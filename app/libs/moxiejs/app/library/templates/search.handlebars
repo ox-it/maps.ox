@@ -1,0 +1,42 @@
+<div id="library-search-form">
+    <div class="search-input">
+        <label for="input-title">Title:</label>
+        <input id="input-title" type="text" name="title" value="{{query.title}}">
+
+        <label for="input-author">Author:</label>
+        <input id="input-author" type="text" name="author" value="{{query.author}}">
+
+        <label for="input-isbn">ISBN:</label>
+        <input id="input-isbn" type="text" name="isbn" value="{{query.isbn}}">
+
+        <input class="action-button search" type="submit" value="Search" id="submit-search"></input>
+    </div>
+</div>
+<div class="library-results-container">
+    <ul id="search-results" class="results-list">
+    </ul>
+    {{#if midRequest}}
+    <div id="loading">
+        <img src="images/preloader.gif" class="preloader">
+    </div>
+    {{else}}
+    {{#unless emptyQuery}}
+    {{#unless hasResults}}
+    <p>Your search - <strong>{{ query.title }} / {{ query.author }} / {{ query.isbn }}</strong> - did not match any library items.</p>
+    {{/unless}}
+    {{/unless}}
+    {{/if}}
+</div>
+<div id="library-info">
+    <h2 class="free-text">Library Services Info</h2>
+    <ul class="results-list">
+        <li><a href="#places/search?type=%2Funiversity%2Flibrary">List of libraries</a></li>
+        <li><a class="web" href="http://www.bodleian.ox.ac.uk/" target="_blank">Bodleian Libraries Home</a></li>
+        <li><a class="web" href="http://library.ox.ac.uk/" target="_blank">OLIS (Oxford Library Information System)</a></li>
+    </ul>
+
+    <div class="metadata-buttons">
+        <a class="action-button email" href="mailto:reader.services@ouls.ox.ac.uk">Email Reader Services</a>
+        <a class="action-button tel" href="tel:+441865277162">01865 (2)77162</a>
+    </div>
+</div>

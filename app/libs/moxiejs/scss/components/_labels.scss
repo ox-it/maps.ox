@@ -1,0 +1,43 @@
+@import "globals/oxford-palette";
+@import "globals/variables";
+@import "compass/css3";
+
+@mixin label($color, $font-size: 0.9em) {
+    color: #fff;
+    display: inline-block;
+    background-color:($color);
+    @include border-radius(8px);
+    font-size: $font-size;
+    padding: 2px 4px 1px 4px;
+    font-weight: 600;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    @include box-shadow(0 0 1px darken($color, 10%))
+}
+
+.label-place-open {
+    @include label($success-green);
+}
+
+.label-place-closed {
+    @include label($fail-red);
+}
+
+.label-facet {
+    @include label($pantone624);
+    margin-top: 5px;
+    cursor: pointer;
+    // For smaller labels
+    &.label-small {
+        font-size: 13px;
+        font-weight: 400;
+    }
+    &:hover {
+        color: #fff;
+    }
+}
+
+.label-notification-updates {
+    @include label($success-green);
+    font-weight: normal;
+    line-height: 1.3em;
+}

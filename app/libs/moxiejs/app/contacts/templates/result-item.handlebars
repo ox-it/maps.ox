@@ -1,0 +1,17 @@
+<div class="contact-details">
+    {{#if contact.unit}}<span class="contact-unit">{{ contact.unit }}</span>{{/if}}
+    <h3>
+        <span class="contact-name">{{ contact.name }}</span>
+    </h3>
+    <p class="contact-info">
+        {{#if contact.email}}
+        <span class="contact-email"><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></span>
+        {{/if}}
+        {{#if contact.external_tel}}
+        <span class="contact-tel"><a href="tel:{{contact.external_tel}}">{{ contact.external_tel }}</a></span>
+        {{/if}}
+    </p>
+</div>
+<div class="contact-controls">
+    <a href="{{ vcardData }}" class="action-button add-contact" download="{{ contact.name }}.vcf" target="_blank">+</a>
+</div>

@@ -1,0 +1,38 @@
+<h2 class="free-heading">Favourites</h2>
+{{#if favourites}}
+{{#if editing}}
+    <ul class="results-list">
+        {{#favourites}}
+        <li id="{{ id }}">
+            <a href="#" class="remove-fav ss-standard ss-delete"></a>
+            <div class="rename-fav">
+                <input type="text" placeholder="{{ title }}" value="{{ userTitle }}">
+            </div>
+        </li>
+        {{/favourites}}
+    </ul>
+{{else}}
+    <ul class="results-list">
+        {{#favourites}}
+        <li id="{{ id }}">
+            <a href="#{{path}}">
+                {{#if userTitle}}
+                    {{ userTitle }}
+                {{else}}
+                    {{ title }}
+                {{/if}}
+            </a>
+        </li>
+        {{/favourites}}
+    </ul>
+{{/if}}
+{{else}}
+<div class="help-card-container">
+    <div class="today help">
+        <p>You do not have any favourites just yet.</p>
+        <p>
+            Whilst browsing Mobile Oxford, click the favourite button <i class="ss-standard ss-star favourited"></i> in the top right corner and they will appear here.
+        </p>
+    </div>
+</div>
+{{/if}}

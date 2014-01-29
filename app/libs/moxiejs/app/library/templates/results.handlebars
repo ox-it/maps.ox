@@ -1,0 +1,19 @@
+{{#if results}}
+    {{#results}}
+        <a href="#/library/item/{{ attributes.id }}">
+        <li data-id="{{ attributes.id }}">
+        {{#if attributes.title }}
+            <h3>{{ attributes.title }}</h3>
+        {{/if}}
+        {{#if attributes.author }}
+            <p class="meta-info"><span class="meta-info-title">Author:</span> {{ attributes.author }}</p>
+        {{/if}}
+        {{#if attributes.publisher }}
+            <p class="meta-info"><span class="meta-info-title">Publisher:</span> {{ attributes.publisher }}</p>
+        {{/if}}
+        </li>
+        </a>
+    {{/results}}
+{{else}}
+    <p>No results found</p>
+{{/if}}
