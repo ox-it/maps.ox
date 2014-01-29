@@ -1,0 +1,60 @@
+@import "settings";
+
+/* Initialize */
+$base-size: $base-font-size;
+$ratio: golden() fourth() !default;
+
+
+// Variables to set our breakpoints
+$smartphone-screen: emCalc(480);
+$small-screen: emCalc(768);
+$medium-screen: emCalc(1280);
+$large-screen: emCalc(1440);
+
+$screen: "only screen";
+$smartphone: "only screen and (max-width:"#{$small-screen}")";
+$small: "only screen and (min-width:"#{$small-screen}")";
+$medium: "only screen and (min-width:"#{$medium-screen}")";
+$large: "only screen and (min-width:"#{$large-screen}")";
+$landscape: "only screen and (orientation: landscape)";
+$portrait: "only screen and (orientation: portrait)";
+
+$body-background: #fafafa;
+
+$grayBorder: 1px solid #ccc;
+$standard-page-padding: 5px;
+
+$cream-dust: "../images/backgrounds/cream_dust.png";
+$cream-dust-hidpi: "../images/backgrounds/cream_dust_@2X.png";
+$subtle-dots: "../images/backgrounds/subtle_dots.png";
+$subtle-dots-hidpi: "../images/backgrounds/subtle_dots_@2X.png";
+
+$darkOxfordBlue: #1B4474;
+$lightOxfordBlue: #002856;
+
+$animations-enabled: false;
+
+$dark: rgba(210,210,210, 0.2);
+$light: rgba(255,255,255, 0.1);
+$border-color: rgba(200,200,200, 0.5);
+
+$mapHeight: 140px;
+
+
+$navbarDark: $darkOxfordBlue;
+$navbarLight: $lightOxfordBlue;
+$navbarHeight: 40px;
+$navbarItemWidth: 50px;
+$navbarBorderDark: 1px solid rgba(darken($navbarDark, 10%),0.7);
+$navbarBorderLight: 1px solid rgba(lighten($navbarDark, 5%),0.7);
+
+$sidebar-animation-time: 0.33s;
+$sidebar-width: 350px;
+$sidebar-smartphone-width: 230px;
+
+// Colours predominantly for labels and suchlike
+$fail-red: #B94A48;
+$success-green: #468847;
+$stack-yellow: #f89406;
+$reference-blue: #002856;
+$unknown-grey: #888;

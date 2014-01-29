@@ -1,0 +1,130 @@
+<div id="contacts-search-form">
+    <div class="search-input">
+        <label for="input-query">Search</label>
+        <input id="input-query" placeholder="e.g. Joe Bloggs" type="text" name="title" value="{{query}}">
+
+        <input class="action-button search" type="submit" value="Email" id="submit-search-email"></input>
+        <input class="action-button search" type="submit" value="Phone" id="submit-search-phone"></input>
+    </div>
+</div>
+
+{{#if showHelpNative}}
+<div class="card-container">
+    <div class="today help">
+        <p>Contacts can be saved to your phonebook by clicking the +<i class="ss-standard ss-user"></i> icon next to their contact details.</p>
+    </div>
+</div>
+{{/if}}
+
+{{#if showHelpDataUri}}
+<div class="card-container">
+    <div class="today help">
+        <p>Contacts can be downloaded to your device by clicking the +<i class="ss-standard ss-user"></i> icon next to their contact details.</p>
+    </div>
+</div>
+{{/if}}
+
+<div id="loading">
+    <img src="images/preloader.gif" class="preloader">
+</div>
+
+{{#if query}}
+        {{#unless has_results}}
+<div id="no-result">
+    <p>No result for your query "{{query}}"</p>
+</div>
+        {{/unless}}
+{{/if}}
+
+<ul id="search-results" class="results-list">
+
+</ul>
+
+<div id="main-contacts">
+    <h2>University contacts</h2>
+
+    <ul id="university-contacts" class="results-list">
+        <li>
+            <a href="tel:+441865270000">
+                <h3>General enquiries</h3>
+                01865 (2)70000
+            </a>
+        </li>
+        <li>
+            <a href="tel:+441865280000">
+                <h3>Switchboard</h3>
+                01865 (2)80000
+            </a>
+        </li>
+        <li>
+            <a href="tel:+441865273200">
+                <h3>IT Services Help desk</h3>
+                01865 (2)73200
+            </a>
+        </li>
+    </ul>
+
+    <h2>Emergency contacts</h2>
+
+    <ul id="emergency-contacts" class="results-list">
+        <li>
+            <a href="tel:112">
+                <h3>Emergency services</h3>
+                112
+            </a>
+        </li>
+        <li>
+            <a href="tel:+441865289999">
+                <h3>University security (emergency)</h3>
+                01865 (2)89999
+            </a>
+        </li>
+        <li>
+            <a href="tel:+441865272944">
+                <h3>University security (enquiries)</h3>
+                01865 (2)72944
+            </a>
+        </li>
+        <li>
+            <a href="tel:101">
+                <h3>Thames Valley Police (non-emergency)</h3>
+                101
+            </a>
+        </li>
+    </ul>
+
+    <h2>Health and welfare</h2>
+
+    <ul id="health-contacts" class="results-list">
+        <li>
+            <a href="tel:+448454647">
+                <h3>NHS Direct</h3>
+                0845 46 47
+            </a>
+        </li>
+        <li>
+            <a href="tel:+441865270300">
+                <h3>University Counselling Service</h3>
+                01865 (2)70300
+            </a>
+        </li>
+        <li>
+            <a href="tel:+441865270270">
+                <h3>Oxford Nightline</h3>
+                01865 (2)70270
+            </a>
+        </li>
+        <li>
+            <a href="tel:+441865726295">
+                <h3>Rape Crisis</h3>
+                01865 726295
+            </a>
+        </li>
+        <li>
+            <a href="tel:+448457909090">
+                <h3>Samaritans</h3>
+                08457 90 90 90
+            </a>
+        </li>
+    </ul>
+</div>

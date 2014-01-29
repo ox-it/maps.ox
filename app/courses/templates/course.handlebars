@@ -1,0 +1,44 @@
+<h2>{{ course.title }}</h2>
+<p class="type">{{ course.provider }}</p>
+<p>
+{{#course.subjects}}
+<a class="label-facet label-small" href='#/courses/course_subject:"{{this}}"'>{{this}}</a>
+{{/course.subjects}}
+</p>
+<p class="free-text">{{ course.description }} </p>
+
+<div id="authStatus"></div>
+
+<ul>
+{{#course.presentations}}
+<li>
+	{{#if start }}
+	Starts: {{ dateFormat start }}<br />
+	{{/if}}
+    {{#if location }}
+        <div id="poi-{{ location }}"></div>
+    {{/if}}
+    <span class="bookable">
+    {{#if _links.book }}
+	<a class="bookLink" data-id="{{ id }}">Book</a>
+    {{else}}
+        {{#if apply_from}}
+            {{#if apply_until}}
+                Bookable between {{ dateFormat apply_from}} and {{ dateFormat apply_until }}.
+            {{else}}
+                Bookable from {{ dateFormat apply_from }}
+            {{/if}}
+        {{ else }}
+        (Cannot be booked at the moment.)
+        {{/if}}
+        {{#if apply_link}}
+        <span>
+            <a href="{{ apply_link }}" target="_blank">Book online</a>
+        </span>
+        {{/if}}
+    {{/if}}
+    </span>
+
+</li>
+{{/course.presentations}}
+</ul>

@@ -1,0 +1,38 @@
+{{#if messages}}
+    <table>
+    {{#messages}}
+    <tr>{{ this }}</tr>
+    {{/messages}}
+    </table>
+{{/if}}
+
+{{#if services}}
+<img src="images/preloader.gif" id="rti-load" class="preloader" width="15" height="15">
+<table id="bus-rti">
+    <tbody>
+    {{#services}}
+    <tr>
+        <td rowspan="2"><span class="service-id">{{ service }}</span></td>
+        <td class="service-destination">{{ destination }}</td>
+        <td class="service-next-bus">{{ next }}</td>
+    </tr>
+    <tr class="notopborder">
+        <td colspan="2" class="service-next-buses-following"><small>
+        {{#if following }}
+        Next:
+        {{/if}}
+        {{#following}}
+            {{ this }},
+        {{/following}}
+        </small></td>
+    </tr>
+    {{/services}}
+    </tbody>
+</table>
+{{else}}
+        <p class="free-text">No real-time information available at the moment</p>
+{{/if}}
+
+{{#if lastUpdatedFormatted}}
+<div class="last-updated">updated: {{ lastUpdatedFormatted }}</div>
+{{/if}}

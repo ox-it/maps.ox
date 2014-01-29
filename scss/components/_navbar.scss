@@ -1,0 +1,103 @@
+@import "globals/variables";
+@import "globals/oxford-palette";
+
+// Navbar
+// Make the navbar sexy.
+#navbar, #content {
+    position: absolute;
+    left: 0; right: 0;
+    @media #{$small} {
+        width: auto; min-width: 0; margin-left: 0; margin-right: 0;
+        border: 0;
+    }
+}
+
+// Context button styles
+#navbar>li a.favourited, .favourited {
+    color: $pantone129;
+}
+#navbar>li a.ss-check {
+    color: $pantone583;
+}
+
+#navbar {
+    position: fixed;
+    margin: 0 auto;
+    top: 0px;
+    // TODO: Pick a good value for this
+    z-index: 51;
+    height: $navbarHeight;
+    line-height: $navbarHeight - 1px;
+    color: #fff;
+    list-style: none;
+    background: $navbarLight; // Basic background for old devices
+    @include background(
+    // Highlighting radial gradient.
+    // Light top, dark bottom
+    radial-gradient(center, ellipse cover, rgba(0,0,0,0), rgba(0,0,0,0.1)),
+    linear-gradient(top, $navbarDark, $navbarLight)
+    );
+    body.is-sidebar-active & {
+        left: $sidebar-width;
+        @media #{$smartphone} {
+            left: $sidebar-smartphone-width;
+        }
+        right: auto;
+        width: 100%;
+    }
+
+    > li {
+        // Most of the elements are on the right, so default to floating them right
+        float: right;
+        // Set width of each button and center align it
+        width: $navbarItemWidth;
+        text-align: center;
+
+        // 3d effect by having a dark and light border on each item
+        border-left: $navbarBorderDark;
+
+        a {
+            border-left: $navbarBorderLight;
+            display: block;
+            color: #fff;
+            // Only style for the active pseudoclass on mobiles
+            // Doesn't make sense to style hover since it isn't possible
+            &:active {
+                @include box-shadow(0 0 $navbarItemWidth/2 #000 inset);
+                background: rgba(0,0,0,0.4);
+            }
+            @media #{$small} {
+                // Style both hover and clicked pseudoclasses for larger devices
+                &:active, &:hover {@include box-shadow(0 0 $navbarItemWidth/2 #000 inset);}
+            }
+        }
+
+        // Left hand button should not have the brighter border
+        &:first-child a { border-left: 0;}
+
+        &#home, &#back {
+            float: left;
+            border: 0;
+            border-right: $navbarBorderLight;
+            a { border-right: $navbarBorderDark; }
+        }
+        &#title {
+            float: left;
+            width: auto;
+            border: 0;
+            h1 {
+                white-space: nowrap;
+                color: #fff;
+                // Set line-height to navbarHeight to give vertical alignment
+                line-height: $navbarHeight;
+                font-size: 1em;
+                font-weight: 600;
+                @include text-shadow(0 -1px 0 #000);
+                // Left spacing equivalent to font-size.
+                margin: auto 0 auto 1em;
+                // Pull the text up slightly to align with buttons
+                margin-top: -2px;
+            }
+        }
+    }
+}

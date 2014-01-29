@@ -1,0 +1,20 @@
+@import "globals/oxford-palette";
+// Manage Favourites view
+ul.results-list {
+    li div.rename-fav {
+        margin-left: 35px;
+        margin-right: 10px;
+        padding-top: 5px;
+    }
+    li a.remove-fav {
+        float: left;
+        width: 20px;
+        height: 20px;
+        color: $pantone200;
+        font-size: 20px;
+        padding: 6px;
+    }
+}
+#context-button .ss-writingdisabled {
+    color: $pantoneWarmGray3;
+}

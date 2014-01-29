@@ -1,0 +1,12 @@
+<div class="day">
+    <span class="{{ observation.ss_class}}"></span>
+    <span class="ss-forecast">{{ observation.temperature}}&deg;C</span>
+</div>
+<div class="five-day-forecast">
+    {{#forecasts}}
+    <div>
+        <span alt="{{ outlook_description }}" class="{{ ss_class }}"></span>
+        <span class="day-of-week">{{ dayOfWeek }}</span>
+    </div>
+    {{/forecasts}}
+</div>
