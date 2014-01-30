@@ -38,7 +38,7 @@ var require = {
         "MoxieModel": moxieJS + "core/models/MoxieModel",
         "MoxieCollection": moxieJS + "core/collections/MoxieCollection",
 
-        "moxie.conf": moxieJS + "moxie.conf",
+        "moxie.conf": "maps.conf",
         "moxie.position": moxieJS + "moxie.position"
     },
 
@@ -94,9 +94,7 @@ var require = {
         helperPathCallback: function(name) {return moxieJS + 'templates/helpers/' + name;}
     }
 };
-for (var i = 0; i < moxiePlaces.length; i++) {
-    require.paths[moxiePlaces[i]] = moxieJS + moxiePlaces[i];
-}
-for (var i = 0; i < moxieCore.length; i++) {
-    require.paths[moxieCore[i]] = moxieJS + moxieCore[i];
+var moxieModules = moxiePlaces.concat(moxieCore);
+for (var i = 0; i < moxieModules.length; i++) {
+    require.paths[moxieModules[i]] = moxieJS + moxieModules[i];
 }
