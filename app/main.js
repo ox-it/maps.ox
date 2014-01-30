@@ -1,6 +1,7 @@
-require(['jquery','backbone', 'libs/moxiejs/app/places/router', 'fastclick', 'backbone.queryparams', 'backbone.layoutmanager'], function($, Backbone, Router, FastClick) {
+require(['jquery','backbone', 'libs/moxiejs/app/places/router', 'fastclick', 'backbone.queryparams', 'backbone.layoutmanager'], function($, Backbone, PlacesRouter, FastClick) {
     $(function() {
         // Initialse our router
+        var Router = Backbone.Router.extend(PlacesRouter);
         var router = new Router();
 
         // Default to requesting hal+json but fallback to json
