@@ -2,7 +2,7 @@ require(['jquery','backbone', 'libs/moxiejs/app/places/router', 'fastclick', 'ba
     $(function() {
         // Initialse our router
         var Router = Backbone.Router.extend(PlacesRouter);
-        var router = new Router();
+        var router = new Router({urlPrefix: '#'});
 
         // Default to requesting hal+json but fallback to json
         $.ajaxSetup({ headers: { 'Accept': 'application/hal+json;q=1.0, application/json;q=0.9, */*; q=0.01' } });
