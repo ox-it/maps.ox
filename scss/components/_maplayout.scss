@@ -7,28 +7,27 @@
 #content {
     position: absolute;
     top: 0;
+    right: 0;
     bottom: 0;
     left: 0;
-    right: 0;
     background: #fff;
     // border-left: $grayBorder;
     // border-right: $grayBorder;
 
     .content-browse {
-        height: 100%;
-        width: 30%;
+        right: auto;
+        overflow-y: scroll;
         padding: 0px 0px;
+        width: 30%;
+        height: 100%;
         background: $body-background;
         -webkit-overflow-scrolling: touch;
-        right: auto;
-        padding: 0px 0px;
-        overflow-y: scroll;
         @media #{$smartphone} {
-            height: auto;
-            overflow-y: auto;
-            overflow: visible;
-            width: 100%;
             position: static;
+            overflow: visible;
+            overflow-y: auto;
+            width: 100%;
+            height: auto;
         }
     }
 
@@ -37,10 +36,10 @@
     }
 
     .content-map {
-        width: 70%;
         float: right;
-        height: 100%;
         padding: 0px 0px;
+        width: 70%;
+        height: 100%;
         @media #{$smartphone} {
             float: none;
             width: 100%;
@@ -48,8 +47,8 @@
         }
     }
     #map {
-        height: 100%;
         width: 100% !important;
+        height: 100%;
         @media #{$smartphone} {
             height: $mapHeight;
             &.full-screen {
@@ -62,21 +61,21 @@
     }
     .search-input {
         position: relative;
-        padding-top: 10px;
-        margin-left: 5px;
         margin-right: 5px;
+        margin-left: 5px;
+        padding-top: 10px;
 
         span.deleteicon {
-            display: block;
-            line-height: 9px;
-            position: absolute;
-            right: 15px;
-            top: 15px;
-            padding: 4px 4px 2px 4px;
             @include border-radius(30px);
-            font-size: 9px;
-            color: #fff;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: block;
+            padding: 4px 4px 2px 4px;
             background: #ccc;
+            color: #fff;
+            font-size: 9px;
+            line-height: 9px;
             cursor: pointer;
         }
     }
