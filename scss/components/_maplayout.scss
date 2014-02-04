@@ -32,12 +32,33 @@
     }
 
     .map-browse-layout {
+        .content-detail {
+            display: none;
+        }
+    }
+
+
+    .map-browse-layout {
         &.with-detail {
             .content-map {
                 height: 60%;
+                @media #{$smartphone} {
+                    float: none;
+                    width: 100%;
+                    height: $mapHeight;
+                }
             }
             .content-detail {
+                display: block;
                 height: 40%;
+                @media #{$smartphone} {
+                    height: auto;
+                }
+            }
+            .content-browse {
+                @media #{$smartphone} {
+                    // display: none;
+                }
             }
         }
         height: 100%;
@@ -55,7 +76,7 @@
         @media #{$smartphone} {
             float: none;
             width: 100%;
-            height: $mapHeight;
+            height: auto;
         }
     }
     #map {
