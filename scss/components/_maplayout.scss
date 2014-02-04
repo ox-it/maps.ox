@@ -32,15 +32,19 @@
     }
 
     .map-browse-layout {
+        &.with-detail {
+            .content-map {
+                height: 60%;
+            }
+            .content-detail {
+                height: 40%;
+            }
+        }
         height: 100%;
     }
 
     .content-map {
-        height: 60%;
-    }
-
-    .content-detail {
-        height: 40%;
+        height: 100%;
     }
 
     .content-main {
