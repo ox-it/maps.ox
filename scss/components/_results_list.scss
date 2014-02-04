@@ -1,0 +1,71 @@
+@import "globals/variables";
+@import "globals/mixins";
+
+// hidpi media queries mixins for selecting higher res images
+@import "hidpi";
+
+ul.results-list {
+    margin-bottom: 0;
+    padding: 0;
+    border-top: 2px solid $border-color;
+    list-style: none;
+    .highlighted {
+        background: $border-color;
+    }
+    li {
+        min-height: 46px;
+        border-bottom: 2px solid $border-color;
+        color: rgba(40, 40, 40, 0.8);
+        text-shadow: 0 1px 1px rgba(255, 255, 255, 0.9);
+        .highlighted {
+            background-color: red;
+        }
+        p {
+            margin-bottom: 0px;
+        }
+        > label, > a, > h3, > p {
+            padding: 10px 8px;
+        }
+        > label, > a {
+            margin: 0;
+            height: 100%;
+            display: block;
+            color: rgba(40, 40, 40, 0.8);
+        }
+
+        // Used on list items to show the count in the proceeding category/group
+        .subtext {
+            display: block;
+            font-size: 0.9em;
+            margin: 0;
+        }
+
+        // Used to convey complex list items such as library search results
+        $meta-info-font-size: 0.8em;
+        .meta-info {
+            font-size: $meta-info-font-size;
+            padding: 0;
+            margin: 3px 0 0 5px;
+            line-height: $meta-info-font-size + convert-to-em(5px);
+            font-weight: 200;
+        }
+
+        .meta-info-title {
+            font-size: inherit;
+            font-weight: 800;
+
+        }
+        & * {
+            font-family: Helvetica, Verdana, sans-serif;
+        }
+
+        h3 {
+            font-size: 1.2em;
+            font-weight: normal;
+            padding: 0;
+            margin: 0;
+            color: #444;
+        }
+
+    }
+}

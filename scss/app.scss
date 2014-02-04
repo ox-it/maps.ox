@@ -1,0 +1,16 @@
+@import "compass/css3";
+
+@import "globals/variables";
+@import "globals/oxford-palette";
+@import "globals/mixins";
+
+// Our major components used throughout moxie
+@import "components/results_list";
+@import "components/maplayout";
+
+html, body { height: 100%; }
+body {
+    overflow-x: hidden;
+    background: $body-background;
+    width: 100%;
+}
