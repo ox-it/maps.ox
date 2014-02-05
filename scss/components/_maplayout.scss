@@ -57,7 +57,7 @@
             }
             .content-browse {
                 @media #{$smartphone} {
-                    // display: none;
+                    display: none;
                 }
             }
         }
