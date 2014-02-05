@@ -18,27 +18,50 @@
         right: auto;
         overflow-y: scroll;
         padding: 0px 0px;
-        width: 30%;
         height: 100%;
         background: $body-background;
         -webkit-overflow-scrolling: touch;
-        @media #{$smartphone} {
-            position: static;
-            overflow: visible;
-            overflow-y: auto;
-            width: 100%;
-            height: auto;
-        }
     }
 
     .map-browse-layout {
+        height: 100%;
         .content-detail {
             display: none;
         }
     }
 
+    .btn-toggle-browse {
+        background: $body-background;
+        display: inline-block;
+        z-index: 10000;
+        position: absolute;
+        left: 0px;
+        top: 200px;
+        width: 30px;
+        height: 30px;
+    }
 
     .map-browse-layout {
+        &.with-browse {
+            .btn-toggle-browse {
+                left: 30%;
+                @media #{$smartphone} {
+                    left: 85%;
+                }
+            }
+            .content-browse {
+                width: 30%;
+                @media #{$smartphone} {
+                    width: 85%;
+                }
+            }
+            .content-main {
+                width: 70%;
+                @media #{$smartphone} {
+                    width: 15%;
+                }
+            }
+        }
         &.with-detail {
             .content-map {
                 height: 60%;
@@ -55,13 +78,7 @@
                     height: auto;
                 }
             }
-            .content-browse {
-                @media #{$smartphone} {
-                    display: none;
-                }
-            }
         }
-        height: 100%;
     }
 
     .content-map {
@@ -71,22 +88,13 @@
     .content-main {
         float: right;
         padding: 0px 0px;
-        width: 70%;
+        width: 100%;
         height: 100%;
-        @media #{$smartphone} {
-            float: none;
-            width: 100%;
-            height: auto;
-        }
     }
     #map {
         width: 100% !important;
         height: 100%;
         @media #{$smartphone} {
-            height: $mapHeight;
-            &.full-screen {
-                height: 100%;
-            }
             .leaflet-control-zoom {
                 display: none;
             }
