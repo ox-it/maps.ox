@@ -6,6 +6,7 @@ define(['jquery', 'underscore', 'backbone', 'app', 'moxie.conf', 'moxie.position
         // View constructor
         initialize: function() {
             _.bindAll(this);
+            this.urlPrefix = this.options.urlPrefix;
             this.category_name = this.options.category_name || "/";
             this.collection.on('reset', this.render, this);
         },
@@ -13,7 +14,7 @@ define(['jquery', 'underscore', 'backbone', 'app', 'moxie.conf', 'moxie.position
         manage: true,
         template: categoriesTemplate,
         serialize: function() {
-            var context = {};
+            var context = {urlPrefix: this.urlPrefix};
             var category = this.collection.find(function(model) { return model.get('type_prefixed') === this.category_name; }, this);
             if (category) {
                 context.types = new Categories(category.getChildren()).toJSON();
@@ -43,7 +44,7 @@ define(['jquery', 'underscore', 'backbone', 'app', 'moxie.conf', 'moxie.position
             if (ev.which === 13) {
                 var query = ev.target.value;
                 var qstring = $.param({q: query}).replace(/\+/g, "%20");
-                var path = conf.pathFor('places_search') + '?' + qstring;
+                var path = this.urlPrefix + '/search' + '?' + qstring;
                 app.navigate(path, {trigger: true, replace: false});
             }
         },

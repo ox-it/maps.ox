@@ -5,6 +5,14 @@ define(['backbone', 'core/views/MapView', 'hbs!core/templates/map-browse'], func
         template: mapBrowseTemplate,
         className: 'map-browse-layout',
         name: 'MapBrowseLayout',
+        events: {
+            'click .btn-toggle-browse': 'toggleBrowse',
+        },
+
+        toggleBrowse: function() {
+            this.$el.toggleClass('with-browse');
+            this.mapView.invalidateMapSize();
+        },
 
         // Previously we set this view in 'views' this is WRONG
         //
@@ -13,8 +21,25 @@ define(['backbone', 'core/views/MapView', 'hbs!core/templates/map-browse'], func
         //
         // See commit #6511cae
         beforeRender: function() {
-            this.setView(".content-map", new MapView());
-        }
+            this.mapView = new MapView();
+            this.setView(".content-map", this.mapView);
+        },
+        removeDetail: function() {
+            this.$el.removeClass('with-detail');
+            this.mapView.invalidateMapSize();
+        },
+        withDetail: function() {
+            this.$el.addClass('with-detail');
+            this.mapView.invalidateMapSize();
+        },
+        removeBrowse: function() {
+            this.$el.removeClass('with-browse');
+            this.mapView.invalidateMapSize();
+        },
+        withBrowse: function() {
+            this.$el.addClass('with-browse');
+            this.mapView.invalidateMapSize();
+        },
     });
 
     return MapBrowseLayout;
