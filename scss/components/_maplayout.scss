@@ -39,6 +39,9 @@
         top: 200px;
         width: 30px;
         height: 30px;
+        @media #{$smartphone} {
+            top: $mapHeight - 30px;
+        }
     }
 
     .map-browse-layout {
