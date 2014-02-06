@@ -10,7 +10,7 @@ We are using [`git subtree`](https://github.com/git/git/blob/master/contrib/subt
 to embed the [Mobile Oxford](https://github.com/ox-it/moxie-js-client) git repository at
 app/libs/moxiejs.
 
-To work with the subtree merge strategy I strongly recommend installing
+To work with the subtree merge strategy we recommend installing
 [git-subtree](https://github.com/git/git/blob/master/contrib/subtree/git-subtree.txt) and reading up
 on [how it works](http://blogs.atlassian.com/2013/05/alternatives-to-git-submodule-git-subtree/).
 
