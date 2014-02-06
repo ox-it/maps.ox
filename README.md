@@ -7,7 +7,7 @@ Git
 ---
 
 We are using [`git subtree`](https://github.com/git/git/blob/master/contrib/subtree/git-subtree.txt)
-embed [Mobile Oxford](https://github.com/ox-it/moxie-js-client) entire git repository at
+to embed the [Mobile Oxford](https://github.com/ox-it/moxie-js-client) git repository at
 app/libs/moxiejs.
 
 To work with the subtree merge strategy I strongly recommend installing
