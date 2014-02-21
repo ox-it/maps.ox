@@ -1,4 +1,4 @@
-define(["underscore", "backbone", "moxie.conf"], function(_, Backbone, conf){
+define(["underscore", "backbone", "moxie.conf", "cordova.help"], function(_, Backbone, conf, cordova){
     var EVENT_POSITION_UPDATED = 'position:updated';
     function UserPosition() {
         _.extend(this, Backbone.Events);
@@ -12,6 +12,17 @@ define(["underscore", "backbone", "moxie.conf"], function(_, Backbone, conf){
             return latestPosition || conf.defaultLocation;
         },
         this.getLocation = function(cb, options) {
+            if (cordova.isCordova() && !cordova.appReady()) {
+                // Only call navigator.geolocation when "deviceready"
+                //
+                // This prevents us using the WebView geolocation features and
+                // ensures we use the cordova geolocation plugin.
+                //
+                // For iOS this has the added benefit of only prompting once
+                // for the user to allow geolocation.
+                cordova.onAppReady(_.bind(this.getLocation, this, cb, options));
+                return;
+            }
             options = options || {};
             // If we don't get a location within the errorMargin before the Timeout
             // we return the most recent position reported by watchPosition
@@ -56,7 +67,7 @@ define(["underscore", "backbone", "moxie.conf"], function(_, Backbone, conf){
                 locationError.apply(this);
             }
         }
-        var count = 0;
+        var followerCount = 0;
         this.follow = function(cb, context) {
             context = context || this;
             if (!positionInterval) {
@@ -64,7 +75,7 @@ define(["underscore", "backbone", "moxie.conf"], function(_, Backbone, conf){
                 startWatching.apply(this);
             }
             this.on(EVENT_POSITION_UPDATED, cb, context);
-            this.count++;
+            followerCount++;
             // Send user latest userPosition (not default)
             if (latestPosition) {
                 cb.apply(context, [latestPosition]);
@@ -76,8 +87,8 @@ define(["underscore", "backbone", "moxie.conf"], function(_, Backbone, conf){
             } else {
                 this.off(EVENT_POSITION_UPDATED, cb);
             }
-            this.count--;
-            if (this.count === 0) {
+            followerCount--;
+            if (followerCount === 0) {
                 window.clearInterval(positionInterval);
             }
         };

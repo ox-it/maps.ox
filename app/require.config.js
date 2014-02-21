@@ -39,7 +39,8 @@ var require = {
         "MoxieCollection": moxieJS + "core/collections/MoxieCollection",
 
         "moxie.conf": "maps.conf",
-        "moxie.position": moxieJS + "moxie.position"
+        "moxie.position": moxieJS + "moxie.position",
+        "cordova.help": moxieJS + "cordova.help"
     },
 
     // Sets the configuration for your third party scripts that are not AMD compatible
