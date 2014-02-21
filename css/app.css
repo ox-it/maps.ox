@@ -107,103 +107,104 @@ ul.results-list li h3 {
 #content .btn-toggle-browse {
   background: #fafafa;
   display: inline-block;
-  z-index: 10000;
+  z-index: 10001;
   position: absolute;
   left: 0px;
-  top: 200px;
+  top: 0px;
+  width: 30px;
+  height: 30px;
+}
+/* line 44, ../scss/components/_maplayout.scss */
+#content .btn-toggle-location {
+  background: #fafafa;
+  display: inline-block;
+  z-index: 10001;
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
   width: 30px;
   height: 30px;
 }
 @media only screen and (max-width: 768px) {
-  /* line 33, ../scss/components/_maplayout.scss */
-  #content .btn-toggle-browse {
+  /* line 44, ../scss/components/_maplayout.scss */
+  #content .btn-toggle-location {
     top: 110px;
   }
 }
-/* line 49, ../scss/components/_maplayout.scss */
-#content .map-browse-layout.with-browse .btn-toggle-browse {
+/* line 60, ../scss/components/_maplayout.scss */
+#content .map-browse-layout.with-browse .content-browse, #content .map-browse-layout.with-browse .btn-toggle-location, #content .map-browse-layout.with-browse .btn-toggle-browse {
   left: 30%;
 }
 @media only screen and (max-width: 768px) {
-  /* line 49, ../scss/components/_maplayout.scss */
-  #content .map-browse-layout.with-browse .btn-toggle-browse {
+  /* line 60, ../scss/components/_maplayout.scss */
+  #content .map-browse-layout.with-browse .content-browse, #content .map-browse-layout.with-browse .btn-toggle-location, #content .map-browse-layout.with-browse .btn-toggle-browse {
     left: 85%;
   }
 }
-/* line 55, ../scss/components/_maplayout.scss */
-#content .map-browse-layout.with-browse .content-browse {
-  width: 30%;
-}
-@media only screen and (max-width: 768px) {
-  /* line 55, ../scss/components/_maplayout.scss */
-  #content .map-browse-layout.with-browse .content-browse {
-    width: 85%;
-  }
-}
-/* line 61, ../scss/components/_maplayout.scss */
+/* line 66, ../scss/components/_maplayout.scss */
 #content .map-browse-layout.with-browse .content-main {
   width: 70%;
 }
 @media only screen and (max-width: 768px) {
-  /* line 61, ../scss/components/_maplayout.scss */
+  /* line 66, ../scss/components/_maplayout.scss */
   #content .map-browse-layout.with-browse .content-main {
     width: 15%;
   }
 }
-/* line 69, ../scss/components/_maplayout.scss */
+/* line 74, ../scss/components/_maplayout.scss */
 #content .map-browse-layout.with-detail .content-map {
   height: 60%;
 }
 @media only screen and (max-width: 768px) {
-  /* line 69, ../scss/components/_maplayout.scss */
+  /* line 74, ../scss/components/_maplayout.scss */
   #content .map-browse-layout.with-detail .content-map {
     float: none;
     width: 100%;
     height: 140px;
   }
 }
-/* line 77, ../scss/components/_maplayout.scss */
+/* line 82, ../scss/components/_maplayout.scss */
 #content .map-browse-layout.with-detail .content-detail {
   display: block;
   height: 40%;
   overflow-y: scroll;
 }
 @media only screen and (max-width: 768px) {
-  /* line 77, ../scss/components/_maplayout.scss */
+  /* line 82, ../scss/components/_maplayout.scss */
   #content .map-browse-layout.with-detail .content-detail {
     height: auto;
   }
 }
-/* line 88, ../scss/components/_maplayout.scss */
+/* line 93, ../scss/components/_maplayout.scss */
 #content .content-map {
   height: 100%;
 }
-/* line 92, ../scss/components/_maplayout.scss */
+/* line 97, ../scss/components/_maplayout.scss */
 #content .content-main {
   float: right;
   padding: 0px 0px;
   width: 100%;
   height: 100%;
 }
-/* line 98, ../scss/components/_maplayout.scss */
+/* line 103, ../scss/components/_maplayout.scss */
 #content #map {
   width: 100% !important;
   height: 100%;
 }
 @media only screen and (max-width: 768px) {
-  /* line 102, ../scss/components/_maplayout.scss */
+  /* line 107, ../scss/components/_maplayout.scss */
   #content #map .leaflet-control-zoom {
     display: none;
   }
 }
-/* line 107, ../scss/components/_maplayout.scss */
+/* line 112, ../scss/components/_maplayout.scss */
 #content .search-input {
   position: relative;
   margin-right: 5px;
   margin-left: 5px;
   padding-top: 10px;
 }
-/* line 113, ../scss/components/_maplayout.scss */
+/* line 118, ../scss/components/_maplayout.scss */
 #content .search-input span.deleteicon {
   -webkit-border-radius: 30px;
   -moz-border-radius: 30px;
@@ -222,16 +223,16 @@ ul.results-list li h3 {
   cursor: pointer;
 }
 
-/* line 129, ../scss/components/_maplayout.scss */
+/* line 134, ../scss/components/_maplayout.scss */
 .list-map, .detail-map, .generic {
   height: 100%;
   -webkit-overflow-scrolling: touch;
 }
-/* line 132, ../scss/components/_maplayout.scss */
+/* line 137, ../scss/components/_maplayout.scss */
 .list-map ul.facet-list, .detail-map ul.facet-list, .generic ul.facet-list {
   padding-left: 5px;
 }
-/* line 135, ../scss/components/_maplayout.scss */
+/* line 140, ../scss/components/_maplayout.scss */
 .list-map > h3, .detail-map > h3, .generic > h3 {
   padding-left: 5px;
 }
