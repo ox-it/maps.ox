@@ -1,10 +1,9 @@
-define(['backbone', 'leaflet', 'underscore', 'moxie.conf', 'places/utils', 'moxie.position', 'core/media'], function(Backbone, L, _, MoxieConf, utils, userPosition, media) {
+define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/utils', 'core/media'], function(Backbone, $, L, _, MoxieConf, utils, media) {
     var MapView = Backbone.View.extend({
         initialize: function(options) {
             this.options = options || {};
             this.interactiveMap = this.options.interactiveMap || media.isTablet();
             this.markers = [];
-            this.userPosition = null;
         },
 
         attributes: {},
@@ -16,7 +15,10 @@ define(['backbone', 'leaflet', 'underscore', 'moxie.conf', 'places/utils', 'moxi
         mapMoved: false,
 
         beforeRender: function() {
-            var mapOptions = {};
+            $('html').addClass('map');
+            var mapOptions = {
+                zoomControl: false
+            };
             if (!this.interactiveMap) {
                  mapOptions.dragging = false;
                  mapOptions.touchZoom = false;
@@ -35,7 +37,6 @@ define(['backbone', 'leaflet', 'underscore', 'moxie.conf', 'places/utils', 'moxi
                     this.trigger('mapClick');
                 }, this);
             }
-            userPosition.follow(this.handle_geolocation_query, this);
             return this;
         },
 
@@ -71,10 +72,13 @@ define(['backbone', 'leaflet', 'underscore', 'moxie.conf', 'places/utils', 'moxi
         },
 
         handle_geolocation_query: function(position) {
+            // is this the first position being reported?
             var firstPosition = false;
             if (!this.user_position) {
                 firstPosition = true;
-            } else if (this.user_position[0] === position.coords.latitude && this.user_position[1] === position.coords.longitude)  {
+            }
+            // Only update the markers if the user position changes (useful for desktops)
+            if (this.user_position && this.user_position[0] === position.coords.latitude && this.user_position[1] === position.coords.longitude)  {
                 return;
             }
             this.user_position = [position.coords.latitude, position.coords.longitude];
@@ -84,7 +88,15 @@ define(['backbone', 'leaflet', 'underscore', 'moxie.conf', 'places/utils', 'moxi
             }
             this.user_marker = L.circle(you, 10, {color: 'red', fillColor: 'red', fillOpacity: 1.0});
             this.map.addLayer(this.user_marker);
-            this.setMapBounds({firstPosition: firstPosition});
+
+            // Generally we reset the MapBounds after each new location is
+            // reported unless the user has interacted with the map in someway.
+            //
+            // The only exception being when it's the first user position to be
+            // reported in which case we always reset the map to new bounds.
+            if (firstPosition || !this.mapMoved) {
+                this.setMapBounds();
+            }
         },
 
         placePOI: function(poi) {
@@ -119,12 +131,7 @@ define(['backbone', 'leaflet', 'underscore', 'moxie.conf', 'places/utils', 'moxi
             return this;
         },
 
-        setMapBounds: function(options) {
-            options = options || {};
-            var firstPosition = options.firstPosition;
-            if (!firstPosition && this.mapMoved) {
-                return;
-            }
+        setMapBounds: function() {
             var latlngs = [];
             // Only set map bounds if we have some points
             //
@@ -171,8 +178,8 @@ define(['backbone', 'leaflet', 'underscore', 'moxie.conf', 'places/utils', 'moxi
         },
 
         cleanup: function() {
+            $('html').removeClass('map');
             this.unsetCollection();
-            userPosition.unfollow(this.handle_geolocation_query, this);
         }
     });
     MapView.extend(Backbone.Events);

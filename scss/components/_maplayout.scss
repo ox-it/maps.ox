@@ -33,10 +33,21 @@
     .btn-toggle-browse {
         background: $body-background;
         display: inline-block;
-        z-index: 10000;
+        z-index: 10001;
         position: absolute;
         left: 0px;
-        top: 200px;
+        top: 0px;
+        width: 30px;
+        height: 30px;
+    }
+
+    .btn-toggle-location {
+        background: $body-background;
+        display: inline-block;
+        z-index: 10001;
+        position: absolute;
+        left: 0px;
+        bottom: 0px;
         width: 30px;
         height: 30px;
         @media #{$smartphone} {
@@ -46,16 +57,10 @@
 
     .map-browse-layout {
         &.with-browse {
-            .btn-toggle-browse {
+            .content-browse, .btn-toggle-location, .btn-toggle-browse {
                 left: 30%;
                 @media #{$smartphone} {
                     left: 85%;
-                }
-            }
-            .content-browse {
-                width: 30%;
-                @media #{$smartphone} {
-                    width: 85%;
                 }
             }
             .content-main {
