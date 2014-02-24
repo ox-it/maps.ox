@@ -1,11 +1,14 @@
 define(['backbone', 'moxie.position', 'core/views/MapView', 'hbs!core/templates/map-browse'], function(Backbone, userPosition, MapView, mapBrowseTemplate) {
 
     var MapBrowseLayout = Backbone.View.extend({
+        initialize: function(options) {
+            options = options || {};
+            this.followUser = options.followUser;
+        },
         manage: true,
         template: mapBrowseTemplate,
         className: 'map-browse-layout',
         name: 'MapBrowseLayout',
-        followByDefault: false,
         events: {
             'click .btn-toggle-browse': 'toggleBrowse',
             'click .btn-toggle-location': 'toggleLocation',
@@ -16,12 +19,11 @@ define(['backbone', 'moxie.position', 'core/views/MapView', 'hbs!core/templates/
             this.mapView.invalidateMapSize();
         },
         toggleLocation: function() {
-            if (this.followingUser) {
-                userPosition.unfollow(this.mapView.handle_geolocation_query, this.mapView);
-                this.followingUser = false;
-            } else {
+            if (!this.followingUser) {
                 userPosition.follow(this.mapView.handle_geolocation_query, this.mapView);
                 this.followingUser = true;
+            } else {
+                userPosition.toggleWatching();
             }
         },
 
@@ -36,7 +38,7 @@ define(['backbone', 'moxie.position', 'core/views/MapView', 'hbs!core/templates/
             this.setView(".content-map", this.mapView);
         },
         afterRender: function() {
-            if (this.followByDefault) {
+            if (this.followUser) {
                 userPosition.follow(this.mapView.handle_geolocation_query, this.mapView);
                 this.followingUser = true;
             }

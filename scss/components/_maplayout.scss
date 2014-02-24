@@ -50,9 +50,6 @@
         bottom: 0px;
         width: 30px;
         height: 30px;
-        @media #{$smartphone} {
-            top: $mapHeight - 30px;
-        }
     }
 
     .map-browse-layout {
@@ -71,6 +68,13 @@
             }
         }
         &.with-detail {
+            .btn-toggle-location {
+                bottom: 40%;
+                @media #{$smartphone} {
+                    top: $mapHeight - 30px;
+                    bottom: auto;
+                }
+            }
             .content-map {
                 height: 60%;
                 @media #{$smartphone} {
