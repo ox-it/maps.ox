@@ -37,7 +37,7 @@
   	::labels {
       text-face-name: @font;
       text-name: @value;
-      text-fill: green;
+      text-fill: black;
       text-size: 15;
       text-halo-fill: fadeout(white, 30%);
       text-halo-radius: 2.5;
