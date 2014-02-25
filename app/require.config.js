@@ -25,6 +25,7 @@ var require = {
         "matchMedia": moxieJS + "libs/matchMedia",
         "raphael": moxieJS + "libs/raphael",
         "justgage": moxieJS + "libs/justgage",
+        "wellknown": moxieJS + "libs/wellknown",
 
         // Moxie Places
         "places/models/POIModel": moxieJS + "places/models/POIModel",
@@ -61,6 +62,9 @@ var require = {
         },
         "leaflet": {
             "exports": "L"
+        },
+        "wellknown": {
+            "exports": "parse"
         },
         "time_domain": {
             "exports": "TimeDomain"
