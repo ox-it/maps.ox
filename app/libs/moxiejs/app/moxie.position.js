@@ -67,10 +67,14 @@ define(["underscore", "backbone", "moxie.conf", "cordova.help"], function(_, Bac
             }
         }
         function startWatching() {
-            this.trigger(EVENT_POSITION_UNPAUSED);
             if (supportsGeoLocation) {
                 this.getLocation(_.bind(locationSuccess, this));
                 this.positionInterval = window.setInterval(this.getLocation, conf.position.updateInterval, _.bind(locationSuccess, this));
+                // NOTE: only trigger EVENT_POSITION_UNPAUSED *after* positionInterval is set,
+                //       we have listeners which call startWatching on EVENT_POSITION_UNPAUSED
+                //       so it has to be triggered after an interval is made otherwise recursive
+                //       calls to startWatching happen.
+                this.trigger(EVENT_POSITION_UNPAUSED);
             } else {
                 locationError.apply(this);
             }
