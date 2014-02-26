@@ -115,6 +115,11 @@ define(["underscore", "backbone", "moxie.conf", "cordova.help"], function(_, Bac
             }
             return positionPaused;
         };
+        this.listening = function() {
+            // Returns true if currently watching user position
+            // else returns false
+            return Boolean(this.positionInterval);
+        };
     }
     return new UserPosition();
 });

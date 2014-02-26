@@ -68,10 +68,15 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
         beforeRender: function() {
             Backbone.trigger('domchange:title', "Search for Places of Interest");
             if (this.collection.length) {
+                var trackingUserPosition = userPosition.listening();
                 var urlPrefix = this.urlPrefix;
                 var views = [];
                 this.collection.each(function(model) {
-                    views.push(new ItemView({model: model, urlPrefix: urlPrefix}));
+                    views.push(new ItemView({
+                        model: model,
+                        urlPrefix: urlPrefix,
+                        trackingUserPosition: trackingUserPosition
+                    }));
                 });
                 this.insertViews({"ul.results-list": views});
             }
