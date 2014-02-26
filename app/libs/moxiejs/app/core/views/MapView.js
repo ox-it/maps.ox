@@ -137,22 +137,30 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
             // Only set map bounds if we have some points
             //
             if (!this.collection || this.collection.length===0) { return; }
-            this.collection.each(function(poi) {
-                // See paramaters in moxie.conf
-                //
-                // Show just a few nearby results -- since we load quite a lot of resutlts by default
-                // the entire listing can be quite overwhelming and the map ends up being very zoomed out.
-                // This was ported verbatim from Molly.
-                if (poi.hasLocation() && (Math.pow((poi.get('distance')*1000), MoxieConf.map.bounds.exponent) * (latlngs.length + 1)) < MoxieConf.map.bounds.limit) {
-                    latlngs.push(new L.LatLng(poi.get('lat'), poi.get('lon')));
-                }
-            });
-            if (latlngs.length === 0) {
-                _.each(this.collection.first(MoxieConf.map.bounds.fallback), function(poi) {
+            if (!userPosition.listening()) {
+                this.collection.each(function(poi) {
                     if (poi.hasLocation()) {
                         latlngs.push(new L.LatLng(poi.get('lat'), poi.get('lon')));
                     }
                 });
+            } else {
+                this.collection.each(function(poi) {
+                    // See paramaters in moxie.conf
+                    //
+                    // Show just a few nearby results -- since we load quite a lot of resutlts by default
+                    // the entire listing can be quite overwhelming and the map ends up being very zoomed out.
+                    // This was ported verbatim from Molly.
+                    if (poi.hasLocation() && (Math.pow((poi.get('distance')*1000), MoxieConf.map.bounds.exponent) * (latlngs.length + 1)) < MoxieConf.map.bounds.limit) {
+                        latlngs.push(new L.LatLng(poi.get('lat'), poi.get('lon')));
+                    }
+                });
+                if (latlngs.length === 0) {
+                    _.each(this.collection.first(MoxieConf.map.bounds.fallback), function(poi) {
+                        if (poi.hasLocation()) {
+                            latlngs.push(new L.LatLng(poi.get('lat'), poi.get('lon')));
+                        }
+                    });
+                }
             }
             if (latlngs.length > 0) {
                 var bounds = new L.LatLngBounds(latlngs);
