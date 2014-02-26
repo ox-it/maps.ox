@@ -1,9 +1,9 @@
-define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/utils', 'core/media'], function(Backbone, $, L, _, MoxieConf, utils, media) {
+define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/utils', 'core/media', 'moxie.position'], function(Backbone, $, L, _, MoxieConf, utils, media, userPosition) {
     var MapView = Backbone.View.extend({
         initialize: function(options) {
             this.options = options || {};
             this.interactiveMap = this.options.interactiveMap || media.isTablet();
-            this.markers = [];
+            this.features = [];
         },
 
         attributes: {},
@@ -48,6 +48,13 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
             this.map.on('dragstart', function() {
                 this.mapMoved = true;
             }, this);
+            userPosition.on('position:paused', function() {
+                this.user_position = null;
+                if (this.user_marker) {
+                    this.map.removeLayer(this.user_marker);
+                    this.setMapBounds();
+                }
+            }, this);
         },
 
         setCollection: function(collection) {
@@ -77,7 +84,7 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
             if (!this.user_position) {
                 firstPosition = true;
             }
-            // Only update the markers if the user position changes (useful for desktops)
+            // Only update the features if the user position changes (useful for desktops)
             if (this.user_position && this.user_position[0] === position.coords.latitude && this.user_position[1] === position.coords.longitude)  {
                 return;
             }
@@ -100,29 +107,23 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
         },
 
         placePOI: function(poi) {
-            if (poi.hasLocation()) {
-                var latlng = new L.LatLng(poi.get('lat'), poi.get('lon'));
-                var marker;
-                if ('getIcon' in poi) {
-                    marker = new L.marker(latlng, {title: poi.get('name'), icon: poi.getIcon()});
-                } else {
-                    marker = new L.marker(latlng, {title: poi.get('name')});
-                }
+            var feature = poi.getMapFeature();
+            if (feature) {
                 if (this.options.fullScreen && this.interactiveMap) {
                     // Phone View
-                    marker.on('click', function(ev) {
+                    feature.on('click', function(ev) {
                         Backbone.history.navigate('#/places/'+poi.id, {trigger: true, replace: false});
                     });
                 } else {
                     // Tablet View
-                    marker.on('click', _.bind(function(ev) {
+                    feature.on('click', _.bind(function(ev) {
                         var highlighted = this.collection.findWhere({'highlighted': true});
                         if (highlighted) { highlighted.set('highlighted', false); }
                         poi.set('highlighted', true);
                     }, this));
                 }
-                this.map.addLayer(marker);
-                this.markers.push(marker);
+                this.map.addLayer(feature);
+                this.features.push(feature);
             }
         },
 
@@ -136,22 +137,30 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
             // Only set map bounds if we have some points
             //
             if (!this.collection || this.collection.length===0) { return; }
-            this.collection.each(function(poi) {
-                // See paramaters in moxie.conf
-                //
-                // Show just a few nearby results -- since we load quite a lot of resutlts by default
-                // the entire listing can be quite overwhelming and the map ends up being very zoomed out.
-                // This was ported verbatim from Molly.
-                if (poi.hasLocation() && (Math.pow((poi.get('distance')*1000), MoxieConf.map.bounds.exponent) * (latlngs.length + 1)) < MoxieConf.map.bounds.limit) {
-                    latlngs.push(new L.LatLng(poi.get('lat'), poi.get('lon')));
-                }
-            });
-            if (latlngs.length === 0) {
-                _.each(this.collection.first(MoxieConf.map.bounds.fallback), function(poi) {
+            if (!userPosition.listening()) {
+                this.collection.each(function(poi) {
                     if (poi.hasLocation()) {
                         latlngs.push(new L.LatLng(poi.get('lat'), poi.get('lon')));
                     }
                 });
+            } else {
+                this.collection.each(function(poi) {
+                    // See paramaters in moxie.conf
+                    //
+                    // Show just a few nearby results -- since we load quite a lot of resutlts by default
+                    // the entire listing can be quite overwhelming and the map ends up being very zoomed out.
+                    // This was ported verbatim from Molly.
+                    if (poi.hasLocation() && (Math.pow((poi.get('distance')*1000), MoxieConf.map.bounds.exponent) * (latlngs.length + 1)) < MoxieConf.map.bounds.limit) {
+                        latlngs.push(new L.LatLng(poi.get('lat'), poi.get('lon')));
+                    }
+                });
+                if (latlngs.length === 0) {
+                    _.each(this.collection.first(MoxieConf.map.bounds.fallback), function(poi) {
+                        if (poi.hasLocation()) {
+                            latlngs.push(new L.LatLng(poi.get('lat'), poi.get('lon')));
+                        }
+                    });
+                }
             }
             if (latlngs.length > 0) {
                 var bounds = new L.LatLngBounds(latlngs);
@@ -167,12 +176,12 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
         },
 
         resetMapContents: function(ev){
-            // Remove the existing map markers
-            _.each(this.markers, function(marker) {
+            // Remove the existing map features
+            _.each(this.features, function(marker) {
                 this.map.removeLayer(marker);
             }, this);
-            // Create new list of markers from search results
-            this.markers = [];
+            // Create new list of features from search results
+            this.features = [];
             this.collection.each(this.placePOI, this);
             this.setMapBounds();
         },

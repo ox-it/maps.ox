@@ -7,6 +7,7 @@ define(["app", "underscore", "backbone", "places/models/POIModel", "places/views
 
         initialize: function(options) {
             options = options || {};
+            this.followUser = options.followUser;
             this.urlPrefix = options.urlPrefix || '#places/';
         },
 
@@ -29,7 +30,7 @@ define(["app", "underscore", "backbone", "places/models/POIModel", "places/views
                 category_name: category_name,
                 urlPrefix: this.urlPrefix
             });
-            var layout = app.getLayout('MapBrowseLayout');
+            var layout = app.getLayout('MapBrowseLayout', {followUser: this.followUser});
             layout.withBrowse();
             layout.setView('.content-browse', categoriesView);
             categoriesView.render();
@@ -44,10 +45,14 @@ define(["app", "underscore", "backbone", "places/models/POIModel", "places/views
                 pois.reset();
                 pois.geoFetch();
             }
-            var layout = app.getLayout('MapBrowseLayout');
+            var layout = app.getLayout('MapBrowseLayout', {followUser: this.followUser});
             layout.removeDetail();
             layout.withBrowse();
-            var searchView = new SearchView({collection: pois, urlPrefix: this.urlPrefix});
+            var searchView = new SearchView({
+                collection: pois,
+                urlPrefix: this.urlPrefix,
+                followUser: this.followUser
+            });
             layout.setView('.content-browse', searchView);
             var mapView = layout.getView('.content-map');
             mapView.setCollection(pois);
@@ -66,7 +71,7 @@ define(["app", "underscore", "backbone", "places/models/POIModel", "places/views
         },
 
         showDetail: function(poi, showBrowse) {
-            var layout = app.getLayout('MapBrowseLayout');
+            var layout = app.getLayout('MapBrowseLayout', {followUser: this.followUser});
             if (media.isPhone() || !showBrowse) {
                 layout.removeBrowse();
                 if (!showBrowse) {

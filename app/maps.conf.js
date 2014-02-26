@@ -13,7 +13,7 @@ define([], function() {
             return this.paths[api_method];
         },
         defaultLocation: {coords: {latitude: 51.752018, longitude: -1.257723}},
-        mapbox: {key: 'mobileox.h54gm7gg'},
+        mapbox: {key: 'mobileox.3q96n7b9'},
         map: {
             defaultZoom: 15,
             bounds: {exponent: 0.75, limit: 500, fallback: 5},
