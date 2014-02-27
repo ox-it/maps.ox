@@ -8,12 +8,12 @@
     [type_name = "Hall"],
     [type_name = "Department"] {
       ::polygon {
-          polygon-opacity: 0.2;
+          polygon-opacity: 0.15;
           polygon-fill: @oxfordblue;
       }
       ::outline {
-        line-color: @oxfordblue;
-        line-width: 2;
+        line-color: lighten(@oxfordblue, 10);
+        line-width: 1;
         }
 	}
   }
