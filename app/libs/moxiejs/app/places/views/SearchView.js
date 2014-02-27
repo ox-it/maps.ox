@@ -11,7 +11,9 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
                 this.collection.followUser();
             } else {
                 userPosition.once('position:unpaused', this.collection.followUser, this.collection);
+                userPosition.on('position:unpaused', this.collection.geoFetch, this.collection);
             }
+            userPosition.on('position:paused', this.collection.geoFetch, this.collection);
             this.collection.on("reset", this.render, this);
             this.collection.on("add", this.addResult, this);
         },
@@ -68,10 +70,15 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
         beforeRender: function() {
             Backbone.trigger('domchange:title', "Search for Places of Interest");
             if (this.collection.length) {
+                var trackingUserPosition = userPosition.listening();
                 var urlPrefix = this.urlPrefix;
                 var views = [];
                 this.collection.each(function(model) {
-                    views.push(new ItemView({model: model, urlPrefix: urlPrefix}));
+                    views.push(new ItemView({
+                        model: model,
+                        urlPrefix: urlPrefix,
+                        trackingUserPosition: trackingUserPosition
+                    }));
                 });
                 this.insertViews({"ul.results-list": views});
             }

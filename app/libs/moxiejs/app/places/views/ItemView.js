@@ -2,6 +2,7 @@ define(["backbone", "underscore", "hbs!places/templates/item"], function(Backbon
     var ItemView = Backbone.View.extend({
         initialize: function() {
             this.urlPrefix = this.options.urlPrefix;
+            this.trackingUserPosition = this.options.trackingUserPosition;
             this.model.on('change:highlighted', _.bind(this.highlight, this));
         },
         highlight: function(poi) {
@@ -29,6 +30,7 @@ define(["backbone", "underscore", "hbs!places/templates/item"], function(Backbon
         serialize: function() {
             var context = this.model.toJSON();
             context.urlPrefix = this.urlPrefix;
+            context.trackingUserPosition = this.trackingUserPosition;
             return context;
         },
         template: itemTemplate
