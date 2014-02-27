@@ -11,7 +11,6 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
                 this.collection.followUser();
             } else {
                 userPosition.once('position:unpaused', this.collection.followUser, this.collection);
-                userPosition.on('position:unpaused', this.collection.geoFetch, this.collection);
             }
             userPosition.on('position:paused', this.collection.geoFetch, this.collection);
             this.collection.on("reset", this.render, this);

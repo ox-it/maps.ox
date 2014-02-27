@@ -5,6 +5,9 @@ define(["core/collections/MoxieCollection", "underscore", "places/models/POIMode
 
         initialize: function(query) {
             this.query = query || {};
+            userPosition.on('position:paused', _.bind(function() {
+                this.latestUserPosition = null;
+            }, this));
         },
 
         followUser: function() {
