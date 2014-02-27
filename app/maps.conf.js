@@ -16,7 +16,12 @@ define([], function() {
         mapbox: {key: 'mobileox.3q96n7b9'},
         map: {
             defaultZoom: 15,
-            bounds: {exponent: 0.75, limit: 500, fallback: 5},
+            bounds: {
+                exponent: 0.75,
+                limit: 500,
+                fallback: 5,
+                padding: 0.1
+            },
             phoneViewMediaQuery: "only screen and (max-width: 767px)",
             defaultTileLayerOptions:  {
                 minZoom: 0,
