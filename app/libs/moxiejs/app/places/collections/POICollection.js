@@ -1,4 +1,4 @@
-define(["core/collections/MoxieCollection", "underscore", "places/models/POIModel", "moxie.conf", 'moxie.position'], function(MoxieCollection, _, POI, conf, userPosition) {
+define(["core/collections/MoxieCollection", "underscore", "places/models/POIModel", "moxie.conf", 'moxie.position', 'leaflet'], function(MoxieCollection, _, POI, conf, userPosition, L) {
 
     var POIs = MoxieCollection.extend({
         model: POI,
@@ -13,6 +13,55 @@ define(["core/collections/MoxieCollection", "underscore", "places/models/POIMode
 
         unfollowUser: function() {
             userPosition.unfollow(this.handle_geolocation_query, this);
+        },
+
+        getBounds: function() {
+            // Returns a L.LatLngBounds for the collection of POIs, follows this flow:
+            //
+            // if there are no POIs returns null.
+            // if there is one POI with a [multi]polygon returns bounds on whole shape
+            // if there are multiple POIs and location is disabled returns bounds of all POIs
+            // if there are multiple POIs and location is enabled returns bounds of some nearby POIs
+            //   > if there are no true nearby POIs following our algorithm, returns bounds of 5 nearest.
+            var bounds = null;
+            var latlngs = [];
+            if (this.length===0) {
+                return bounds;
+            } else if (this.length===1 && this.at(0).has('shape')) {
+                // bound by shape if possible
+                var shape = this.at(0).getMapFeature();
+                if (shape) { // getMapFeature can return undefined if fails parsing
+                    bounds = shape.getBounds();
+                }
+            } else if (!userPosition.listening()) {
+                this.each(function(poi) {
+                    if (poi.hasLocation()) {
+                        latlngs.push(new L.LatLng(poi.get('lat'), poi.get('lon')));
+                    }
+                });
+            } else {
+                this.each(function(poi) {
+                    // See paramaters in moxie.conf
+                    //
+                    // Show just a few nearby results -- since we load quite a lot of resutlts by default
+                    // the entire listing can be quite overwhelming and the map ends up being very zoomed out.
+                    // This was ported verbatim from Molly.
+                    if (poi.hasLocation() && (Math.pow((poi.get('distance')*1000), conf.map.bounds.exponent) * (latlngs.length + 1)) < conf.map.bounds.limit) {
+                        latlngs.push(new L.LatLng(poi.get('lat'), poi.get('lon')));
+                    }
+                });
+                if (latlngs.length === 0) {
+                    _.each(this.first(conf.map.bounds.fallback), function(poi) {
+                        if (poi.hasLocation()) {
+                            latlngs.push(new L.LatLng(poi.get('lat'), poi.get('lon')));
+                        }
+                    });
+                }
+            }
+            if (_.isNull(bounds) && latlngs.length > 0) {
+                bounds = new L.LatLngBounds(latlngs);
+            }
+            return bounds;
         },
 
         latestUserPosition: null,

@@ -13,10 +13,15 @@ define([], function() {
             return this.paths[api_method];
         },
         defaultLocation: {coords: {latitude: 51.752018, longitude: -1.257723}},
-        mapbox: {key: 'mobileox.3q96n7b9'},
+        mapbox: {key: 'mobileox.4xjkbj4i'},
         map: {
             defaultZoom: 15,
-            bounds: {exponent: 0.75, limit: 500, fallback: 5},
+            bounds: {
+                exponent: 0.75,
+                limit: 500,
+                fallback: 5,
+                padding: 0.1
+            },
             phoneViewMediaQuery: "only screen and (max-width: 767px)",
             defaultTileLayerOptions:  {
                 minZoom: 0,

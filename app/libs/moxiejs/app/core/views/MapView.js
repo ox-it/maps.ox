@@ -1,4 +1,4 @@
-define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/utils', 'core/media', 'moxie.position'], function(Backbone, $, L, _, MoxieConf, utils, media, userPosition) {
+define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/utils', 'core/media', 'moxie.position'], function(Backbone, $, L, _, conf, utils, media, userPosition) {
     var MapView = Backbone.View.extend({
         initialize: function(options) {
             this.options = options || {};
@@ -133,45 +133,19 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
         },
 
         setMapBounds: function() {
-            var latlngs = [];
-            // Only set map bounds if we have some points
-            //
-            if (!this.collection || this.collection.length===0) { return; }
-            if (!userPosition.listening()) {
-                this.collection.each(function(poi) {
-                    if (poi.hasLocation()) {
-                        latlngs.push(new L.LatLng(poi.get('lat'), poi.get('lon')));
+            // Only set map bounds if we have a collection
+            if (this.collection) {
+                var bounds = this.collection.getBounds();
+                if (bounds) {
+                    if (this.user_position) {
+                        bounds.extend(this.user_position);
                     }
-                });
-            } else {
-                this.collection.each(function(poi) {
-                    // See paramaters in moxie.conf
-                    //
-                    // Show just a few nearby results -- since we load quite a lot of resutlts by default
-                    // the entire listing can be quite overwhelming and the map ends up being very zoomed out.
-                    // This was ported verbatim from Molly.
-                    if (poi.hasLocation() && (Math.pow((poi.get('distance')*1000), MoxieConf.map.bounds.exponent) * (latlngs.length + 1)) < MoxieConf.map.bounds.limit) {
-                        latlngs.push(new L.LatLng(poi.get('lat'), poi.get('lon')));
-                    }
-                });
-                if (latlngs.length === 0) {
-                    _.each(this.collection.first(MoxieConf.map.bounds.fallback), function(poi) {
-                        if (poi.hasLocation()) {
-                            latlngs.push(new L.LatLng(poi.get('lat'), poi.get('lon')));
-                        }
-                    });
+                    bounds = bounds.pad(conf.map.bounds.padding);
+                    // Animating here seemed to cause a problem when we call fitBounds several
+                    // times during a quick succession, not sure if this is a bug with leaflet
+                    // but setting animate: false seems to resolve things.
+                    this.map.fitBounds(bounds, {animate: false});
                 }
-            }
-            if (latlngs.length > 0) {
-                var bounds = new L.LatLngBounds(latlngs);
-                if (this.user_position) {
-                    bounds.extend(this.user_position);
-                }
-                bounds = bounds.pad(0.1);
-                // Animating here seemed to cause a problem when we call fitBounds several
-                // times during a quick succession, not sure if this is a bug with leaflet
-                // but setting animate: false seems to resolve things.
-                this.map.fitBounds(bounds, {animate: false});
             }
         },
 

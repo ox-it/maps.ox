@@ -46,7 +46,7 @@ Map { font-directory: url(./fonts); }
 @wooded:            #C3D9AD;
 @agriculture:       #F2E8B6;
 
-@building:          #E4E0E0;
+@building:          #E6E0D0;
 @hospital:          rgb(229,198,195);
 @school:            #FFF5CC;
 @sports:            #B8E6B8;
