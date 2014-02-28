@@ -75,12 +75,6 @@ define([], function() {
                     "type_prefixed": "/university/building"
                 },
                 {
-                    "type": "room",
-                    "type_name": "Room",
-                    "type_name_plural": "Rooms",
-                    "type_prefixed": "/university/room"
-                },
-                {
                     "type": "hall",
                     "type_name": "Hall",
                     "type_name_plural": "Halls",
