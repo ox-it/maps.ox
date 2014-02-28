@@ -37,6 +37,51 @@ define([], function() {
             maximumAge: 600000,             // 10 minutes
             enableHighAccuracy: true,       // Use the GPS if possible
         },
+        categories: {
+            "description": "Libraries, Colleges, Departments...",
+            "type": "university",
+            "type_name": "University",
+            "type_name_plural": "University",
+            "type_prefixed": "/university",
+            "types": [
+                {
+                    "type": "college",
+                    "type_name": "College",
+                    "type_name_plural": "Colleges",
+                    "type_prefixed": "/university/college"
+                },
+                {
+                    "type": "department",
+                    "type_name": "Department",
+                    "type_name_plural": "Departments",
+                    "type_prefixed": "/university/department"
+                },
+                {
+                    "type": "library",
+                    "type_name": "Library",
+                    "type_name_plural": "Librairies",
+                    "type_prefixed": "/university/library"
+                },
+                {
+                    "type": "building",
+                    "type_name": "Building",
+                    "type_name_plural": "Buildings",
+                    "type_prefixed": "/university/building"
+                },
+                {
+                    "type": "room",
+                    "type_name": "Room",
+                    "type_name_plural": "Rooms",
+                    "type_prefixed": "/university/room"
+                },
+                {
+                    "type": "hall",
+                    "type_name": "Hall",
+                    "type_name_plural": "Halls",
+                    "type_prefixed": "/university/hall"
+                }
+            ]
+        },
     };
     return MoxieConf;
 });
