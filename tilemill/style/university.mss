@@ -6,7 +6,8 @@
   [zoom>=15] {
     [type_name = "College"],
     [type_name = "Hall"],
-    [type_name = "Department"] {
+    [type_name = "Department"],
+    [type_name = "Museum"] {
       ::polygon {
           polygon-opacity: 0.15;
           polygon-fill: @oxfordblue;
