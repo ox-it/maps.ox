@@ -20,7 +20,8 @@
 }
 
 #university-labels {
-  [zoom>=15] {
+  // only display university labels at zoom 15
+  [zoom=15] {
     [type_name = "College"],
     [type_name = "Department"],
     [type_name = "Hall"],
