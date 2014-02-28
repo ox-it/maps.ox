@@ -4,6 +4,13 @@ define(["core/collections/MoxieCollection", "underscore", "places/models/Categor
     var CategoryCollection = MoxieCollection.extend({
         model: Category,
         url: conf.urlFor('places_categories'),
+        fetch: function() {
+            if (conf.categories) {
+                return this.reset(conf.categories, {parse: true});
+            } else {
+                MoxieCollection.prototype.fetch.apply(this, arguments);
+            }
+        },
         parse: function(data) {
             // The data Moxie presents for categories is in a (sensible) tree structure.
             // This kind of structure doesn't fit the Model/Collection paradigm in Backbone
@@ -25,7 +32,7 @@ define(["core/collections/MoxieCollection", "underscore", "places/models/Categor
                 }
             }
             data.type = data.type || '/';
-            data.type_prefixed = data.type || '/';
+            data.type_prefixed = data.type_prefixed || '/';
             flatten_categories(0, [data]);
             return flattened_cats;
         }
