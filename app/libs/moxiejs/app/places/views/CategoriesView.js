@@ -7,7 +7,7 @@ define(['jquery', 'underscore', 'backbone', 'app', 'moxie.conf', 'moxie.position
         initialize: function() {
             _.bindAll(this);
             this.urlPrefix = this.options.urlPrefix;
-            this.category_name = this.options.category_name || "/";
+            this.category_name = this.options.category_name;
             this.collection.on('reset', this.render, this);
         },
 
@@ -15,7 +15,12 @@ define(['jquery', 'underscore', 'backbone', 'app', 'moxie.conf', 'moxie.position
         template: categoriesTemplate,
         serialize: function() {
             var context = {urlPrefix: this.urlPrefix};
-            var category = this.collection.find(function(model) { return model.get('type_prefixed') === this.category_name; }, this);
+            var category;
+            if (this.category_name) {
+                category = this.collection.find(function(model) { return model.get('type_prefixed') === this.category_name; }, this);
+            } else {
+                category = this.collection.findWhere({depth: 1});
+            }
             if (category) {
                 context.types = new Categories(category.getChildren()).toJSON();
                 context.category = category.toJSON();
