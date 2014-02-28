@@ -17,15 +17,16 @@ define(["core/collections/MoxieCollection", "underscore", "places/models/Categor
             // too well, so we flatten the structure. We leave behind markers for 'depth' to
             // make fast queries on the content at depth 2 without any need to traverse again.
             var flattened_cats = [];
-            function flatten_categories(depth, cats) {
+            function flatten_categories(parentcat, depth, cats) {
                 depth++;
                 for (var i=0; i < cats.length; i++) {
                     var cat_data = cats[i];
                     // How far into the tree are we? This is kept around as a convenience.
+                    cat_data.parentcat = parentcat;
                     cat_data.depth = depth;
                     if (cat_data.types && depth < DEPTH_LIMIT) {
                         cat_data.hasTypes = true;
-                        flatten_categories(depth, cat_data.types);
+                        flatten_categories(cat_data.type_prefixed, depth, cat_data.types);
                     }
                     // Don't include the recursive structure in the models
                     flattened_cats.push(_.omit(cat_data, ['types']));
@@ -33,7 +34,7 @@ define(["core/collections/MoxieCollection", "underscore", "places/models/Categor
             }
             data.type = data.type || '/';
             data.type_prefixed = data.type_prefixed || '/';
-            flatten_categories(0, [data]);
+            flatten_categories(null, 0, [data]);
             return flattened_cats;
         }
     });
