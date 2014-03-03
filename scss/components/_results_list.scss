@@ -1,32 +1,41 @@
 @import "globals/variables";
 @import "globals/mixins";
+@import "globals/oxford-palette";
 
 // hidpi media queries mixins for selecting higher res images
 @import "hidpi";
 
+$meta-info-font-size: 0.8em;
+
 ul.results-list {
     margin-bottom: 0;
-    padding: 0;
-    border-top: 2px solid $border-color;
+    padding: 0px 12px;
     list-style: none;
     .highlighted {
         background: $border-color;
     }
     li {
         // Used to convey complex list items such as library search results
-        $meta-info-font-size: 0.8em;
-        min-height: 46px;
-        border-bottom: 2px solid $border-color;
+        a {
+            text-decoration: none;
+            color: $pantone279;
+            line-height: 1.5em;
+            font-size: 1em;
+        }
+        h3 {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            margin-left: 5px;
+            font-weight: normal;
+        }
+        min-height: 43px;
+        border-bottom: 1px solid $border-color;
         color: rgba(40, 40, 40, 0.8);
-        text-shadow: 0 1px 1px rgba(255, 255, 255, 0.9);
         .highlighted {
             background-color: red;
         }
         p {
             margin-bottom: 0px;
-        }
-        > label, > a, > h3, > p {
-            padding: 10px 8px;
         }
         > label, > a {
             display: block;
@@ -57,14 +66,5 @@ ul.results-list {
         & * {
             font-family: Helvetica, Verdana, sans-serif;
         }
-
-        h3 {
-            margin: 0;
-            padding: 0;
-            color: #444;
-            font-weight: normal;
-            font-size: 1.2em;
-        }
-
     }
 }
