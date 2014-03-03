@@ -61,20 +61,18 @@ define(["app", "underscore", "backbone", "places/models/POIModel", "places/views
 
         detailMap: function(id) {
             var poi = pois.get(id);
-            var mapView = new MapView({interactiveMap: true, fullScreen: true});
-            app.renderView(mapView);
             if (!poi) {
                 poi = new POI({id: id});
                 poi.fetch();
             }
-            mapView.setCollection(new POIs([poi]));
+            this.showDetail(poi, false, false);
         },
 
-        showDetail: function(poi, showBrowse) {
+        showDetail: function(poi, browsePane, detailPane) {
             var layout = app.getLayout('MapBrowseLayout', {followUser: this.followUser});
-            if (media.isPhone() || !showBrowse) {
+            if (media.isPhone() || !browsePane) {
                 layout.removeBrowse();
-                if (!showBrowse) {
+                if (!browsePane) {
                     var categoriesView = new CategoriesView({
                         collection: categories,
                         urlPrefix: this.urlPrefix
@@ -83,35 +81,37 @@ define(["app", "underscore", "backbone", "places/models/POIModel", "places/views
                     categoriesView.render();
                 }
             }
-            layout.withDetail();
-            var detailView = new DetailView({
-                model: poi
-            });
-            layout.setView('.content-detail', detailView);
             var mapView = layout.getView('.content-map');
             mapView.setCollection(new POIs([poi]));
-            // Remove any other mapClick listeners (if the view is being reused)
-            mapView.off('mapClick');
-            var urlPrefix = this.urlPrefix;
-            mapView.on('mapClick', function() {
-                Backbone.history.navigate(urlPrefix + poi.id + '/map', {trigger: true, replace: false});
-            });
-            detailView.render();
+            if (detailPane) {
+                layout.withDetail();
+                var detailView = new DetailView({
+                    model: poi
+                });
+                layout.setView('.content-detail', detailView);
+                // Remove any other mapClick listeners (if the view is being reused)
+                mapView.off('mapClick');
+                var urlPrefix = this.urlPrefix;
+                mapView.on('mapClick', function() {
+                    Backbone.history.navigate(urlPrefix + poi.id + '/map', {trigger: true, replace: false});
+                });
+                detailView.render();
+            }
         },
 
         detail: function(id, params) {
             var query = params || {};
             var showRTI = 'rti' in query ? params.rti : null;
             var poi = pois.get(id);
-            var showBrowse = false;
+            var browsePane = false;
             if (poi) {
                 poi.set('showRTI', showRTI);
-                showBrowse = true;
+                browsePane = true;
             } else {
                 poi = new POI({id: id, showRTI: showRTI});
                 poi.fetch();
             }
-            this.showDetail(poi, showBrowse);
+            this.showDetail(poi, browsePane, true);
         }
     };
 
