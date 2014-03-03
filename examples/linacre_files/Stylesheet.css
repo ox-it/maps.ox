@@ -1,0 +1,363 @@
+﻿/* CSS RESET */
+html
+{
+    color: #000;
+   background-color:#B0C6E6;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td
+{
+    margin: 0;
+    padding: 0;
+}
+table
+{
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+fieldset, img
+{
+    border: 0;
+}
+
+li
+{
+    list-style: none;
+}
+caption, th
+{
+    text-align: left;
+}
+h1, h2, h3, h4, h5, h6
+{
+    font-size: 100%;
+    font-weight: normal;
+}
+q:before, q:after
+{
+    content: '';
+}
+abbr, acronym
+{
+    border: 0;
+    font-variant: normal;
+}
+sup
+{
+    vertical-align: text-top;
+}
+sub
+{
+    vertical-align: text-bottom;
+}
+input, textarea, select
+{
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+}
+legend
+{
+    color: #000;
+}
+
+body
+{
+    font: 13px/1.231 arial,helvetica,clean,sans-serif;
+}
+table
+{
+    font-size: inherit;
+    font-size: 100%;
+}
+pre, code, kbd, samp, tt
+{
+    font-family: monospace;
+    line-height: 100%;
+}
+/* CSS RESET */
+
+
+body
+{
+    text-align: center;
+    color: #000;
+    background-color:#B0C6E6;
+}
+a
+{
+    text-decoration: none;
+    color: #2375D8;
+}
+a:hover
+{
+    text-decoration: underline;
+    color: #2375D8;
+}
+#wrap
+{
+    width: 900px;
+    width: 990px;
+    text-align: left;
+    margin: 0 auto;
+    background: url(images/bg_2.jpg);
+}
+
+.fl
+{
+    float: left;
+}
+.fr
+{
+    float: right;
+}
+.clearfix
+{
+    clear: both;
+}
+
+
+/*any element with this class will be hidden off screen, but will still be seen by screen readers*/
+.nonVisual
+{
+    position: absolute !important;
+    left: -9000px !important;
+    top: 0 !important;
+}
+/* header */
+#header
+{
+    position: relative;
+    height: 111px;
+    background: url(images/hd_2.jpg);
+}
+
+#logo
+{
+    position: absolute;
+    top: 30px;
+    left: 40px;
+    background-image:url(images/Linacre_college_shield.png);
+    background-repeat:no-repeat;
+    background-position:0px 5px;
+    font-family:Times New Roman;    
+}
+#logo h1
+{
+    font-size: 26px;
+    margin-left:60px;
+    text-transform:uppercase;
+    font-weight:500;
+    line-height:40px;
+}
+#logo div
+{
+    text-align:right; 
+}
+#nav
+{
+    position: absolute;
+    top: 30px;
+    left: 400px;
+}
+#nav ul
+{
+    
+    background: url(images/nav.jpg);
+    height: 30px;
+    line-height: 30px;
+    padding: 0px;
+    float:left;
+    display:inline;
+}
+#nav li
+{
+    float: left;
+    font-weight: 700;
+    padding: 0 15px;
+}
+#nav a
+{
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    color: #565656;
+}
+#nav a:hover
+{
+    /*background: #AA4479;
+    color: #000000;*/
+    text-decoration:underline;
+}
+/* content */
+
+.snorkelSlideShowContainer img
+{
+    margin: 0px 0 0 40px;
+}
+.hidden
+{
+    display:none;
+}
+.main
+{
+    width: 680px;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    background: url(images/box.jpg);
+    color: #000;
+}
+#text
+{
+    margin: 0px 0 0 25px;
+}
+#text p
+{
+    margin-top:10px;
+    /*margin: 10 auto;*/
+/*    width: 420px;*/
+}
+#text h2
+{
+    font-size: 24px;
+    padding: 20px 0 20px 0;
+}
+#text img
+{
+    margin: 10px 0 0 0;
+}
+#col
+{
+    margin: 30px 0 10px 65px;
+    width: 300px;
+    background: url(images/col.jpg);
+    width: 419px;
+    height: 161px;
+}
+
+#col div
+{
+    width: 150px;
+    margin: 20px 0 0 10px;
+    display: inline;
+}
+#col .first
+{
+    margin: 20px 30px 0 20px;
+}
+#col li
+{
+    line-height: 20px;
+    list-style: inside disc;
+    color: #2375D8;
+}
+#col a
+{
+    color: #2375D8;
+    text-decoration: underline;
+}
+.side
+{
+    width: 200px;
+    display: inline;
+    margin-left:45px;
+}
+.side h2
+{
+    font-size: 22px;
+    margin-left:20px;
+}
+.side li
+{
+    line-height: 20px;
+    list-style: inside disc;
+    color: #2375D8;
+}
+.side ul
+{
+    margin: 20px 0 30px 20px;
+}
+.side ul li ul
+{
+    margin: 0px 0px 0px 20px;
+}
+a.selected
+{
+    color:#005FCF;
+    font-weight:bold;
+}
+#top
+{
+    margin-top: 20px;
+}
+/* footer */
+#footer
+{
+    background: url(images/ft_2.jpg);
+    height: 100px;
+    position: relative;
+}
+#ftinner
+{
+    position: absolute;
+    bottom: 20px;
+    width: 900px;
+    margin-left: 40px;
+    color: #565656;
+}
+#ftinner a
+{
+    color: #565656;
+}
+
+#footer ul
+{
+ 
+}
+#footer ul li
+{
+     float: left;
+     margin-left:5px;
+     margin-bottom:10px;
+}
+#text ul
+{
+    margin:10px;
+}
+#text li
+{
+    line-height: 20px;
+    list-style-position:outside;
+    list-style-type: disc;
+    margin:10px;
+}
+
+img.left
+{
+	float:left;
+	margin-right:10px;
+	margin-bottom:10px;
+}
+img.right
+{
+	float:right;
+	margin-left:10px;
+	margin-bottom:10px;
+}
+span.sitemappath
+{
+    font-size:10px;
+}
+
+#bm
+{
+    margin-left:10px;
+}
+
+h3
+{
+    margin-top:20px;
+    font-size:18px;
+}
+a.snorkelThumbnail
+{
+    margin-right:10px;
+}
