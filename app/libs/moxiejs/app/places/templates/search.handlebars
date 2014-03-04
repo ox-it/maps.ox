@@ -1,6 +1,12 @@
 <div class="search-input">
     <input type="text" placeholder="Search&hellip;" name="q" value="{{query.q}}">
 </div>
+<div class="map-options">
+    <ul>
+        <li><a href="#">A-Z</a></li>
+        <li><a href="#">Nearby</a></li>
+    </ul>
+</div>
 <ul class="facet-list">
     {{#facets}}
     <li class="label-facet" data-category="{{ name }}">{{ title }}</li>
