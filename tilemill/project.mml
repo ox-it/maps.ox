@@ -467,9 +467,9 @@
       "status": "on"
     },
     {
-      "geometry": "point",
+      "geometry": "polygon",
       "extent": [
-        -1.37443,
+        -1.7302701,
         -3.6296592,
         39.8558813,
         51.81965
@@ -477,7 +477,7 @@
       "id": "university-shapes",
       "class": "",
       "Datasource": {
-        "file": "/Users/martinfilliau/Documents/Projects/maps.ox/tilemill/data/university.json"
+        "file": "/Users/martinfilliau/Documents/Projects/maps.ox/tilemill/data/university-shapes.json"
       },
       "srs-name": "autodetect",
       "srs": "",
@@ -528,7 +528,7 @@
         "geometry_field": "way",
         "id": "motorway_label",
         "key_field": "",
-        "project": "foss4g-2011",
+        "project": "oxford",
         "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
         "table": "( SELECT way, highway AS type, name, ref, oneway, CHAR_LENGTH(ref) AS reflen\n    FROM planet_osm_line\n    WHERE highway IN ('motorway', 'trunk')\n      AND (name IS NOT NULL OR ref IS NOT NULL)\n) AS data",
         "type": "postgis"
@@ -613,8 +613,7 @@
       "srs-name": "autodetect",
       "srs": "",
       "advanced": {},
-      "name": "university-labels",
-      "status": "off"
+      "name": "university-labels"
     },
     {
       "geometry": "polygon",
@@ -636,7 +635,7 @@
     }
   ],
   "scale": 1,
-  "metatile": 2,
+  "metatile": 4,
   "_basemap": "",
   "attribution": "Data © OpenStreetMap (and) contributors, CC-BY-SA",
   "description": "",

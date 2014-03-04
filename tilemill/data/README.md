@@ -26,3 +26,8 @@ Each feature should have the following properties:
 * `type_name`
 * `name`
 * `short_name`
+
+University shapes
+-----------------
+
+The script situated in `data/simplify-university-shapes.py` should be executed against the main GeoJSON feed to reduce all shapes to a set of "unique" shapes per type to be used to produce the actual shapes in the tiles.
