@@ -1,4 +1,4 @@
-define(['backbone', 'moxie.position', 'core/views/MapView', 'hbs!core/templates/map-browse'], function(Backbone, userPosition, MapView, mapBrowseTemplate) {
+define(['backbone', 'jquery', 'moxie.position', 'core/views/MapView', 'hbs!core/templates/map-browse'], function(Backbone, $, userPosition, MapView, mapBrowseTemplate) {
 
     var MapBrowseLayout = Backbone.View.extend({
         initialize: function(options) {
@@ -19,13 +19,14 @@ define(['backbone', 'moxie.position', 'core/views/MapView', 'hbs!core/templates/
             this.mapView.invalidateMapSize();
         },
         toggleLocation: function(ev) {
+            var locationButton = $('.btn-toggle-location');
             if (!this.followingUser) {
                 userPosition.follow(this.mapView.handle_geolocation_query, this.mapView);
                 this.followingUser = true;
-                $(ev.target).addClass('active');
+                locationButton.addClass('active');
             } else {
                 userPosition.toggleWatching();
-                $(ev.target).toggleClass('active');
+                locationButton.toggleClass('active');
             }
         },
 
