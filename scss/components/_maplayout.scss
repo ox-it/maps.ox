@@ -20,7 +20,7 @@
         position: relative;
         padding: 0px 0px;
         height: 100%;
-        border-right: 1px solid #aaa;
+        border-right: $map-pane-border;
     }
 
     .content-browse {
@@ -69,29 +69,42 @@
     }
 
     .btn-toggle-browse, .btn-toggle-location {
+        cursor: pointer;
         position: absolute;
         display: inline-block;
         background: $body-background;
         z-index: 10001;
         width: $map-controls-size;
-        height: $map-controls-size;
-        border-right: 1px solid #aaa;
-        border-bottom: 1px solid #aaa;
+        // TODO: set this working with the box model
+        // height: $map-controls-size;
+        border-right: $map-pane-border;
+        border-bottom: $map-pane-border;
         text-align: center;
         line-height: 2em;
         font-size: 1.2em;
-        color: #ccc;
+        color: $map-toggle-active;
     }
     .btn-toggle-location {
-        bottom: 0px;
-        border-top: 1px solid #aaa;
+        &.active {
+            color: $pantone129;
+        }
+        color: $map-toggle-inactive;
+        bottom: 0;
+        border-top: $map-pane-border;
         border-bottom: none;
     }
 
     .map-browse-layout {
         &.with-browse {
+            .btn-toggle-browse {
+                color: $map-toggle-inactive;
+            }
             .btn-toggle-location, .btn-toggle-browse {
                 left: 100%;
+            }
+            .additional-toggles {
+                width: 100%;
+                display: inline-block;
             }
             .content-browse-wrapper {
                 width: 30%;
@@ -123,7 +136,7 @@
                 }
             }
             .content-detail {
-                border-top: 1px solid #aaa;
+                border-top: $map-pane-border;
                 display: block;
                 height: 40%;
                 overflow-y: scroll;
