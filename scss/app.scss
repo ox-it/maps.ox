@@ -19,7 +19,7 @@ body {
     text-align: center;
     ul {
         padding: 0;
-        border-bottom: 1px solid #aaa;
+        border-bottom: $map-pane-border;
     }
     a {
         text-decoration: none;
@@ -30,7 +30,7 @@ body {
     li {
         display: inline-block;
         list-style: none;
-        border-left: 1px solid #aaa;
+        border-left: $map-pane-border;
         padding: 5px;
         min-width: 90px;
     }
