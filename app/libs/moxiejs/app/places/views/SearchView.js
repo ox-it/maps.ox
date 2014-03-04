@@ -46,7 +46,13 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
         },
 
         addResult: function(model) {
-            var view = new ItemView({model: model});
+            var trackingUserPosition = userPosition.listening();
+            var view = new ItemView({
+                model: model,
+                urlPrefix: this.urlPrefix,
+                trackingUserPosition: trackingUserPosition,
+                userSearch: this.collection.query.q,
+            });
             this.insertView("ul.results-list", view);
             view.render();
         },
@@ -69,6 +75,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
         beforeRender: function() {
             Backbone.trigger('domchange:title', "Search for Places of Interest");
             if (this.collection.length) {
+                var userSearch = this.collection.query.q;
                 var trackingUserPosition = userPosition.listening();
                 var urlPrefix = this.urlPrefix;
                 var views = [];
@@ -76,7 +83,8 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
                     views.push(new ItemView({
                         model: model,
                         urlPrefix: urlPrefix,
-                        trackingUserPosition: trackingUserPosition
+                        trackingUserPosition: trackingUserPosition,
+                        userSearch: userSearch,
                     }));
                 });
                 this.insertViews({"ul.results-list": views});
