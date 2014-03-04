@@ -7,6 +7,25 @@
 
 $meta-info-font-size: 0.8em;
 
+.search-input {
+    text-align: center;
+    input {
+        width: 85%;
+        padding-left: 10px;
+        border: $map-pane-border;
+        @include border-radius(8px, 8px);
+        background-color: #fff;
+        height: 1.5em;
+    }
+}
+
+.content-browse {
+    ul.results-list {
+        margin-bottom: 0px;
+        padding-bottom: $map-controls-size;
+    }
+}
+
 ul.results-list {
     margin-bottom: 0;
     padding: 0px 12px;
@@ -23,8 +42,6 @@ ul.results-list {
             font-size: 1em;
         }
         h3 {
-            margin-top: 5px;
-            margin-bottom: 5px;
             margin-left: 5px;
             font-weight: normal;
         }
