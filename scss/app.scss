@@ -14,3 +14,27 @@ body {
     width: 100%;
     background: $body-background;
 }
+.map-options {
+    padding: 0;
+    text-align: center;
+    ul {
+        padding: 0;
+        border-bottom: 1px solid #aaa;
+    }
+    a {
+        text-decoration: none;
+        color: $pantone279;
+        line-height: 1.5em;
+        font-size: 1em;
+    }
+    li {
+        display: inline-block;
+        list-style: none;
+        border-left: 1px solid #aaa;
+        padding: 5px;
+        min-width: 90px;
+    }
+    li:first-child {
+        border-left: none;
+    }
+}
