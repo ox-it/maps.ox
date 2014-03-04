@@ -3,6 +3,7 @@ define(["backbone", "underscore", "hbs!places/templates/item"], function(Backbon
         initialize: function() {
             this.urlPrefix = this.options.urlPrefix;
             this.trackingUserPosition = this.options.trackingUserPosition;
+            this.userSearch = this.options.userSearch;
             this.model.on('change:highlighted', _.bind(this.highlight, this));
         },
         highlight: function(poi) {
@@ -31,6 +32,7 @@ define(["backbone", "underscore", "hbs!places/templates/item"], function(Backbon
             var context = this.model.toJSON();
             context.urlPrefix = this.urlPrefix;
             context.trackingUserPosition = this.trackingUserPosition;
+            context.userSearch = this.userSearch;
             return context;
         },
         template: itemTemplate

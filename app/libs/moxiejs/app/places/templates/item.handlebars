@@ -1,25 +1,36 @@
-<a href="{{ urlPrefix }}{{ id }}">
-    {{#if name }}
-        <h3>{{ name }}</h3>
-        <p class="type">{{ type_name }}
-        {{# if opening_hours }}
-            {{{currentlyOpen opening_hours}}}
-        {{/if}}
-        </p>
-    {{ else }}
-        <p class="type">{{ type_name }}
-        {{! opening_hours should be a string if it exists}}
-        {{# if opening_hours }}
-            <p class="type">{{{currentlyOpen opening_hours}}}</p>
-        {{/if}}
+{{#if name }}
+    <h3>
+        <a href="{{ urlPrefix }}{{ id }}">
+            {{ name }}
+        </a>
+    </h3>
+    {{#if userSearch}}
+    <p class="type">
+        {{ type_name }}
+    </p>
     {{/if}}
-    {{# if collection_times }}
-        <p class="type">{{{collectionTimes collection_times}}}</p>
+    {{# if opening_hours }}
+        {{{currentlyOpen opening_hours}}}
     {{/if}}
+{{ else }}
+    <p class="type">
+        <a href="{{ urlPrefix }}{{ id }}">
+        {{ type_name }}
+        </a>
+    </p>
+    {{! opening_hours should be a string if it exists}}
+    {{# if opening_hours }}
+        <p class="type">{{{currentlyOpen opening_hours}}}</p>
+    {{/if}}
+{{/if}}
+{{# if collection_times }}
+    <p class="metadata">{{{collectionTimes collection_times}}}</p>
+{{/if}}
+{{#if userSearch}}
     {{#if address }}
-            <p class="metadata">{{ address }}</p>
+        <p class="metadata">{{ address }}</p>
     {{/if}}
-    {{#if trackingUserPosition}}
-    <p class="metadata">{{humaniseDistance distance }}</p>
-    {{/if}}
-</a>
+{{/if}}
+{{#if trackingUserPosition}}
+<p class="metadata">{{humaniseDistance distance }}</p>
+{{/if}}
