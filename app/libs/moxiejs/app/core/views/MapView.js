@@ -4,6 +4,7 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
             this.options = options || {};
             this.interactiveMap = this.options.interactiveMap || media.isTablet();
             this.features = [];
+            this.additionalLayers = {};
         },
 
         attributes: {},
@@ -57,7 +58,7 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
             }, this);
         },
 
-        setCollection: function(collection) {
+        setCollection: function(collection, additionalCollections) {
             this.mapMoved = false;
             this.unsetCollection();
             this.collection = collection;
@@ -66,6 +67,21 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
             // Add is used as we load additional results.
             this.collection.on("sync", this.resetMapContents, this);
             this.collection.on("add", this.placePOI, this);
+            if (additionalCollections) {
+                _.each(additionalCollections, function(collection, name) {
+                    collection.on("show", function(collection) {
+                        if (!this.additionalLayers[name]) {
+                            this.additionalLayers[name] = L.geoJson(collection.geoJSON);
+                        }
+                        this.additionalLayers[name].addTo(this.map);
+                    }, this);
+                    collection.on("hide", function(collection) {
+                        if (this.additionalLayers[name]) {
+                            this.map.removeLayer(this.additionalLayers[name]);
+                        }
+                    }, this);
+                }, this);
+            }
             if (this.collection.length) {
                 this.resetMapContents();
             }
