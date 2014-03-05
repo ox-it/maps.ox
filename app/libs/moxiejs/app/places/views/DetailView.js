@@ -44,9 +44,10 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
             }
             var libraries = [];
             var organisations = [];
-            var alsoOccupies = []
+            var occupies = []
             var occupiedBy = [];
             var contains = [];
+            var containedBy = [];
 
             if (poi._links) {
                 for (var i in poi._links.child) {
@@ -58,13 +59,13 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                                 libraries.push(child);
                                 break;
                             case '/university/building':
-                                alsoOccupies.push(child);
+                                occupies.push(child);
                                 break;
                             case '/university/site':
-                                alsoOccupies.push(child);
+                                occupies.push(child);
                                 break;
                             case '/university/room':
-                                alsoOccupies.push(child);
+                                occupies.push(child);
                                 break;
                             case '/university/department':
                                 organisations.push(child);
@@ -79,22 +80,29 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                     }
                 }
                 if (poi._links.parent) {
-                    var parent = poi._links.parent;
-                    var parent_name = null;
-                    if (parent.type) {
-                        switch (parent.type[0]) {
-                            case '/university/library':
-                                parent_name = 'See library';
-                                break;
-                            default:
-                                parent_name = 'Parent ' + parent.type_name[0].toLowerCase();
-                        }
+                    var parents = [];
+                    if (!$.isArray(poi._links.parent)) {
+                        parents.push(poi._links.parent);
                     } else {
-                        parent = null;
+                        parents = poi._links.parent;
                     }
-                } else {
-                    var parent = null;
-                    var parent_name = null;
+                    var parent;
+                    for (var i in parents) {
+                        parent = parents[i];
+                        if (parent.type) {
+                            switch (parent.type[0]) {
+                                case '/university/library':
+                                    occupiedBy.push(parent);
+                                    break;
+                                case '/university/department':
+                                    occupiedBy.push(parent);
+                                    break;
+                                default :
+                                    containedBy.push(parent);
+                                    break;
+                            }
+                        }
+                    }
                 }
             }
 
@@ -107,10 +115,10 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                 parsedOpeningHours: parsedOpeningHours,
                 libraries: libraries,
                 organisations: organisations,
-                alsoOccupies: alsoOccupies,
+                occupies: occupies,
                 contains: contains,
-                parent: parent,
-                parent_name: parent_name
+                containedBy: containedBy,
+                occupiedBy: occupiedBy
             };
         },
         template: detailTemplate,

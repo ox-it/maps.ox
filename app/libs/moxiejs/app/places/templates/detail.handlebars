@@ -107,11 +107,17 @@
 		<dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
 		{{/libraries}}
     {{/if}}
-    {{#if alsoOccupies}}
+    {{#if occupies}}
 		<dt>Occupies</dt>
-		{{#alsoOccupies}}
+		{{#occupies}}
 		<dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
-		{{/alsoOccupies}}
+		{{/occupies}}
+    {{/if}}
+    {{#if occupiedBy}}
+		<dt>Occupied by</dt>
+		{{#occupiedBy}}
+		<dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
+		{{/occupiedBy}}
     {{/if}}
     {{#if organisations}}
 		<dt>Sub organisations</dt>
@@ -124,6 +130,12 @@
 		{{#contains}}
 		<dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
 		{{/contains}}
+    {{/if}}
+    {{#if containedBy}}
+		<dt>Contained by</dt>
+		{{#containedBy}}
+		<dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
+		{{/containedBy}}
     {{/if}}
 	</dl>
 </div>
