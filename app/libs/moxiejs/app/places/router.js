@@ -3,6 +3,41 @@ define(["app", "underscore", "backbone", "places/models/POIModel", "places/views
     var pois = new POIs();
     var categories = new Categories();
     categories.fetch();
+
+    // Certain layers (collections of POIs) can be toggled on and off.
+    // We only place an icon on the map for these POIs and load them
+    // through geoJSON (without hypermedia). This improves performance
+    // on the server and allows bulk loading through Leaflet.
+    //
+    // These serve the purpose of bringing context to the map rather than being
+    // the primary user goal. e.g. "I'm looking for X building, oh is there a
+    // bus stop nearby?"
+    var additionalPOIs = {
+        'public-transport': new POIs({
+            toggleEvent: 'places:toggle-public-transport',
+            defaultQuery: {
+                type_exact: ['/transport/rail-station', '/transport/bus-stop'],
+                count: 200,
+            },
+            format: 'geoJSON',
+        }),
+        'cycling': new POIs({
+            toggleEvent: 'places:toggle-cycling',
+            defaultQuery: {
+                type_exact: '/transport/bicycle-parking',
+                count: 200,
+            },
+            format: 'geoJSON',
+        }),
+        'driving': new POIs({
+            toggleEvent: 'places:toggle-driving',
+            defaultQuery: {
+                type: '/transport/car-park',
+                count: 100,
+            },
+            format: 'geoJSON',
+        }),
+    };
     var PlacesRouter = {
 
         initialize: function(options) {
@@ -33,6 +68,8 @@ define(["app", "underscore", "backbone", "places/models/POIModel", "places/views
             var layout = app.getLayout('MapBrowseLayout', {followUser: this.followUser});
             layout.withBrowse();
             layout.setView('.content-browse', categoriesView);
+            var mapView = layout.getView('.content-map');
+            mapView.setCollection(new POIs(), additionalPOIs);
             categoriesView.render();
         },
 
@@ -55,7 +92,7 @@ define(["app", "underscore", "backbone", "places/models/POIModel", "places/views
             });
             layout.setView('.content-browse', searchView);
             var mapView = layout.getView('.content-map');
-            mapView.setCollection(pois);
+            mapView.setCollection(pois, additionalPOIs);
             searchView.render();
         },
 
@@ -82,7 +119,7 @@ define(["app", "underscore", "backbone", "places/models/POIModel", "places/views
                 }
             }
             var mapView = layout.getView('.content-map');
-            mapView.setCollection(new POIs([poi]));
+            mapView.setCollection(new POIs([poi]), additionalPOIs);
             if (detailPane) {
                 layout.withDetail();
                 var detailView = new DetailView({
