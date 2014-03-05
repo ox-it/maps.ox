@@ -1,13 +1,43 @@
-define(["core/collections/MoxieCollection", "underscore", "places/models/POIModel", "moxie.conf", 'moxie.position', 'leaflet'], function(MoxieCollection, _, POI, conf, userPosition, L) {
+define(["backbone", "core/collections/MoxieCollection", "underscore", "places/models/POIModel", "moxie.conf", 'moxie.position', 'leaflet'], function(Backbone, MoxieCollection, _, POI, conf, userPosition, L) {
 
     var POIs = MoxieCollection.extend({
         model: POI,
 
-        initialize: function(query) {
-            this.query = query || {};
+        initialize: function(options) {
+            this.options = options || {};
+            this.query = {};
             userPosition.on('position:paused', _.bind(function() {
                 this.latestUserPosition = null;
             }, this));
+            if (this.options.toggleEvent) {
+                Backbone.on(this.options.toggleEvent, this.toggle, this);
+            }
+        },
+
+        visible: false,
+        toggle: function() {
+            // Should this Collection of POIs be shown now?
+            //
+            // If a collection is empty and toggle is called we fetch()
+            // then call toggle() again to display the results of the
+            // fetch().
+            if (this.options.format && this.options.format === 'geoJSON') {
+                if (this.geoJSON && this.geoJSON.features) {
+                    if (this.visible) {
+                        this.trigger('hide', this);
+                        this.visible = false;
+                    } else {
+                        this.trigger('show', this);
+                        this.visible = true;
+                    }
+                } else {
+                    this.geoFetch({success: _.bind(function() {
+                        this.toggle();
+                    }, this)});
+                }
+            } else {
+                throw new Error("only geoJSON collections can be toggled!");
+            }
         },
 
         followUser: function() {
@@ -108,6 +138,11 @@ define(["core/collections/MoxieCollection", "underscore", "places/models/POIMode
         parse: function(data) {
             // Fetch over
             this.ongoingFetch = false;
+            // Test if geoJSON and return all features as models
+            if (this.options.format && this.options.format === 'geoJSON') {
+                this.geoJSON = data;
+                return [];
+            }
             // Called when we want to empty the existing collection
             // For example when a search is issued and we clear the existing results.
             this.next_results = data._links['hl:next'];
@@ -116,8 +151,17 @@ define(["core/collections/MoxieCollection", "underscore", "places/models/POIMode
         },
 
         url: function() {
-            var qstring = $.param(this.query);
-            var searchPath = conf.pathFor('places_search');
+            var query = _.clone(this.query);
+            if (this.options.defaultQuery && _.isEmpty(query)) {
+                query = this.options.defaultQuery;
+            }
+            var qstring = $.param(query, true);
+            var searchPath;
+            if (this.options.format && this.options.format === 'geoJSON') {
+                searchPath = conf.pathFor('places_search_geojson');
+            } else {
+                searchPath = conf.pathFor('places_search');
+            }
             if (qstring) {
                 searchPath += ('?' + qstring);
             }
