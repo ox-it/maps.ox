@@ -47,10 +47,11 @@
         border-top: $map-pane-border;
         ul {
             padding: 0;
-            margin: 0;
+            // TODO: Hacky fix for now, this negative margin aligns the
+            //       additional-toggles with toggle-location button
+            margin: -4px 0px 0px;
             li {
                 background-repeat: no-repeat;
-                // TODO: set this working with the box model
                 height: $map-controls-size;
                 display: inline-block;
                 list-style: none;
@@ -69,18 +70,17 @@
     }
 
     .btn-toggle-browse, .btn-toggle-location {
+        overflow: hidden;
         cursor: pointer;
         position: absolute;
         display: inline-block;
         background: $body-background;
         z-index: 10001;
         width: $map-controls-size;
-        // TODO: set this working with the box model
-        // height: $map-controls-size;
+        height: $map-controls-size;
         border-right: $map-pane-border;
         border-bottom: $map-pane-border;
         text-align: center;
-        line-height: 2em;
         font-size: 1.2em;
         color: $map-toggle-active;
     }
