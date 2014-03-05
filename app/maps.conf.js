@@ -3,6 +3,7 @@ define([], function() {
         endpoint: 'http://new.m.ox.ac.uk/api',
         paths: {
             places_search: '/places/search',
+            places_search_geojson: '/places/search.geojson',
             places_categories: '/places/types',
             places_id: '/places/',
         },
