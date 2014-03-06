@@ -16,6 +16,7 @@ var require = {
         "json2": moxieJS + "libs/json2",
         "i18nprecompile": moxieJS + "libs/i18nprecompile",
         "leaflet": moxieJS + "libs/leaflet",
+        "leaflet.markercluster": moxieJS + "libs/leaflet.markercluster",
         "time_domain": moxieJS + "libs/time_domain",
         "fastclick": moxieJS + "libs/fastclick",
         "moment": moxieJS + "libs/moment",
@@ -62,6 +63,9 @@ var require = {
         },
         "leaflet": {
             "exports": "L"
+        },
+        "leaflet.markercluster": {
+            "deps": ["leaflet"],
         },
         "wellknown": {
             "exports": "parse"
