@@ -69,14 +69,23 @@ define(["core/collections/MoxieCollection", "underscore", "places/models/POIMode
 
         latestUserPosition: null,
         geoFetch: function(options) {
-            // Set a boolean for while the fetch is inflight
-            this.ongoingFetch = true;
             options = options || {};
             options.headers = options.headers || {};
             var position = this.latestUserPosition || userPosition.getCurrentLocation();
             position = [position.coords.latitude, position.coords.longitude];
             options.headers['Geo-Position'] = position.join(';');
             return this.fetch(options);
+        },
+
+        fetch: function() {
+            // Set a boolean for while the fetch is inflight
+            this.ongoingFetch = true;
+            // Following user Position so send a Geo-Position header
+            if (userPosition.listening()) {
+                return this.geoFetch(arguments);
+            } else {
+                return MoxieCollection.prototype.fetch.apply(this, arguments);
+            }
         },
 
         handle_geolocation_query: function(position) {
@@ -98,7 +107,7 @@ define(["core/collections/MoxieCollection", "underscore", "places/models/POIMode
             if (this.next_results) {
                 var urlFunc = this.url;
                 this.url = conf.endpoint + this.next_results.href;
-                this.geoFetch({update: true, remove: false});
+                this.fetch({update: true, remove: false});
                 this.url = urlFunc;
             } else {
                 return false;

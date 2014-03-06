@@ -43,7 +43,7 @@ define(["app", "underscore", "backbone", "places/models/POIModel", "places/views
                 pois.query = query;
                 // Calling reset here prevents us from rendering any old results
                 pois.reset();
-                pois.geoFetch();
+                pois.fetch();
             }
             var layout = app.getLayout('MapBrowseLayout', {followUser: this.followUser});
             layout.removeDetail();
