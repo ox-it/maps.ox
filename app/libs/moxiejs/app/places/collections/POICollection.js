@@ -74,7 +74,7 @@ define(["core/collections/MoxieCollection", "underscore", "places/models/POIMode
             var position = this.latestUserPosition || userPosition.getCurrentLocation();
             position = [position.coords.latitude, position.coords.longitude];
             options.headers['Geo-Position'] = position.join(';');
-            return this.fetch(options);
+            return MoxieCollection.prototype.fetch.call(this, options);
         },
 
         fetch: function() {
@@ -82,7 +82,7 @@ define(["core/collections/MoxieCollection", "underscore", "places/models/POIMode
             this.ongoingFetch = true;
             // Following user Position so send a Geo-Position header
             if (userPosition.listening()) {
-                return this.geoFetch(arguments);
+                return this.geoFetch.apply(this, arguments);
             } else {
                 return MoxieCollection.prototype.fetch.apply(this, arguments);
             }
