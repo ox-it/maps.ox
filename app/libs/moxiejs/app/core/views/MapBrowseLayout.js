@@ -18,7 +18,6 @@ define(['backbone', 'jquery', 'moxie.position', 'core/views/MapView', 'hbs!core/
         },
 
         toggleDriving: function() {
-            console.log("driving");
             Backbone.trigger('places:toggle-driving');
         },
         toggleCycling: function() {
