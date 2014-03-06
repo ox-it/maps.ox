@@ -14,6 +14,11 @@ define(["backbone", "core/collections/MoxieCollection", "underscore", "places/mo
             }
         },
 
+        getIcon: function() {
+            var options = this.options.icon || {};
+            return new L.Icon(options);
+        },
+
         visible: false,
         toggle: function() {
             // Should this Collection of POIs be shown now?
