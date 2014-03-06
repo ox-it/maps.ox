@@ -20,6 +20,10 @@ define(["app", "underscore", "backbone", "places/models/POIModel", "places/views
                 count: 200,
             },
             format: 'geoJSON',
+            icon: {
+                iconSize: [18, 18],
+                iconUrl: '../maki/renders/bus-18.png',
+            },
         }),
         'cycling': new POIs({
             toggleEvent: 'places:toggle-cycling',
@@ -28,6 +32,10 @@ define(["app", "underscore", "backbone", "places/models/POIModel", "places/views
                 count: 200,
             },
             format: 'geoJSON',
+            icon: {
+                iconSize: [18, 18],
+                iconUrl: '../maki/renders/bicycle-18.png',
+            },
         }),
         'driving': new POIs({
             toggleEvent: 'places:toggle-driving',
@@ -36,6 +44,10 @@ define(["app", "underscore", "backbone", "places/models/POIModel", "places/views
                 count: 100,
             },
             format: 'geoJSON',
+            icon: {
+                iconSize: [18, 18],
+                iconUrl: '../maki/renders/car-18.png',
+            },
         }),
     };
     var PlacesRouter = {
