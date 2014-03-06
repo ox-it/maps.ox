@@ -1,4 +1,4 @@
-define(["app", "underscore", "backbone", "places/models/POIModel", "places/views/CategoriesView", "places/views/SearchView", "places/views/DetailView", "places/collections/POICollection", "places/collections/CategoryCollection", "core/views/MapView", "core/media"], function(app, _, Backbone, POI, CategoriesView, SearchView, DetailView, POIs, Categories, MapView, media){
+define(["app", "underscore", "backbone", "moxie.conf", "places/models/POIModel", "places/views/CategoriesView", "places/views/SearchView", "places/views/DetailView", "places/collections/POICollection", "places/collections/CategoryCollection", "core/views/MapView", "core/media", "places/collections/AdditionalPOICollection"], function(app, _, Backbone, conf, POI, CategoriesView, SearchView, DetailView, POIs, Categories, MapView, media, AdditionalPOIs){
 
     var pois = new POIs();
     var categories = new Categories();
@@ -12,44 +12,11 @@ define(["app", "underscore", "backbone", "places/models/POIModel", "places/views
     // These serve the purpose of bringing context to the map rather than being
     // the primary user goal. e.g. "I'm looking for X building, oh is there a
     // bus stop nearby?"
-    var additionalPOIs = {
-        'public-transport': new POIs({
-            toggleEvent: 'places:toggle-public-transport',
-            defaultQuery: {
-                type_exact: ['/transport/rail-station', '/transport/bus-stop'],
-                count: 200,
-            },
-            format: 'geoJSON',
-            icon: {
-                iconSize: [18, 18],
-                iconUrl: '../maki/renders/bus-18.png',
-            },
-        }),
-        'cycling': new POIs({
-            toggleEvent: 'places:toggle-cycling',
-            defaultQuery: {
-                type_exact: '/transport/bicycle-parking',
-                count: 200,
-            },
-            format: 'geoJSON',
-            icon: {
-                iconSize: [18, 18],
-                iconUrl: '../maki/renders/bicycle-18.png',
-            },
-        }),
-        'driving': new POIs({
-            toggleEvent: 'places:toggle-driving',
-            defaultQuery: {
-                type: '/transport/car-park',
-                count: 100,
-            },
-            format: 'geoJSON',
-            icon: {
-                iconSize: [18, 18],
-                iconUrl: '../maki/renders/car-18.png',
-            },
-        }),
-    };
+    var additionalPOIs = {};
+    _.each(conf.additionalCollections, function(options, name) {
+        additionalPOIs[name] = new AdditionalPOIs(options);
+    });
+
     var PlacesRouter = {
 
         initialize: function(options) {
