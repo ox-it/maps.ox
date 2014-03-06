@@ -6,43 +6,6 @@ define(["backbone", "core/collections/MoxieCollection", "underscore", "places/mo
         initialize: function(options) {
             this.options = options || {};
             this.query = {};
-            userPosition.on('position:paused', _.bind(function() {
-                this.latestUserPosition = null;
-            }, this));
-            if (this.options.toggleEvent) {
-                Backbone.on(this.options.toggleEvent, this.toggle, this);
-            }
-        },
-
-        getIcon: function() {
-            var options = this.options.icon || {};
-            return new L.Icon(options);
-        },
-
-        visible: false,
-        toggle: function() {
-            // Should this Collection of POIs be shown now?
-            //
-            // If a collection is empty and toggle is called we fetch()
-            // then call toggle() again to display the results of the
-            // fetch().
-            if (this.options.format && this.options.format === 'geoJSON') {
-                if (this.geoJSON && this.geoJSON.features) {
-                    if (this.visible) {
-                        this.trigger('hide', this);
-                        this.visible = false;
-                    } else {
-                        this.trigger('show', this);
-                        this.visible = true;
-                    }
-                } else {
-                    this.geoFetch({success: _.bind(function() {
-                        this.toggle();
-                    }, this)});
-                }
-            } else {
-                throw new Error("only geoJSON collections can be toggled!");
-            }
         },
 
         followUser: function() {
@@ -143,11 +106,6 @@ define(["backbone", "core/collections/MoxieCollection", "underscore", "places/mo
         parse: function(data) {
             // Fetch over
             this.ongoingFetch = false;
-            // Test if geoJSON and return all features as models
-            if (this.options.format && this.options.format === 'geoJSON') {
-                this.geoJSON = data;
-                return [];
-            }
             // Called when we want to empty the existing collection
             // For example when a search is issued and we clear the existing results.
             this.next_results = data._links['hl:next'];
@@ -162,7 +120,7 @@ define(["backbone", "core/collections/MoxieCollection", "underscore", "places/mo
             }
             var qstring = $.param(query, true);
             var searchPath;
-            if (this.options.format && this.options.format === 'geoJSON') {
+            if (this.options.format && this.options.format === conf.formats.geoJSON) {
                 searchPath = conf.pathFor('places_search_geojson');
             } else {
                 searchPath = conf.pathFor('places_search');
