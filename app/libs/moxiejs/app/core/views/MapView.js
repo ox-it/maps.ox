@@ -1,4 +1,4 @@
-define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/utils', 'core/media', 'moxie.position'], function(Backbone, $, L, _, conf, utils, media, userPosition) {
+define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/utils', 'core/media', 'moxie.position', 'leaflet.markercluster'], function(Backbone, $, L, _, conf, utils, media, userPosition) {
     var MapView = Backbone.View.extend({
         initialize: function(options) {
             this.options = options || {};
@@ -71,9 +71,22 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
                 _.each(additionalCollections, function(collection, name) {
                     collection.on("show", function(collection) {
                         if (!this.additionalLayers[name]) {
-                            this.additionalLayers[name] = L.geoJson(collection.geoJSON);
+                            var icon = collection.getIcon();
+                            var markers = new L.MarkerClusterGroup({
+                                spiderfyOnMaxZoom: false,
+                                showCoverageOnHover: false,
+                                zoomToBoundsOnClick: false,
+                                singleMarkerMode: true,
+                                maxClusterRadius: 40,
+                                disableClusteringAtZoom: 16,
+                                iconCreateFunction: function(cluster) {
+                                    return icon;
+                                }
+                            });
+                            markers.addLayer(L.geoJson(collection.geoJSON));
+                            this.additionalLayers[name] = markers;
                         }
-                        this.additionalLayers[name].addTo(this.map);
+                        this.map.addLayer(this.additionalLayers[name]);
                     }, this);
                     collection.on("hide", function(collection) {
                         if (this.additionalLayers[name]) {
