@@ -10,7 +10,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
             this.model.on('error', this.renderError, this);
         },
         attributes: {
-            'class': 'detail-map'
+            'class': 'content-detail'
         },
 
         renderError: function(model, response) {
