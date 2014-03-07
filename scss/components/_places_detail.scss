@@ -20,6 +20,11 @@
         float: left;
         display: inline;
         padding-left: 20px;
+        &.no-depiction {
+            width: auto;
+            float: none;
+            display: block;
+        }
         @media #{$smartphone} {
             float: none;
             display: block;
