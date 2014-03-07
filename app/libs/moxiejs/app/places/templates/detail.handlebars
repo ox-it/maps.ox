@@ -119,6 +119,12 @@
 		<dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
 		{{/occupiedBy}}
     {{/if}}
+    {{#if partOf}}
+		<dt>Part of</dt>
+		{{#partOf}}
+		<dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
+		{{/partOf}}
+    {{/if}}
     {{#if organisations}}
 		<dt>Sub organisations</dt>
 		{{#organisations}}

@@ -44,10 +44,11 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
             }
             var libraries = [];
             var organisations = [];
-            var occupies = []
+            var occupies = [];
             var occupiedBy = [];
             var contains = [];
             var containedBy = [];
+            var partOf = [];
 
             if (poi._links) {
                 for (var i in poi._links.child) {
@@ -92,10 +93,15 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                         if (parent.type) {
                             switch (parent.type[0]) {
                                 case '/university/library':
-                                    occupiedBy.push(parent);
+                                    partOf.push(parent);
                                     break;
+                                case '/university/division':
                                 case '/university/department':
-                                    occupiedBy.push(parent);
+                                    if (poi.type[0]==='/university/department') {
+                                        partOf.push(parent);
+                                    } else {
+                                        occupiedBy.push(parent);
+                                    }
                                     break;
                                 default :
                                     containedBy.push(parent);
@@ -118,7 +124,8 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                 occupies: occupies,
                 contains: contains,
                 containedBy: containedBy,
-                occupiedBy: occupiedBy
+                occupiedBy: occupiedBy,
+                partOf: partOf,
             };
         },
         template: detailTemplate,
