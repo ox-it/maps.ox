@@ -97,8 +97,9 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                                     break;
                                 case '/university/division':
                                 case '/university/department':
-                                    if (poi.type[0]==='/university/department') {
-                                        partOf.push(parent);
+                                    if (poi.type[0]==='/university/department' ||
+                                        poi.type[0]==='/leisure/museum') {
+                                            partOf.push(parent);
                                     } else {
                                         occupiedBy.push(parent);
                                     }
