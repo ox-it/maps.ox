@@ -42,6 +42,10 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                     currentlyOpen = null;
                 }
             }
+            var depiction;
+            if (poi.picture_depiction && poi.picture_depiction.length > 0) {
+                depiction = poi.picture_depiction[0];
+            }
             var libraries = [];
             var organisations = [];
             var occupies = [];
@@ -127,6 +131,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                 containedBy: containedBy,
                 occupiedBy: occupiedBy,
                 partOf: partOf,
+                depiction: depiction,
             };
         },
         template: detailTemplate,
