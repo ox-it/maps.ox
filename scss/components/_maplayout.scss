@@ -20,19 +20,20 @@
         position: relative;
         padding: 0px 0px;
         height: 100%;
+        width: 0;
         border-right: $map-pane-border;
     }
 
     .content-browse {
         height: 100%;
-        overflow-y: scroll;
+        overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         background: $body-background;
     }
 
     .map-browse-layout {
         height: 100%;
-        .content-detail {
+        .content-detail-wrapper {
             display: none;
         }
     }
@@ -115,7 +116,11 @@
             .content-main {
                 width: 70%;
                 @media #{$smartphone} {
-                    width: 15%;
+                    position: absolute;
+                    width: 100%;
+                    left: 85%;
+                    overflow: hidden;
+                    height: 100%;
                 }
             }
         }
@@ -135,8 +140,7 @@
                     height: $mapHeight;
                 }
             }
-            .content-detail {
-                border-top: $map-pane-border;
+            .content-detail-wrapper {
                 display: block;
                 height: 40%;
                 overflow-y: scroll;
