@@ -1,13 +1,11 @@
-define(["core/collections/MoxieCollection", "underscore", "places/models/POIModel", "moxie.conf", 'moxie.position', 'leaflet'], function(MoxieCollection, _, POI, conf, userPosition, L) {
+define(["backbone", "core/collections/MoxieCollection", "underscore", "places/models/POIModel", "moxie.conf", 'moxie.position', 'leaflet'], function(Backbone, MoxieCollection, _, POI, conf, userPosition, L) {
 
     var POIs = MoxieCollection.extend({
         model: POI,
 
-        initialize: function(query) {
-            this.query = query || {};
-            userPosition.on('position:paused', _.bind(function() {
-                this.latestUserPosition = null;
-            }, this));
+        initialize: function(options) {
+            this.options = options || {};
+            this.query = {};
         },
 
         followUser: function() {
@@ -125,8 +123,17 @@ define(["core/collections/MoxieCollection", "underscore", "places/models/POIMode
         },
 
         url: function() {
-            var qstring = $.param(this.query);
-            var searchPath = conf.pathFor('places_search');
+            var query = _.clone(this.query);
+            if (this.options.defaultQuery && _.isEmpty(query)) {
+                query = this.options.defaultQuery;
+            }
+            var qstring = $.param(query, true);
+            var searchPath;
+            if (this.options.format && this.options.format === conf.formats.geoJSON) {
+                searchPath = conf.pathFor('places_search_geojson');
+            } else {
+                searchPath = conf.pathFor('places_search');
+            }
             if (qstring) {
                 searchPath += ('?' + qstring);
             }
