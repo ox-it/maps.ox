@@ -1,9 +1,10 @@
-define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/utils', 'core/media', 'moxie.position'], function(Backbone, $, L, _, conf, utils, media, userPosition) {
+define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/utils', 'core/media', 'moxie.position', 'leaflet.markercluster'], function(Backbone, $, L, _, conf, utils, media, userPosition) {
     var MapView = Backbone.View.extend({
         initialize: function(options) {
             this.options = options || {};
             this.interactiveMap = this.options.interactiveMap || media.isTablet();
             this.features = [];
+            this.additionalLayers = {};
         },
 
         attributes: {},
@@ -57,7 +58,7 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
             }, this);
         },
 
-        setCollection: function(collection) {
+        setCollection: function(collection, additionalCollections) {
             this.mapMoved = false;
             this.unsetCollection();
             this.collection = collection;
@@ -66,6 +67,34 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
             // Add is used as we load additional results.
             this.collection.on("sync", this.resetMapContents, this);
             this.collection.on("add", this.placePOI, this);
+            if (additionalCollections) {
+                _.each(additionalCollections, function(collection, name) {
+                    collection.on("show", function(collection) {
+                        if (!this.additionalLayers[name]) {
+                            var icon = collection.getIcon();
+                            var markers = new L.MarkerClusterGroup({
+                                spiderfyOnMaxZoom: false,
+                                showCoverageOnHover: false,
+                                zoomToBoundsOnClick: false,
+                                singleMarkerMode: true,
+                                maxClusterRadius: 40,
+                                disableClusteringAtZoom: 16,
+                                iconCreateFunction: function(cluster) {
+                                    return icon;
+                                }
+                            });
+                            markers.addLayer(L.geoJson(collection.geoJSON));
+                            this.additionalLayers[name] = markers;
+                        }
+                        this.map.addLayer(this.additionalLayers[name]);
+                    }, this);
+                    collection.on("hide", function(collection) {
+                        if (this.additionalLayers[name]) {
+                            this.map.removeLayer(this.additionalLayers[name]);
+                        }
+                    }, this);
+                }, this);
+            }
             if (this.collection.length) {
                 this.resetMapContents();
             }

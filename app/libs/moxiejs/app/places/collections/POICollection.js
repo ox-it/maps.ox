@@ -1,13 +1,11 @@
-define(["core/collections/MoxieCollection", "underscore", "places/models/POIModel", "moxie.conf", 'moxie.position', 'leaflet'], function(MoxieCollection, _, POI, conf, userPosition, L) {
+define(["backbone", "core/collections/MoxieCollection", "underscore", "places/models/POIModel", "moxie.conf", 'moxie.position', 'leaflet'], function(Backbone, MoxieCollection, _, POI, conf, userPosition, L) {
 
     var POIs = MoxieCollection.extend({
         model: POI,
 
-        initialize: function(query) {
-            this.query = query || {};
-            userPosition.on('position:paused', _.bind(function() {
-                this.latestUserPosition = null;
-            }, this));
+        initialize: function(options) {
+            this.options = options || {};
+            this.query = {};
         },
 
         followUser: function() {
@@ -69,14 +67,23 @@ define(["core/collections/MoxieCollection", "underscore", "places/models/POIMode
 
         latestUserPosition: null,
         geoFetch: function(options) {
-            // Set a boolean for while the fetch is inflight
-            this.ongoingFetch = true;
             options = options || {};
             options.headers = options.headers || {};
             var position = this.latestUserPosition || userPosition.getCurrentLocation();
             position = [position.coords.latitude, position.coords.longitude];
             options.headers['Geo-Position'] = position.join(';');
-            return this.fetch(options);
+            return MoxieCollection.prototype.fetch.call(this, options);
+        },
+
+        fetch: function() {
+            // Set a boolean for while the fetch is inflight
+            this.ongoingFetch = true;
+            // Following user Position so send a Geo-Position header
+            if (userPosition.listening()) {
+                return this.geoFetch.apply(this, arguments);
+            } else {
+                return MoxieCollection.prototype.fetch.apply(this, arguments);
+            }
         },
 
         handle_geolocation_query: function(position) {
@@ -98,7 +105,7 @@ define(["core/collections/MoxieCollection", "underscore", "places/models/POIMode
             if (this.next_results) {
                 var urlFunc = this.url;
                 this.url = conf.endpoint + this.next_results.href;
-                this.geoFetch({update: true, remove: false});
+                this.fetch({update: true, remove: false});
                 this.url = urlFunc;
             } else {
                 return false;
@@ -116,8 +123,17 @@ define(["core/collections/MoxieCollection", "underscore", "places/models/POIMode
         },
 
         url: function() {
-            var qstring = $.param(this.query);
-            var searchPath = conf.pathFor('places_search');
+            var query = _.clone(this.query);
+            if (this.options.defaultQuery && _.isEmpty(query)) {
+                query = this.options.defaultQuery;
+            }
+            var qstring = $.param(query, true);
+            var searchPath;
+            if (this.options.format && this.options.format === conf.formats.geoJSON) {
+                searchPath = conf.pathFor('places_search_geojson');
+            } else {
+                searchPath = conf.pathFor('places_search');
+            }
             if (qstring) {
                 searchPath += ('?' + qstring);
             }

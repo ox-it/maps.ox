@@ -1,8 +1,10 @@
 define([], function() {
+    var GEOJSON = 'geoJSON';
     var MoxieConf = {
         endpoint: 'http://new.m.ox.ac.uk/api',
         paths: {
             places_search: '/places/search',
+            places_search_geojson: '/places/search.geojson',
             places_categories: '/places/types',
             places_id: '/places/',
         },
@@ -82,6 +84,47 @@ define([], function() {
                 }
             ]
         },
+        formats: {
+            geoJSON: GEOJSON,
+        },
+        additionalCollections: {
+            'public-transport': {
+                toggleEvent: 'places:toggle-public-transport',
+                defaultQuery: {
+                    type_exact: ['/transport/rail-station', '/transport/bus-stop'],
+                    count: 200,
+                },
+                format: GEOJSON,
+                icon: {
+                    iconSize: [18, 18],
+                    iconUrl: '../maki/renders/bus-18.png',
+                },
+            },
+            'cycling': {
+                toggleEvent: 'places:toggle-cycling',
+                defaultQuery: {
+                    type_exact: '/transport/bicycle-parking',
+                    count: 200,
+                },
+                format: GEOJSON,
+                icon: {
+                    iconSize: [18, 18],
+                    iconUrl: '../maki/renders/bicycle-18.png',
+                },
+            },
+            'driving': {
+                toggleEvent: 'places:toggle-driving',
+                defaultQuery: {
+                    type: '/transport/car-park',
+                    count: 100,
+                },
+                format: GEOJSON,
+                icon: {
+                    iconSize: [18, 18],
+                    iconUrl: '../maki/renders/car-18.png',
+                },
+            }
+        }
     };
     return MoxieConf;
 });

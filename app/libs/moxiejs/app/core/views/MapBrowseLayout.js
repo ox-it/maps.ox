@@ -12,6 +12,19 @@ define(['backbone', 'jquery', 'moxie.position', 'core/views/MapView', 'hbs!core/
         events: {
             'click .btn-toggle-browse': 'toggleBrowse',
             'click .btn-toggle-location': 'toggleLocation',
+            'click .btn-toggle-cycling': 'toggleCycling',
+            'click .btn-toggle-driving': 'toggleDriving',
+            'click .btn-toggle-public-transport': 'togglePublicTransport',
+        },
+
+        toggleDriving: function() {
+            Backbone.trigger('places:toggle-driving');
+        },
+        toggleCycling: function() {
+            Backbone.trigger('places:toggle-cycling');
+        },
+        togglePublicTransport: function() {
+            Backbone.trigger('places:toggle-public-transport');
         },
 
         toggleBrowse: function() {
