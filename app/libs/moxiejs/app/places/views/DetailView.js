@@ -10,7 +10,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
             this.model.on('error', this.renderError, this);
         },
         attributes: {
-            'class': 'detail-map'
+            'class': 'content-detail'
         },
 
         renderError: function(model, response) {
@@ -41,6 +41,10 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                     parsedOpeningHours = null;
                     currentlyOpen = null;
                 }
+            }
+            var depiction;
+            if (poi.picture_depiction && poi.picture_depiction.length > 0) {
+                depiction = poi.picture_depiction[0];
             }
             var libraries = [];
             var organisations = [];
@@ -97,8 +101,9 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                                     break;
                                 case '/university/division':
                                 case '/university/department':
-                                    if (poi.type[0]==='/university/department') {
-                                        partOf.push(parent);
+                                    if (poi.type[0]==='/university/department' ||
+                                        poi.type[0]==='/leisure/museum') {
+                                            partOf.push(parent);
                                     } else {
                                         occupiedBy.push(parent);
                                     }
@@ -126,6 +131,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                 containedBy: containedBy,
                 occupiedBy: occupiedBy,
                 partOf: partOf,
+                depiction: depiction,
             };
         },
         template: detailTemplate,

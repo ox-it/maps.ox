@@ -1,0 +1,56 @@
+@import "globals/variables";
+@import "globals/oxford-palette";
+
+.content-detail {
+    border-top: $map-pane-border;
+    padding: 10px;
+    h2 {
+        margin: 0 0 5px 0;
+    }
+    dl dd {
+        margin-left: 15px;
+    }
+    .preloader {
+        display: block;
+        margin: 10px auto 0 auto;
+    }
+
+    .poi-details-text {
+        width: 50%;
+        float: left;
+        display: inline;
+        padding-left: 20px;
+        &.no-depiction {
+            width: auto;
+            float: none;
+            display: block;
+        }
+        @media #{$smartphone} {
+            float: none;
+            display: block;
+            width: 100%;
+            padding-left: 0;
+        }
+    }
+
+    .poi-details-depiction {
+        width: 40%;
+        float: left;
+        display: inline;
+        .depiction-wrapper {
+            background-color: #eee;
+            border: $map-pane-border;
+            padding: 20px;
+            img.depiction {
+                display: block;
+                margin: 0 auto 0 auto;
+                max-width: 100%;
+            }
+        }
+        @media #{$smartphone} {
+            width: 100%;
+            float: none;
+            display: block;
+        }
+    }
+}

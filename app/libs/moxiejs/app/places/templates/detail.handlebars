@@ -1,147 +1,156 @@
 {{#if poi.midFetch }}
 <img src="images/preloader.gif" class="preloader">
 {{/if}}
-<div class="free-text">
-	{{#if poi.name }}
-		<h2>{{ poi.name }}</h2>
-		<p class="type">{{ poi.type_name }}
-		{{#if poi.opening_hours }}
-			{{{currentlyOpen currentlyOpen}}}
-		{{/if}}
-		</p>
-	{{ else }}
-		<h2>{{ poi.type_name }}</h2>
-		{{! opening_hours should be a string if it exists}}
-		{{# if poi.opening_hours }}
-			<p class="type">{{{currentlyOpen poi.opening_hours}}}</p>
-		{{/if}}
-	{{/if}}
 
-	{{#if poi.collection_times }}
-	    <p class="type">{{{collectionTimes poi.collection_times}}}</p>
-	{{/if}}
-
-	<p class="metadata">
-		{{#if poi.address }}{{ poi.address }}{{/if}}
-	</p>
-</div>
-{{#if poi.RTI}}
-	<div class="rti">
-    {{#if multiRTI}}
-    <h3>{{ currentRTI.title }}
-        {{#if alternateRTI}}
-        ({{#alternateRTI}}<a href="#/places/{{../poi.id}}?rti={{type}}">{{ title }}</a>{{/alternateRTI}})
-        {{/if}}
-    </h3>
-    {{/if}}
-        <div id="poi-rti">
-            <img src="images/preloader.gif" class="preloader" width="15" height="15">
-        </div>
-	</div>
+{{#if poi.name }}
+    <h2>{{ poi.name }}</h2>
+{{ else }}
+    <h2>{{ poi.type_name }}</h2>
 {{/if}}
 
-<div class="free-text">
-	<p class="metadata">
-		{{#if poi.opening_hours }}{{{formatOpeningHours poi.opening_hours parsedOpeningHours }}}<br />
-		{{/if}}
-		{{#if poi.collection_times}}
-		<p>Collection times: {{ poi.collection_times }}</p>
-		{{/if}}
-	</p>
-
-	{{! Buttons for phone or website }}
-	{{! TODO only make this div visible if either phone or website exist }}
-	<div class="metadata-buttons">
-		{{#if poi.phone}}<a class="action-button ss-phone" href="tel:{{ poi.phone }}">{{ poi.phone }}</a>{{/if}}
-		{{#if poi.website}}<a class="action-button ss-navigate" href="{{ poi.website }}" target="_blank">Website</a>{{/if}}
-		{{#if poi.social_twitter}}<a class="action-button ss-navigate" href="{{ poi.social_twitter }}">Twitter</a>{{/if}}
-		{{#if poi.social_facebook}}<a class="action-button ss-navigate" href="{{ poi.social_facebook }}">Facebook</a>{{/if}}
-	</div>
-
-    {{#if poi.library_opening_hours_termtime }}
-        <h3>Opening hours</h3>
-        <p class="metadata"><strong>Term time</strong>: {{ poi.library_opening_hours_termtime }}</p>
-        {{#if poi.library_opening_hours_vacation }}
-            <p class="metadata"><strong>Vacation</strong>: {{ poi.library_opening_hours_vacation }}</p>
+{{#if depiction }}
+    <div class="poi-details-depiction">
+        <div class="depiction-wrapper">
+            <img class="depiction" src="{{ depiction }}">
+        </div>
+    </div>
+{{/if}}
+<div class="poi-details-text {{#unless depiction}}no-depiction{{/unless}}">
+    <div class="free-text">
+        {{#if poi.name }}
+            <span class="type">{{ poi.type_name }}</span>
+        {{/if}}
+        {{#if poi.opening_hours }}
+            {{{currentlyOpen currentlyOpen}}}
+        {{/if}}
+        {{#if poi.collection_times }}
+            <p class="type">{{{collectionTimes poi.collection_times}}}</p>
         {{/if}}
 
-        {{#if poi.library_opening_hours_closed }}
-            <p class="metadata"><strong>Closed</strong>: {{ poi.library_opening_hours_closed }}</p>
+        <p class="metadata">
+            {{#if poi.address }}{{ poi.address }}{{/if}}
+        </p>
+    </div>
+    {{#if poi.RTI}}
+        <div class="rti">
+        {{#if multiRTI}}
+        <h3>{{ currentRTI.title }}
+            {{#if alternateRTI}}
+            ({{#alternateRTI}}<a href="#/places/{{../poi.id}}?rti={{type}}">{{ title }}</a>{{/alternateRTI}})
+            {{/if}}
+        </h3>
         {{/if}}
+            <div id="poi-rti">
+                <img src="images/preloader.gif" class="preloader" width="15" height="15">
+            </div>
+        </div>
     {{/if}}
 
-    {{#if poi.library_policy_academic }}
-        <h3>Admission policies</h3>
-        <p class="metadata"><strong>Academic</strong>: {{ poi.library_policy_academic }}</p>
-        {{#if poi.library_policy_undergraduate }}
-            <p class="metadata"><strong>Undergraduate</strong>: {{ poi.library_policy_undergraduate }}</p>
-        {{/if}}
-        {{#if poi.library_policy_postgraduate }}
-            <p class="metadata"><strong>Postgraduate</strong>: {{ poi.library_policy_postgraduate }}</p>
-        {{/if}}
-        {{#if poi.library_policy_other }}
-            <p class="metadata"><strong>Other</strong>: {{ poi.library_policy_other }}</p>
-        {{/if}}
-    {{/if}}
+    <div class="free-text">
+        <p class="metadata">
+            {{#if poi.opening_hours }}{{{formatOpeningHours poi.opening_hours parsedOpeningHours }}}<br />
+            {{/if}}
+            {{#if poi.collection_times}}
+            <p>Collection times: {{ poi.collection_times }}</p>
+            {{/if}}
+        </p>
 
-    {{#if poi.library_subject }}
-        <h3>Subjects</h3>
-        <ul>
-        {{#poi.library_subject}}
-        <li>{{this}}</li>
-        {{/poi.library_subject}}
+        <ul class="external-links">
+            {{#if poi.phone}}
+            <a href="tel:{{ poi.phone }}">Tel: {{ poi.phone }}</a>
+            {{/if}}
+            {{#if poi.website}}
+            <a href="{{ poi.website }}" target="_blank">{{ poi.website }}</a>
+            {{/if}}
         </ul>
-    {{/if}}
+        <div class="social-links">
+            {{#if poi.social_twitter}}
+            <a target="_blank" href="{{ poi.social_twitter }}">Twitter</a>
+            {{/if}}
+            {{#if poi.social_facebook}}
+            <a target="_blank" href="{{ poi.social_facebook }}">Facebook</a>
+            {{/if}}
+        </div>
 
-	{{! Links to parents and children }}
-	<dl>
-	{{#if parent}}
-		<dt>{{ parent_name }}</dt>
-		<dd>
-			<a href="#{{ parent.href }}">{{ parent.title }}</a>
-		</dd>
-	{{/if}}
-    {{#if libraries}}
-		<dt>Libraries</dt>
-		{{#libraries}}
-		<dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
-		{{/libraries}}
-    {{/if}}
-    {{#if occupies}}
-		<dt>Occupies</dt>
-		{{#occupies}}
-		<dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
-		{{/occupies}}
-    {{/if}}
-    {{#if occupiedBy}}
-		<dt>Occupied by</dt>
-		{{#occupiedBy}}
-		<dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
-		{{/occupiedBy}}
-    {{/if}}
-    {{#if partOf}}
-		<dt>Part of</dt>
-		{{#partOf}}
-		<dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
-		{{/partOf}}
-    {{/if}}
-    {{#if organisations}}
-		<dt>Sub organisations</dt>
-		{{#organisations}}
-		<dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
-		{{/organisations}}
-    {{/if}}
-    {{#if contains}}
-		<dt>Contains</dt>
-		{{#contains}}
-		<dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
-		{{/contains}}
-    {{/if}}
-    {{#if containedBy}}
-		<dt>Contained by</dt>
-		{{#containedBy}}
-		<dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
-		{{/containedBy}}
-    {{/if}}
-	</dl>
+        {{#if poi.library_opening_hours_termtime }}
+            <h3>Opening hours</h3>
+            <p class="metadata"><strong>Term time</strong>: {{ poi.library_opening_hours_termtime }}</p>
+            {{#if poi.library_opening_hours_vacation }}
+                <p class="metadata"><strong>Vacation</strong>: {{ poi.library_opening_hours_vacation }}</p>
+            {{/if}}
+
+            {{#if poi.library_opening_hours_closed }}
+                <p class="metadata"><strong>Closed</strong>: {{ poi.library_opening_hours_closed }}</p>
+            {{/if}}
+        {{/if}}
+
+        {{#if poi.library_policy_academic }}
+            <h3>Admission policies</h3>
+            <p class="metadata"><strong>Academic</strong>: {{ poi.library_policy_academic }}</p>
+            {{#if poi.library_policy_undergraduate }}
+                <p class="metadata"><strong>Undergraduate</strong>: {{ poi.library_policy_undergraduate }}</p>
+            {{/if}}
+            {{#if poi.library_policy_postgraduate }}
+                <p class="metadata"><strong>Postgraduate</strong>: {{ poi.library_policy_postgraduate }}</p>
+            {{/if}}
+            {{#if poi.library_policy_other }}
+                <p class="metadata"><strong>Other</strong>: {{ poi.library_policy_other }}</p>
+            {{/if}}
+        {{/if}}
+
+        {{#if poi.library_subject }}
+            <h3>Subjects</h3>
+            <ul>
+            {{#poi.library_subject}}
+            <li>{{this}}</li>
+            {{/poi.library_subject}}
+            </ul>
+        {{/if}}
+
+        {{! Links to parents and children }}
+        <dl>
+        {{#if libraries}}
+            <dt>Libraries</dt>
+            {{#libraries}}
+            <dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
+            {{/libraries}}
+        {{/if}}
+        {{#if occupies}}
+            <dt>Occupies</dt>
+            {{#occupies}}
+            <dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
+            {{/occupies}}
+        {{/if}}
+        {{#if occupiedBy}}
+            <dt>Occupied by</dt>
+            {{#occupiedBy}}
+            <dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
+            {{/occupiedBy}}
+        {{/if}}
+        {{#if partOf}}
+            <dt>Part of</dt>
+            {{#partOf}}
+            <dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
+            {{/partOf}}
+        {{/if}}
+        {{#if organisations}}
+            <dt>Sub organisations</dt>
+            {{#organisations}}
+            <dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
+            {{/organisations}}
+        {{/if}}
+        {{#if contains}}
+            <dt>Contains</dt>
+            {{#contains}}
+            <dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
+            {{/contains}}
+        {{/if}}
+        {{#if containedBy}}
+            <dt>Contained by</dt>
+            {{#containedBy}}
+            <dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
+            {{/containedBy}}
+        {{/if}}
+        </dl>
+    </div>
 </div>

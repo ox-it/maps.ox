@@ -104,7 +104,7 @@ define(["app", "underscore", "backbone", "moxie.conf", "places/models/POIModel",
                 var detailView = new DetailView({
                     model: poi
                 });
-                layout.setView('.content-detail', detailView);
+                layout.setView('.content-detail-wrapper', detailView);
                 // Remove any other mapClick listeners (if the view is being reused)
                 mapView.off('mapClick');
                 var urlPrefix = this.urlPrefix;
