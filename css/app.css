@@ -111,24 +111,25 @@ ul.results-list li * {
   position: relative;
   padding: 0px 0px;
   height: 100%;
+  width: 0;
   border-right: 1px solid #aaaaaa;
 }
-/* line 26, ../scss/components/_maplayout.scss */
+/* line 27, ../scss/components/_maplayout.scss */
 #content .content-browse {
   height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   background: #fafafa;
 }
-/* line 33, ../scss/components/_maplayout.scss */
+/* line 34, ../scss/components/_maplayout.scss */
 #content .map-browse-layout {
   height: 100%;
 }
-/* line 35, ../scss/components/_maplayout.scss */
-#content .map-browse-layout .content-detail {
+/* line 36, ../scss/components/_maplayout.scss */
+#content .map-browse-layout .content-detail-wrapper {
   display: none;
 }
-/* line 40, ../scss/components/_maplayout.scss */
+/* line 41, ../scss/components/_maplayout.scss */
 #content .additional-toggles {
   position: absolute;
   display: none;
@@ -138,12 +139,12 @@ ul.results-list li * {
   background: #fafafa;
   border-top: 1px solid #aaaaaa;
 }
-/* line 48, ../scss/components/_maplayout.scss */
+/* line 49, ../scss/components/_maplayout.scss */
 #content .additional-toggles ul {
   padding: 0;
   margin: -4px 0px 0px;
 }
-/* line 53, ../scss/components/_maplayout.scss */
+/* line 54, ../scss/components/_maplayout.scss */
 #content .additional-toggles ul li {
   background-repeat: no-repeat;
   height: 35px;
@@ -151,19 +152,19 @@ ul.results-list li * {
   list-style: none;
   min-width: 40px;
 }
-/* line 61, ../scss/components/_maplayout.scss */
+/* line 62, ../scss/components/_maplayout.scss */
 #content .additional-toggles .btn-toggle-public-transport {
   background-image: url("../maki/renders/bus-18@2x.png");
 }
-/* line 64, ../scss/components/_maplayout.scss */
+/* line 65, ../scss/components/_maplayout.scss */
 #content .additional-toggles .btn-toggle-driving {
   background-image: url("../maki/renders/car-18@2x.png");
 }
-/* line 67, ../scss/components/_maplayout.scss */
+/* line 68, ../scss/components/_maplayout.scss */
 #content .additional-toggles .btn-toggle-cycling {
   background-image: url("../maki/renders/bicycle-18@2x.png");
 }
-/* line 72, ../scss/components/_maplayout.scss */
+/* line 73, ../scss/components/_maplayout.scss */
 #content .btn-toggle-browse, #content .btn-toggle-location {
   overflow: hidden;
   cursor: pointer;
@@ -179,116 +180,119 @@ ul.results-list li * {
   font-size: 1.2em;
   color: #444444;
 }
-/* line 87, ../scss/components/_maplayout.scss */
+/* line 88, ../scss/components/_maplayout.scss */
 #content .btn-toggle-location {
   color: #aaaaaa;
   bottom: 0;
   border-top: 1px solid #aaaaaa;
   border-bottom: none;
 }
-/* line 88, ../scss/components/_maplayout.scss */
+/* line 89, ../scss/components/_maplayout.scss */
 #content .btn-toggle-location.active {
   color: #f5cf47;
 }
-/* line 99, ../scss/components/_maplayout.scss */
+/* line 100, ../scss/components/_maplayout.scss */
 #content .map-browse-layout.with-browse .btn-toggle-browse {
   color: #aaaaaa;
 }
-/* line 102, ../scss/components/_maplayout.scss */
+/* line 103, ../scss/components/_maplayout.scss */
 #content .map-browse-layout.with-browse .btn-toggle-location, #content .map-browse-layout.with-browse .btn-toggle-browse {
   left: 100%;
 }
-/* line 105, ../scss/components/_maplayout.scss */
+/* line 106, ../scss/components/_maplayout.scss */
 #content .map-browse-layout.with-browse .additional-toggles {
   width: 100%;
   display: inline-block;
 }
-/* line 109, ../scss/components/_maplayout.scss */
+/* line 110, ../scss/components/_maplayout.scss */
 #content .map-browse-layout.with-browse .content-browse-wrapper {
   width: 30%;
 }
 @media only screen and (max-width: 768px) {
-  /* line 109, ../scss/components/_maplayout.scss */
+  /* line 110, ../scss/components/_maplayout.scss */
   #content .map-browse-layout.with-browse .content-browse-wrapper {
     width: 85%;
   }
 }
-/* line 115, ../scss/components/_maplayout.scss */
+/* line 116, ../scss/components/_maplayout.scss */
 #content .map-browse-layout.with-browse .content-main {
   width: 70%;
 }
 @media only screen and (max-width: 768px) {
-  /* line 115, ../scss/components/_maplayout.scss */
+  /* line 116, ../scss/components/_maplayout.scss */
   #content .map-browse-layout.with-browse .content-main {
-    width: 15%;
+    position: absolute;
+    width: 100%;
+    left: 85%;
+    overflow: hidden;
+    height: 100%;
   }
 }
-/* line 123, ../scss/components/_maplayout.scss */
+/* line 128, ../scss/components/_maplayout.scss */
 #content .map-browse-layout.with-detail .btn-toggle-location {
   bottom: 40%;
 }
 @media only screen and (max-width: 768px) {
-  /* line 123, ../scss/components/_maplayout.scss */
+  /* line 128, ../scss/components/_maplayout.scss */
   #content .map-browse-layout.with-detail .btn-toggle-location {
     top: 105px;
     bottom: auto;
   }
 }
-/* line 130, ../scss/components/_maplayout.scss */
+/* line 135, ../scss/components/_maplayout.scss */
 #content .map-browse-layout.with-detail .content-map {
   height: 60%;
 }
 @media only screen and (max-width: 768px) {
-  /* line 130, ../scss/components/_maplayout.scss */
+  /* line 135, ../scss/components/_maplayout.scss */
   #content .map-browse-layout.with-detail .content-map {
     float: none;
     width: 100%;
     height: 140px;
   }
 }
-/* line 138, ../scss/components/_maplayout.scss */
-#content .map-browse-layout.with-detail .content-detail {
-  border-top: 1px solid #aaaaaa;
+/* line 143, ../scss/components/_maplayout.scss */
+#content .map-browse-layout.with-detail .content-detail-wrapper {
   display: block;
   height: 40%;
   overflow-y: scroll;
 }
 @media only screen and (max-width: 768px) {
-  /* line 138, ../scss/components/_maplayout.scss */
-  #content .map-browse-layout.with-detail .content-detail {
+  /* line 143, ../scss/components/_maplayout.scss */
+  #content .map-browse-layout.with-detail .content-detail-wrapper {
     height: auto;
   }
 }
-/* line 150, ../scss/components/_maplayout.scss */
+/* line 154, ../scss/components/_maplayout.scss */
 #content .content-map {
   height: 100%;
 }
-/* line 154, ../scss/components/_maplayout.scss */
+/* line 158, ../scss/components/_maplayout.scss */
 #content .content-main {
   float: right;
   padding: 0px 0px;
   width: 100%;
   height: 100%;
 }
-/* line 160, ../scss/components/_maplayout.scss */
+/* line 164, ../scss/components/_maplayout.scss */
 #content #map {
   width: 100% !important;
   height: 100%;
 }
 @media only screen and (max-width: 768px) {
-  /* line 164, ../scss/components/_maplayout.scss */
+  /* line 168, ../scss/components/_maplayout.scss */
   #content #map .leaflet-control-zoom {
     display: none;
   }
 }
-/* line 169, ../scss/components/_maplayout.scss */
+/* line 173, ../scss/components/_maplayout.scss */
 #content .search-input {
   position: relative;
   margin-right: 5px;
   margin-left: 5px;
   padding-top: 10px;
 }
-/* line 175, ../scss/components/_maplayout.scss */
+/* line 179, ../scss/components/_maplayout.scss */
 #content .search-input span.deleteicon {
   -webkit-border-radius: 30px;
   -moz-border-radius: 30px;
@@ -307,50 +311,118 @@ ul.results-list li * {
   cursor: pointer;
 }
 
-/* line 191, ../scss/components/_maplayout.scss */
+/* line 195, ../scss/components/_maplayout.scss */
 .list-map, .detail-map, .generic {
   height: 100%;
   -webkit-overflow-scrolling: touch;
 }
-/* line 194, ../scss/components/_maplayout.scss */
+/* line 198, ../scss/components/_maplayout.scss */
 .list-map ul.facet-list, .detail-map ul.facet-list, .generic ul.facet-list {
   padding-left: 5px;
 }
-/* line 197, ../scss/components/_maplayout.scss */
+/* line 201, ../scss/components/_maplayout.scss */
 .list-map > h3, .detail-map > h3, .generic > h3 {
   padding-left: 5px;
 }
 
-/* line 11, ../scss/app.scss */
+/* Initialize */
+/* line 4, ../scss/components/_places_detail.scss */
+.content-detail {
+  border-top: 1px solid #aaaaaa;
+  padding: 10px;
+}
+/* line 7, ../scss/components/_places_detail.scss */
+.content-detail h2 {
+  margin: 0 0 5px 0;
+}
+/* line 10, ../scss/components/_places_detail.scss */
+.content-detail dl dd {
+  margin-left: 15px;
+}
+/* line 13, ../scss/components/_places_detail.scss */
+.content-detail .preloader {
+  display: block;
+  margin: 10px auto 0 auto;
+}
+/* line 18, ../scss/components/_places_detail.scss */
+.content-detail .poi-details-text {
+  width: 50%;
+  float: left;
+  display: inline;
+  padding-left: 20px;
+}
+/* line 23, ../scss/components/_places_detail.scss */
+.content-detail .poi-details-text.no-depiction {
+  width: auto;
+  float: none;
+  display: block;
+}
+@media only screen and (max-width: 768px) {
+  /* line 18, ../scss/components/_places_detail.scss */
+  .content-detail .poi-details-text {
+    float: none;
+    display: block;
+    width: 100%;
+    padding-left: 0;
+  }
+}
+/* line 36, ../scss/components/_places_detail.scss */
+.content-detail .poi-details-depiction {
+  width: 40%;
+  float: left;
+  display: inline;
+}
+/* line 40, ../scss/components/_places_detail.scss */
+.content-detail .poi-details-depiction .depiction-wrapper {
+  background-color: #eee;
+  border: 1px solid #aaaaaa;
+  padding: 20px;
+}
+/* line 44, ../scss/components/_places_detail.scss */
+.content-detail .poi-details-depiction .depiction-wrapper img.depiction {
+  display: block;
+  margin: 0 auto 0 auto;
+  max-width: 100%;
+}
+@media only screen and (max-width: 768px) {
+  /* line 36, ../scss/components/_places_detail.scss */
+  .content-detail .poi-details-depiction {
+    width: 100%;
+    float: none;
+    display: block;
+  }
+}
+
+/* line 12, ../scss/app.scss */
 html, body {
   height: 100%;
 }
 
-/* line 12, ../scss/app.scss */
+/* line 13, ../scss/app.scss */
 body {
   overflow-x: hidden;
   width: 100%;
   background: #fafafa;
 }
 
-/* line 17, ../scss/app.scss */
+/* line 18, ../scss/app.scss */
 .map-options {
   padding: 0;
   text-align: center;
 }
-/* line 20, ../scss/app.scss */
+/* line 21, ../scss/app.scss */
 .map-options ul {
   padding: 0;
   border-bottom: 1px solid #aaaaaa;
 }
-/* line 24, ../scss/app.scss */
+/* line 25, ../scss/app.scss */
 .map-options a {
   text-decoration: none;
   color: #4891dc;
   line-height: 1.5em;
   font-size: 1em;
 }
-/* line 30, ../scss/app.scss */
+/* line 31, ../scss/app.scss */
 .map-options li {
   display: inline-block;
   list-style: none;
@@ -358,7 +430,7 @@ body {
   padding: 5px;
   min-width: 90px;
 }
-/* line 37, ../scss/app.scss */
+/* line 38, ../scss/app.scss */
 .map-options li:first-child {
   border-left: none;
 }
