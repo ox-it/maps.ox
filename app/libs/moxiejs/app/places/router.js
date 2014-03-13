@@ -17,6 +17,16 @@ define(["app", "underscore", "backbone", "moxie.conf", "places/models/POIModel",
         additionalPOIs[name] = new AdditionalPOIs(options);
     });
 
+    var POI_PREFIX = 'places/';
+    var routes = {
+        "": "categories",
+        "categories": "categories",
+        "categories*category_name": "categories",
+        "search": "search",
+    };
+    routes[POI_PREFIX + ':id'] = 'detail';
+    routes[POI_PREFIX + ':id/map'] = 'detailMap';
+
     var PlacesRouter = {
 
         initialize: function(options) {
@@ -25,17 +35,7 @@ define(["app", "underscore", "backbone", "moxie.conf", "places/models/POIModel",
             this.urlPrefix = options.urlPrefix || '#places/';
         },
 
-        // All of your Backbone Routes (add more)
-        routes: {
-
-            "": "categories",
-            "categories": "categories",
-            "categories*category_name": "categories",
-            "search": "search",
-            ":id": "detail",
-            ":id/map": "detailMap"
-
-        },
+        routes: routes,
 
         categories: function(category_name) {
             // Navigate to the list of categories (root view of places)
