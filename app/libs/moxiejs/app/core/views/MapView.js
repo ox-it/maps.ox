@@ -149,6 +149,7 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
                         var highlighted = this.collection.findWhere({'highlighted': true});
                         if (highlighted) { highlighted.set('highlighted', false); }
                         poi.set('highlighted', true);
+                        Backbone.history.navigate('#/places/'+poi.id, {trigger: true, replace: false});
                     }, this));
                 }
                 this.map.addLayer(feature);
