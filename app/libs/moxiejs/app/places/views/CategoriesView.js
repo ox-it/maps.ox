@@ -4,7 +4,8 @@ define(['jquery', 'underscore', 'backbone', 'app', 'moxie.conf', 'moxie.position
     var CategoriesView = Backbone.View.extend({
 
         // View constructor
-        initialize: function() {
+        initialize: function(options) {
+            this.options = options || {};
             _.bindAll(this);
             this.urlPrefix = this.options.urlPrefix;
             this.category_name = this.options.category_name;
