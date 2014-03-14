@@ -130,7 +130,26 @@ define(["app", "underscore", "backbone", "moxie.conf", "places/models/POIModel",
                 browsePane = true;
             }
             this.showDetail(poi, browsePane, true);
-        }
+        },
+
+        route: function(route, name, callback) {
+            var oldRoute = route;
+            if (!_.isRegExp(route)) route = this._routeToRegExp(route);
+            if (_.isFunction(name)) {
+                callback = name;
+                name = '';
+            }
+            if (!callback) callback = this[name];
+            var router = this;
+            Backbone.history.route(route, function(fragment) {
+                var args = router._extractParameters(route, fragment);
+                router.execute(callback, args);
+                router.trigger.apply(router, ['route:' + name].concat(args));
+                router.trigger('route', name, args);
+                Backbone.history.trigger('route', router, name, args);
+            }, name, oldRoute);
+            return this;
+        },
     };
 
     return PlacesRouter;
