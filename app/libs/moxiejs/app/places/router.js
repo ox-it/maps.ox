@@ -119,13 +119,15 @@ define(["app", "underscore", "backbone", "moxie.conf", "places/models/POIModel",
             var query = params || {};
             var showRTI = 'rti' in query ? params.rti : null;
             var poi = pois.get(id);
-            var browsePane = false;
             if (poi) {
                 poi.set('showRTI', showRTI);
-                browsePane = true;
             } else {
                 poi = new POI({id: id, showRTI: showRTI});
                 poi.fetch();
+            }
+            var browsePane = false;
+            if (pois.length > 0) {
+                browsePane = true;
             }
             this.showDetail(poi, browsePane, true);
         }
