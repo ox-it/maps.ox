@@ -40,6 +40,9 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
         searchEvent: function(ev) {
             if (ev.which === 13) {
                 this.collection.query.q = ev.target.value;
+                // User entered searches clear any existing facets
+                // and query the entire index
+                delete this.collection.query.type;
                 this.collection.geoFetch();
                 Backbone.history.navigate(this.urlPrefix + 'search?'+$.param(this.collection.query).replace(/\+/g, "%20"), {trigger: false});
             }

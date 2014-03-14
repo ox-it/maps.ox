@@ -122,7 +122,7 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
             if (this.user_marker) {
                 this.map.removeLayer(this.user_marker);
             }
-            this.user_marker = L.circle(you, 10, {color: 'red', fillColor: 'red', fillOpacity: 1.0});
+            this.user_marker = L.circle(you, 10, {color: '#4891DC', opacity: 0.6, weight: 4, fillOpacity: 1});
             this.map.addLayer(this.user_marker);
 
             // Generally we reset the MapBounds after each new location is
@@ -149,6 +149,7 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
                         var highlighted = this.collection.findWhere({'highlighted': true});
                         if (highlighted) { highlighted.set('highlighted', false); }
                         poi.set('highlighted', true);
+                        Backbone.history.navigate('#/places/'+poi.id, {trigger: true, replace: false});
                     }, this));
                 }
                 this.map.addLayer(feature);
