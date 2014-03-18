@@ -97,7 +97,7 @@ define([], function() {
                 format: GEOJSON,
                 icon: {
                     iconSize: [18, 18],
-                    iconUrl: '../maki/renders/bus-18.png',
+                    iconUrl: 'maki/renders/bus-18.png',
                 },
             },
             'cycling': {
@@ -109,7 +109,7 @@ define([], function() {
                 format: GEOJSON,
                 icon: {
                     iconSize: [18, 18],
-                    iconUrl: '../maki/renders/bicycle-18.png',
+                    iconUrl: 'maki/renders/bicycle-18.png',
                 },
             },
             'driving': {
@@ -121,7 +121,7 @@ define([], function() {
                 format: GEOJSON,
                 icon: {
                     iconSize: [18, 18],
-                    iconUrl: '../maki/renders/car-18.png',
+                    iconUrl: 'maki/renders/car-18.png',
                 },
             }
         }
