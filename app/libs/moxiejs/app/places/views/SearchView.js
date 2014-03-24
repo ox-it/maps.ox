@@ -4,8 +4,9 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
     var SearchView = InfiniteScrollView.extend({
 
         // View constructor
-        initialize: function() {
+        initialize: function(options) {
             _.bindAll(this);
+            this.options = options;
             this.urlPrefix = this.options.urlPrefix;
             if (this.options.followUser) {
                 this.collection.followUser();
