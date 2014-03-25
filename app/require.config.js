@@ -55,10 +55,6 @@ var require = {
         "backbone.queryparams": {
             "deps": ["backbone"]
         },
-        "backbone.layoutmanager": {
-            "deps": ["backbone"],
-            "exports": "Backbone.Layout"
-        },
         "leaflet": {
             "exports": "L"
         },
