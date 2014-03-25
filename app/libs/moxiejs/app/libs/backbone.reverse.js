@@ -26,13 +26,13 @@ define(['backbone', 'underscore'], function(Backbone, _) {
         //    reverse('detail', {id: 'oxpoints:53255'}));
         //    > '#places/oxpoints:53255
         //
-        //    reverse('categories', {category_name: '/unviersity/colleges'}));
+        //    reverse('categories', {category_name: '/university/colleges'}));
         //    > '#categories/university/colleges'
         var possibleHandlers = _.where(Backbone.history.handlers, {name: name});
         var match;
         var url;
         _.find(possibleHandlers, function(handler) {
-            url = '#' + handler.routeStr;
+            url = Backbone.history.root + handler.routeStr;
             match = true;
             _.each(params, function(val, key) {
                 if (url.indexOf(':'+key)===-1 && url.indexOf('*'+key)===-1) {

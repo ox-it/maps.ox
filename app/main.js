@@ -8,7 +8,9 @@ require(['jquery', 'underscore', 'backbone', 'backbone.reverse', 'libs/moxiejs/a
         $.ajaxSetup({ headers: { 'Accept': 'application/hal+json;q=1.0, application/json;q=0.9, */*; q=0.01' } });
 
         // This kicks off the app -- discovering the hashchanges and calling routers
-        Backbone.history.start();
+        // Route is set to '#', Backbone updates this to '/#/'
+        // Then we can use the root to prefix our URLs
+        Backbone.history.start({root: '#'});
 
         // Include FastClick, this removes a 300ms touch event delay
         var fc = new FastClick(document.body);
