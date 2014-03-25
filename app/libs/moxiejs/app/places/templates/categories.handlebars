@@ -17,12 +17,12 @@
     {{#if hasTypes}}
         {{! If this category has any sub-categories, place a link to them }}
         {{#if ../../category_name}}
-            <a href="{{ ../../../urlPrefix }}search?type={{ type_prefixed }}">
+            <a href="{{ reverse 'search'}}?type={{ type_prefixed }}">
         {{else}}
-            <a href="{{ ../../../urlPrefix }}categories{{ type_prefixed }}">
+            <a href="{{ reverse 'categories' 'category_name' type_prefixed }}">
         {{/if}}
     {{else}}
-        <a href="{{ ../../urlPrefix }}search?type={{ type_prefixed }}">
+        <a href="{{ reverse 'search'}}?type={{ type_prefixed }}">
     {{/if}}
     {{ type_name_plural }}
     {{#if description}}

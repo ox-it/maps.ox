@@ -7,7 +7,6 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
         initialize: function(options) {
             _.bindAll(this);
             this.options = options;
-            this.urlPrefix = this.options.urlPrefix;
             if (this.options.followUser) {
                 this.collection.followUser();
             } else {
@@ -35,7 +34,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
             e.preventDefault();
             this.collection.query.type = $(e.target).data('category');
             this.collection.geoFetch();
-            Backbone.history.navigate(this.urlPrefix + 'search?'+$.param(this.collection.query).replace(/\+/g, "%20"), {trigger: false});
+            Backbone.history.navigate(Backbone.history.reverse('search')+'?'+$.param(this.collection.query).replace(/\+/g, "%20"), {trigger: false});
         },
 
         searchEvent: function(ev) {
@@ -45,7 +44,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
                 // and query the entire index
                 delete this.collection.query.type;
                 this.collection.geoFetch();
-                Backbone.history.navigate(this.urlPrefix + 'search?'+$.param(this.collection.query).replace(/\+/g, "%20"), {trigger: false});
+                Backbone.history.navigate(Backbone.history.reverse('search')+'?'+$.param(this.collection.query).replace(/\+/g, "%20"), {trigger: false});
             }
         },
 
@@ -53,7 +52,6 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
             var trackingUserPosition = userPosition.listening();
             var view = new ItemView({
                 model: model,
-                urlPrefix: this.urlPrefix,
                 trackingUserPosition: trackingUserPosition,
                 userSearch: this.collection.query.q,
             });
@@ -64,7 +62,6 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
         template: searchTemplate,
         serialize: function() {
             var context = {
-                urlPrefix: this.urlPrefix,
                 query: this.collection.query,
                 facets: [],
                 hasResults: Boolean(this.collection.length),
@@ -81,12 +78,10 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
             if (this.collection.length) {
                 var userSearch = this.collection.query.q;
                 var trackingUserPosition = userPosition.listening();
-                var urlPrefix = this.urlPrefix;
                 var views = [];
                 this.collection.each(function(model) {
                     views.push(new ItemView({
                         model: model,
-                        urlPrefix: urlPrefix,
                         trackingUserPosition: trackingUserPosition,
                         userSearch: userSearch,
                     }));

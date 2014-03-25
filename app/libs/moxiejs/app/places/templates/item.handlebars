@@ -1,6 +1,6 @@
 {{#if name }}
     <h3>
-        <a href="{{ urlPrefix }}places/{{ id }}">
+        <a href="{{ reverse 'detail' 'id' id }}">
             {{ name }}
         </a>
     </h3>
@@ -14,7 +14,7 @@
     {{/if}}
 {{ else }}
     <p class="type">
-        <a href="{{ urlPrefix }}places/{{ id }}">
+        <a href="{{ reverse 'detail' 'id' id }}">
         {{ type_name }}
         </a>
     </p>
