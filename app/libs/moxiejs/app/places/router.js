@@ -32,7 +32,6 @@ define(["app", "underscore", "backbone", "moxie.conf", "places/models/POIModel",
         initialize: function(options) {
             options = options || {};
             this.followUser = options.followUser;
-            this.urlPrefix = options.urlPrefix || '#places/';
         },
 
         routes: routes,
@@ -42,7 +41,6 @@ define(["app", "underscore", "backbone", "moxie.conf", "places/models/POIModel",
             var categoriesView = new CategoriesView({
                 collection: categories,
                 category_name: category_name,
-                urlPrefix: this.urlPrefix
             });
             var layout = app.getLayout('MapBrowseLayout', {followUser: this.followUser});
             layout.withBrowse();
@@ -66,7 +64,6 @@ define(["app", "underscore", "backbone", "moxie.conf", "places/models/POIModel",
             layout.withBrowse();
             var searchView = new SearchView({
                 collection: pois,
-                urlPrefix: this.urlPrefix,
                 followUser: this.followUser
             });
             layout.setView('.content-browse', searchView);
@@ -91,7 +88,6 @@ define(["app", "underscore", "backbone", "moxie.conf", "places/models/POIModel",
                 if (!browsePane) {
                     var categoriesView = new CategoriesView({
                         collection: categories,
-                        urlPrefix: this.urlPrefix
                     });
                     layout.setView('.content-browse', categoriesView);
                     categoriesView.render();
@@ -107,9 +103,11 @@ define(["app", "underscore", "backbone", "moxie.conf", "places/models/POIModel",
                 layout.setView('.content-detail-wrapper', detailView);
                 // Remove any other mapClick listeners (if the view is being reused)
                 mapView.off('mapClick');
-                var urlPrefix = this.urlPrefix;
                 mapView.on('mapClick', function() {
-                    Backbone.history.navigate(urlPrefix + poi.id + '/map', {trigger: true, replace: false});
+                    Backbone.history.navigate(
+                        Backbone.history.reverse('detailMap', {id: poi.id}),
+                        {trigger: true, replace: false}
+                    );
                 });
                 detailView.render();
             }
@@ -130,7 +128,8 @@ define(["app", "underscore", "backbone", "moxie.conf", "places/models/POIModel",
                 browsePane = true;
             }
             this.showDetail(poi, browsePane, true);
-        }
+        },
+
     };
 
     return PlacesRouter;

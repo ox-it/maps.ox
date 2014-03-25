@@ -36,7 +36,7 @@
         {{#if multiRTI}}
         <h3>{{ currentRTI.title }}
             {{#if alternateRTI}}
-            ({{#alternateRTI}}<a href="#/places/{{../poi.id}}?rti={{type}}">{{ title }}</a>{{/alternateRTI}})
+            ({{#alternateRTI}}<a href="{{ reverse 'detail' 'id' poi.id }}?rti={{type}}">{{ title }}</a>{{/alternateRTI}})
             {{/if}}
         </h3>
         {{/if}}

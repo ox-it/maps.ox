@@ -27,6 +27,7 @@ var require = {
         "raphael": moxieJS + "libs/raphael",
         "justgage": moxieJS + "libs/justgage",
         "wellknown": moxieJS + "libs/wellknown",
+        "backbone.reverse": moxieJS + "libs/backbone.reverse",
 
         // Testing libs
         "jasmine": moxieJS + "tests/libs/jasmine-1.3.1/jasmine",
@@ -53,10 +54,6 @@ var require = {
         },
         "backbone.queryparams": {
             "deps": ["backbone"]
-        },
-        "backbone.layoutmanager": {
-            "deps": ["backbone"],
-            "exports": "Backbone.Layout"
         },
         "leaflet": {
             "exports": "L"
