@@ -2,7 +2,7 @@ require(['jquery', 'underscore', 'backbone', 'backbone.reverse', 'libs/moxiejs/a
     $(function() {
         // Initialse our router
         var Router = ReversibleRouter.extend(PlacesRouter);
-        var router = new Router({urlPrefix: '#', followUser: false});
+        var router = new Router({followUser: false});
 
         // Default to requesting hal+json but fallback to json
         $.ajaxSetup({ headers: { 'Accept': 'application/hal+json;q=1.0, application/json;q=0.9, */*; q=0.01' } });
