@@ -10,10 +10,6 @@ require(['jquery', 'underscore', 'backbone', 'backbone.reverse', 'libs/moxiejs/a
         // This kicks off the app -- discovering the hashchanges and calling routers
         Backbone.history.start();
 
-        console.log(Backbone.history.reverse('detail', {id: 'oxpoints:53255'}));
-        console.log(Backbone.history.reverse('categories', {category_name: '/university'}));
-        console.log(Backbone.history.reverse('categories'));
-
         // Include FastClick, this removes a 300ms touch event delay
         var fc = new FastClick(document.body);
     });
