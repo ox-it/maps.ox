@@ -50,6 +50,7 @@ define(["underscore", "backbone", "moxie.conf", "cordova.help"], function(_, Bac
             {
                     enableHighAccuracy: conf.position.enableHighAccuracy,
                     maximumAge: conf.position.maximumAge,
+                    timeout: options.timeout,
             });
 
         };
@@ -65,13 +66,15 @@ define(["underscore", "backbone", "moxie.conf", "cordova.help"], function(_, Bac
         }
         function startWatching() {
             if (supportsGeoLocation) {
-                this.getLocation(_.bind(locationSuccess, this));
-                this.positionInterval = window.setInterval(this.getLocation, conf.position.updateInterval, _.bind(locationSuccess, this));
+                this.getLocation.apply(this, [_.bind(locationSuccess, this)]);
+                this.positionInterval = window.setInterval(_.bind(this.getLocation, this), conf.position.updateInterval, _.bind(locationSuccess, this));
                 // NOTE: only trigger EVENT_POSITION_UNPAUSED *after* positionInterval is set,
                 //       we have listeners which call startWatching on EVENT_POSITION_UNPAUSED
                 //       so it has to be triggered after an interval is made otherwise recursive
                 //       calls to startWatching happen.
-                this.trigger(EVENT_POSITION_UNPAUSED);
+                if (positionPaused) {
+                    this.trigger(EVENT_POSITION_UNPAUSED);
+                }
             } else {
                 locationError.apply(this);
             }
@@ -99,20 +102,27 @@ define(["underscore", "backbone", "moxie.conf", "cordova.help"], function(_, Bac
             followerCount--;
             if (followerCount === 0) {
                 window.clearInterval(this.positionInterval);
+                this.positionInterval = null;
             }
         };
-        this.toggleWatching = function() {
+        this.pauseWatching = function() {
             // Pauses all listening on position changes
+            window.clearInterval(this.positionInterval);
+            this.positionInterval = null;
+            positionPaused = true;
+            this.trigger(EVENT_POSITION_PAUSED);
+        };
+        this.unpauseWatching = function() {
+            // Set positionPaused first so we actually start following
+            positionPaused = false;
+            startWatching.apply(this);
+            this.trigger(EVENT_POSITION_UNPAUSED);
+        };
+        this.toggleWatching = function() {
             if (this.positionInterval) {
-                window.clearInterval(this.positionInterval);
-                this.positionInterval = null;
-                positionPaused = true;
-                this.trigger(EVENT_POSITION_PAUSED);
+                this.pauseWatching();
             } else if (followerCount !==0) {
-                // Set positionPaused first so we actually start following
-                positionPaused = false;
-                startWatching.apply(this);
-                this.trigger(EVENT_POSITION_UNPAUSED);
+                this.unpauseWatching();
             }
             return positionPaused;
         };
