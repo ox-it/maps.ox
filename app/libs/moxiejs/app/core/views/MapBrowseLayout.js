@@ -1,9 +1,8 @@
-define(['backbone', 'jquery', 'moxie.position', 'core/views/MapView', 'hbs!core/templates/map-browse'], function(Backbone, $, userPosition, MapView, mapBrowseTemplate) {
+define(['backbone', 'underscore', 'jquery', 'moxie.position', 'core/views/MapView', 'hbs!core/templates/map-browse'], function(Backbone, _, $, userPosition, MapView, mapBrowseTemplate) {
 
     var MapBrowseLayout = Backbone.View.extend({
         initialize: function(options) {
             options = options || {};
-            this.followUser = options.followUser;
         },
         manage: true,
         template: mapBrowseTemplate,
@@ -33,14 +32,8 @@ define(['backbone', 'jquery', 'moxie.position', 'core/views/MapView', 'hbs!core/
         },
         toggleLocation: function(ev) {
             var locationButton = $('.btn-toggle-location');
-            if (!this.followingUser) {
-                userPosition.follow(this.mapView.handle_geolocation_query, this.mapView);
-                this.followingUser = true;
-                locationButton.addClass('active');
-            } else {
-                userPosition.toggleWatching();
-                locationButton.toggleClass('active');
-            }
+            userPosition.toggleWatching();
+            locationButton.toggleClass('active');
         },
 
         // Previously we set this view in 'views' this is WRONG
@@ -54,10 +47,14 @@ define(['backbone', 'jquery', 'moxie.position', 'core/views/MapView', 'hbs!core/
             this.setView(".content-map", this.mapView);
         },
         afterRender: function() {
-            if (this.followUser) {
-                userPosition.follow(this.mapView.handle_geolocation_query, this.mapView);
-                this.followingUser = true;
-            }
+            userPosition.follow(this.mapView.handle_geolocation_query, this.mapView);
+            userPosition.on('position:error', _.bind(function(err) {
+                userPosition.pauseWatching();
+                var locationButton = $('.btn-toggle-location');
+                if (locationButton) {
+                    locationButton.removeClass('active');
+                }
+            }, this));
         },
         removeDetail: function() {
             this.$el.removeClass('with-detail');
