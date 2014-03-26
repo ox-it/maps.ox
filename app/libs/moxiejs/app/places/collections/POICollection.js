@@ -70,8 +70,10 @@ define(["backbone", "core/collections/MoxieCollection", "underscore", "places/mo
             options = options || {};
             options.headers = options.headers || {};
             var position = this.latestUserPosition || userPosition.getCurrentLocation();
-            position = [position.coords.latitude, position.coords.longitude];
-            options.headers['Geo-Position'] = position.join(';');
+            if (position) {
+                position = [position.coords.latitude, position.coords.longitude];
+                options.headers['Geo-Position'] = position.join(';');
+            }
             return MoxieCollection.prototype.fetch.call(this, options);
         },
 
