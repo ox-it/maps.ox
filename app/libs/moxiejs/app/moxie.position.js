@@ -13,7 +13,7 @@ define(["underscore", "backbone", "moxie.conf", "cordova.help"], function(_, Bac
             // This is used in lieu of conf.defaultLocation as it
             // might provide a better result (eg. a recent known
             // location from the geolocation APIs)
-            return latestPosition || conf.defaultLocation;
+            return latestPosition;
         },
         this.getLocation = function(cb, options) {
             if (cordova.isCordova() && !cordova.appReady()) {
@@ -37,8 +37,6 @@ define(["underscore", "backbone", "moxie.conf", "cordova.help"], function(_, Bac
                 navigator.geolocation.clearWatch(temporaryGeoWatchID);
                 if (latestPosition) {
                     cb(latestPosition);
-                } else {
-                    cb(conf.defaultLocation);
                 }
             }, options.timeout);
             temporaryGeoWatchID = navigator.geolocation.watchPosition(function(position) {
