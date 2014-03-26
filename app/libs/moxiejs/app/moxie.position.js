@@ -2,6 +2,7 @@ define(["underscore", "backbone", "moxie.conf", "cordova.help"], function(_, Bac
     var EVENT_POSITION_UPDATED = 'position:updated';
     var EVENT_POSITION_PAUSED = 'position:paused';
     var EVENT_POSITION_UNPAUSED = 'position:unpaused';
+    var EVENT_POSITION_ERROR = 'position:error';
     function UserPosition() {
         _.extend(this, Backbone.Events);
         var supportsGeoLocation = Boolean(navigator.geolocation),
@@ -62,9 +63,7 @@ define(["underscore", "backbone", "moxie.conf", "cordova.help"], function(_, Bac
             }
         }
         function locationError(err) {
-            if ('console' in window) {
-                console.log("Geolocation error: ", err);
-            }
+            this.trigger(EVENT_POSITION_ERROR, err);
         }
         function startWatching() {
             if (supportsGeoLocation) {
