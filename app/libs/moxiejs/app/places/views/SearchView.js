@@ -12,7 +12,10 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
             } else {
                 userPosition.once('position:unpaused', this.collection.followUser, this.collection);
             }
-            userPosition.on('position:paused', this.collection.geoFetch, this.collection);
+            userPosition.on('position:paused', function() {
+                this.collection.latestUserPosition = null;
+                this.collection.fetch();
+            }, this);
             this.collection.on("reset", this.render, this);
             this.collection.on("add", this.addResult, this);
         },
