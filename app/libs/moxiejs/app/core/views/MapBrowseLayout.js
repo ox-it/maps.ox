@@ -1,4 +1,4 @@
-define(['backbone', 'underscore', 'jquery', 'moxie.position', 'core/views/MapView', 'hbs!core/templates/map-browse'], function(Backbone, _, $, userPosition, MapView, mapBrowseTemplate) {
+define(['backbone', 'underscore', 'jquery', 'moxie.position', 'core/views/MapView', 'hbs!core/templates/map-browse', 'hbs!places/templates/requesting_geolocation', 'hbs!places/templates/error_geolocation'], function(Backbone, _, $, userPosition, MapView, mapBrowseTemplate, geoRequesting, geoError) {
 
     var MapBrowseLayout = Backbone.View.extend({
         initialize: function(options) {
@@ -55,6 +55,18 @@ define(['backbone', 'underscore', 'jquery', 'moxie.position', 'core/views/MapVie
                     locationButton.removeClass('active');
                 }
             }, this));
+            userPosition.on('position:unpaused', function() {
+                this.$('.messages').html(geoRequesting());
+            }, this);
+            userPosition.on('position:paused', function() {
+                this.$('.messages').html('');
+            }, this);
+            userPosition.on('position:updated', function() {
+                this.$('.messages').html('');
+            }, this);
+            userPosition.on('position:error', function() {
+                this.$('.messages').html(geoError());
+            }, this);
         },
         removeDetail: function() {
             this.$el.removeClass('with-detail');

@@ -1,5 +1,5 @@
-define(['jquery', 'underscore', 'backbone', 'app', 'moxie.conf', 'moxie.position', 'places/utils', 'places/collections/CategoryCollection', 'hbs!places/templates/categories', 'hbs!places/templates/requesting_geolocation', 'hbs!places/templates/error_geolocation'],
-    function($, _, Backbone, app, conf, userPosition, utils, Categories, categoriesTemplate, geoRequesting, geoError){
+define(['jquery', 'underscore', 'backbone', 'app', 'moxie.conf', 'moxie.position', 'places/utils', 'places/collections/CategoryCollection', 'hbs!places/templates/categories'],
+    function($, _, Backbone, app, conf, userPosition, utils, Categories, categoriesTemplate){
 
     var CategoriesView = Backbone.View.extend({
 
@@ -78,14 +78,6 @@ define(['jquery', 'underscore', 'backbone', 'app', 'moxie.conf', 'moxie.position
         beforeRender: function() {
             Backbone.trigger('domchange:title', "Places " + this.category_name);
         },
-        afterRender: function() {
-            userPosition.on('position:unpaused', function() {
-                this.$('.messages').html(geoRequesting());
-            }, this);
-            userPosition.on('position:error', function() {
-                this.$('.messages').html(geoError());
-            }, this);
-        }
     });
     return CategoriesView;
 });

@@ -1,5 +1,5 @@
-define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView', 'hbs!places/templates/search', 'core/views/InfiniteScrollView', 'moxie.position', 'hbs!places/templates/requesting_geolocation', 'hbs!places/templates/error_geolocation'],
-    function($, Backbone, _, MoxieConf, ItemView, searchTemplate, InfiniteScrollView, userPosition, geoRequesting, geoError){
+define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView', 'hbs!places/templates/search', 'core/views/InfiniteScrollView', 'moxie.position'],
+    function($, Backbone, _, MoxieConf, ItemView, searchTemplate, InfiniteScrollView, userPosition){
 
     var SearchView = InfiniteScrollView.extend({
 
@@ -101,12 +101,6 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
                 InfiniteScrollView.prototype.initScroll.apply(this, [options]);
                 this.infiniteScrollConfigured = true;
             }
-            userPosition.once('position:unpaused', function() {
-                this.$('.messages').html(geoRequesting());
-            }, this);
-            userPosition.on('position:error', function() {
-                this.$('.messages').html(geoError());
-            }, this);
         },
 
         scrollCallbacks: [function() {
