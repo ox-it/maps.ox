@@ -1,6 +1,9 @@
 define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView', 'hbs!places/templates/search', 'core/views/InfiniteScrollView', 'moxie.position'],
     function($, Backbone, _, MoxieConf, ItemView, searchTemplate, InfiniteScrollView, userPosition){
 
+    var SORT_AZ = 'az';
+    var SORT_NEARBY = 'nearby';
+
     var SearchView = InfiniteScrollView.extend({
 
         // View constructor
@@ -9,8 +12,6 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
             this.options = options;
             if (this.options.followUser) {
                 this.collection.followUser();
-            } else {
-                userPosition.once('position:unpaused', this.collection.followUser, this.collection);
             }
             userPosition.on('position:paused', function() {
                 this.collection.latestUserPosition = null;
@@ -18,6 +19,8 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
             }, this);
             this.collection.on("reset", this.render, this);
             this.collection.on("add", this.addResult, this);
+
+            this.sortOrder = options.sortOrder || SORT_AZ;
         },
 
         manage: true,
@@ -26,7 +29,29 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
         events: {
             'keypress :input': "searchEvent",
             'click .deleteicon': "clearSearch",
-            'click .facet-list > li[data-category]': "clickFacet"
+            'click .facet-list > li[data-category]': "clickFacet",
+
+            'click .map-options .sort-nearby': "sortNearby",
+            'click .map-options .sort-az': "sortAZ",
+        },
+
+        sortNearby: function(ev) {
+            Backbone.trigger('showUser');
+            this.sortOrder = SORT_NEARBY;
+            ev.preventDefault();
+            this.collection.followUser();
+            if (!userPosition.listening()) {
+                userPosition.unpauseWatching();
+            } else if (this.collection.latestUserPosition) {
+                this.collection.fetch();
+            }
+        },
+
+        sortAZ: function(ev) {
+            this.sortOrder = SORT_AZ;
+            ev.preventDefault();
+            this.collection.unfollowUser();
+            this.collection.fetch();
         },
 
         clearSearch: function(e) {
@@ -68,7 +93,9 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
                 query: this.collection.query,
                 facets: [],
                 hasResults: Boolean(this.collection.length),
-                midRequest: this.collection.ongoingFetch
+                midRequest: this.collection.ongoingFetch,
+                sortAZ: this.sortOrder===SORT_AZ,
+                sortNearby: this.sortOrder===SORT_NEARBY,
             };
             if (this.collection.facets && (this.collection.query.q || this.collection.query.type) && this.collection.facets.length > 1) {
                 context.facets = this.collection.facets;
@@ -80,7 +107,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
             Backbone.trigger('domchange:title', "Search for Places of Interest");
             if (this.collection.length) {
                 var userSearch = this.collection.query.q;
-                var trackingUserPosition = userPosition.listening();
+                var trackingUserPosition = this.sortOrder===SORT_NEARBY;
                 var views = [];
                 this.collection.each(function(model) {
                     views.push(new ItemView({
