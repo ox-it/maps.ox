@@ -119,6 +119,9 @@ define(["backbone", "core/collections/MoxieCollection", "underscore", "places/mo
         },
 
         parse: function(data) {
+            if (this.followingPosition) {
+                Backbone.trigger('showUser');
+            }
             // Fetch over
             this.ongoingFetch = false;
             // Called when we want to empty the existing collection

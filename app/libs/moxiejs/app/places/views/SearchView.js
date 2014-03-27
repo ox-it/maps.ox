@@ -36,7 +36,6 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
         },
 
         sortNearby: function(ev) {
-            Backbone.trigger('showUser');
             this.sortOrder = SORT_NEARBY;
             ev.preventDefault();
             this.collection.followUser();
