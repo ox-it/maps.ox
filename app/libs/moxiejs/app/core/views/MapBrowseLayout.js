@@ -49,7 +49,7 @@ define(['backbone', 'underscore', 'jquery', 'moxie.position', 'core/views/MapVie
         afterRender: function() {
             userPosition.follow(this.mapView.handle_geolocation_query, this.mapView);
             userPosition.on('position:error', _.bind(function(err) {
-                userPosition.pauseWatching();
+                userPosition.pauseWatching({silent: true});
                 var locationButton = $('.btn-toggle-location');
                 if (locationButton) {
                     locationButton.removeClass('active');

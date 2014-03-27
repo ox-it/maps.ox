@@ -105,12 +105,16 @@ define(["underscore", "backbone", "moxie.conf", "cordova.help"], function(_, Bac
                 this.positionInterval = null;
             }
         };
-        this.pauseWatching = function() {
+        this.pauseWatching = function(options) {
+            options = options || {};
+            options.silent = options.silent || false;
             // Pauses all listening on position changes
             window.clearInterval(this.positionInterval);
             this.positionInterval = null;
             positionPaused = true;
-            this.trigger(EVENT_POSITION_PAUSED);
+            if (!options.silent) {
+                this.trigger(EVENT_POSITION_PAUSED);
+            }
         };
         this.unpauseWatching = function() {
             // Set positionPaused first so we actually start following
