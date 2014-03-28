@@ -16,22 +16,28 @@
 <ul class="results-list" id="categories">
 {{#types}}
     <li>
-    <h3>
-    {{#if hasTypes}}
-        {{! If this category has any sub-categories, place a link to them }}
-        {{#if ../../category_name}}
-            <a href="{{ reverse 'search'}}?type={{ type_prefixed }}">
-        {{else}}
-            <a href="{{ reverse 'categories' 'category_name' type_prefixed }}">
-        {{/if}}
-    {{else}}
-        <a href="{{ reverse 'search'}}?type={{ type_prefixed }}">
-    {{/if}}
-    {{ type_name_plural }}
-    {{#if description}}
-        <p class="subtext">{{ description }}</p>
-    {{/if}}
-    </a></h3></li>
+        <h3>
+            {{#if toggle}}
+            <label><input type="checkbox" {{#if checked}}checked="true"{{/if}} name="{{ type_prefixed }}">{{ type_name_plural }} </label>
+            {{ else }}
+                {{#if hasTypes}}
+                    {{! If this category has any sub-categories, place a link to them }}
+                    {{#if ../../category_name}}
+                        <a href="{{ reverse 'search'}}?type={{ type_prefixed }}">
+                    {{else}}
+                        <a href="{{ reverse 'categories' 'category_name' type_prefixed }}">
+                    {{/if}}
+                {{else}}
+                    <a href="{{ reverse 'search'}}?type={{ type_prefixed }}">
+                {{/if}}
+                {{ type_name_plural }}
+                {{#if description}}
+                    <p class="subtext">{{ description }}</p>
+                {{/if}}
+            {{/if}}
+            </a>
+        </h3>
+    </li>
 {{/types}}
 </ul>
 {{else}}

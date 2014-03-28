@@ -1,5 +1,5 @@
-define(['jquery', 'underscore', 'backbone', 'app', 'moxie.conf', 'moxie.position', 'places/utils', 'places/collections/CategoryCollection', 'hbs!places/templates/categories'],
-    function($, _, Backbone, app, conf, userPosition, utils, Categories, categoriesTemplate){
+define(['jquery', 'underscore', 'backbone', 'app', 'moxie.conf', 'moxie.position', 'places/utils', 'places/collections/CategoryCollection', 'places/collections/AdditionalPOICollection', 'hbs!places/templates/categories'],
+    function($, _, Backbone, app, conf, userPosition, utils, Categories, AdditionalPOIs, categoriesTemplate){
 
     var CategoriesView = Backbone.View.extend({
 
@@ -23,6 +23,11 @@ define(['jquery', 'underscore', 'backbone', 'app', 'moxie.conf', 'moxie.position
             }
             if (category) {
                 context.types = new Categories(category.getChildren()).toJSON();
+                _.each(context.types, function(cat) {
+                    if (cat.toggle && _.contains(this.visibleLayers, cat.type_prefixed)) {
+                        cat.checked = true;
+                    }
+                }, this);
                 context.category = category.toJSON();
             }
             context.amenities = this.category_name === '/amenities';
@@ -36,7 +41,29 @@ define(['jquery', 'underscore', 'backbone', 'app', 'moxie.conf', 'moxie.position
 
         events: {
             'keypress :input': "searchEvent",
-            'click .deleteicon': "clearSearch"
+            'click .deleteicon': "clearSearch",
+            'change input': "toggleCategory"
+        },
+
+
+        additionalCategories: {},
+        toggleCategory: function(ev) {
+            var category_name = ev.target.name;
+            var checked = ev.target.checked;
+            if (category_name in this.additionalCategories) {
+                this.additionalCategories[category_name].visible = !checked;
+                this.additionalCategories[category_name].toggle();
+            } else {
+                var category = this.collection.findWhere({type_prefixed: category_name});
+                var pois = new AdditionalPOIs({
+                    defaultQuery: {type: category_name, count: 200},
+                    format: conf.formats.geoJSON,
+                    icon: category.get('icon'),
+                });
+                this.additionalCategories[category_name] = pois;
+                Backbone.trigger('map:additional-collection', pois, category_name);
+                pois.toggle();
+            }
         },
 
         clearSearch: function(e) {
