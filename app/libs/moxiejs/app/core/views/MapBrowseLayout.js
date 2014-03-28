@@ -31,8 +31,8 @@ define(['backbone', 'underscore', 'jquery', 'moxie.position', 'core/views/MapVie
             this.mapView.invalidateMapSize();
         },
         toggleLocation: function(ev) {
+            this.mapView.toggleUserMarker();
             var locationButton = $('.btn-toggle-location');
-            userPosition.toggleWatching();
             locationButton.toggleClass('active');
         },
 
@@ -49,6 +49,7 @@ define(['backbone', 'underscore', 'jquery', 'moxie.position', 'core/views/MapVie
         afterRender: function() {
             userPosition.follow(this.mapView.handle_geolocation_query, this.mapView);
             userPosition.on('position:error', _.bind(function(err) {
+                this.mapView.removeUserMarker();
                 userPosition.pauseWatching({silent: true});
                 var locationButton = $('.btn-toggle-location');
                 if (locationButton) {
@@ -66,6 +67,12 @@ define(['backbone', 'underscore', 'jquery', 'moxie.position', 'core/views/MapVie
             }, this);
             userPosition.on('position:error', function() {
                 this.$('.messages').html(geoError());
+            }, this);
+
+            Backbone.on('showUser', function() {
+                this.mapView.addUserMarker();
+                var locationButton = $('.btn-toggle-location');
+                locationButton.addClass('active');
             }, this);
         },
         removeDetail: function() {
