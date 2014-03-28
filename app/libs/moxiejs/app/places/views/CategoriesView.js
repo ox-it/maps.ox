@@ -25,6 +25,8 @@ define(['jquery', 'underscore', 'backbone', 'app', 'moxie.conf', 'moxie.position
                 context.types = new Categories(category.getChildren()).toJSON();
                 context.category = category.toJSON();
             }
+            context.amenities = this.category_name === '/amenities';
+            context.university = this.category_name=== '/university';
             return context;
         },
 
