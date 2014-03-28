@@ -41,6 +41,9 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
         routes: routes,
 
         categories: function(category_name) {
+            if (_.isUndefined(category_name) && conf.defaultCategory) {
+                category_name = conf.defaultCategory;
+            }
             // Navigate to the list of categories (root view of places)
             var categoriesView = new CategoriesView({
                 collection: categories,
