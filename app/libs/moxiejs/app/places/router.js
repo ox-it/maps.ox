@@ -44,16 +44,18 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
             if (_.isUndefined(category_name) && conf.defaultCategory) {
                 category_name = conf.defaultCategory;
             }
+            var layout = app.getLayout('MapBrowseLayout', {followUser: this.followUser});
+            var mapView = layout.getView('.content-map');
+            var visibleLayers = _.clone(mapView.visibleLayers);
+            mapView.setCollection(new POIs(), additionalPOIs);
             // Navigate to the list of categories (root view of places)
             var categoriesView = new CategoriesView({
                 collection: categories,
                 category_name: category_name,
+                visibleLayers: visibleLayers,
             });
-            var layout = app.getLayout('MapBrowseLayout', {followUser: this.followUser});
             layout.withBrowse();
             layout.setView('.content-browse', categoriesView);
-            var mapView = layout.getView('.content-map');
-            mapView.setCollection(new POIs(), additionalPOIs);
             categoriesView.render();
         },
 
