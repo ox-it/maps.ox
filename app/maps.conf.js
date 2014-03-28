@@ -33,8 +33,8 @@ define([], function() {
             }
         },
         position: {
-            updateInterval: 60000,          // 60 seconds
-            errorMargin: 50,                // 50 meters
+            updateInterval: 600000,         // 10 minutes
+            errorMargin: 150,               // 150 meters
             accuracyTimeout: 25000,         // 25 seconds
             maximumAge: 600000,             // 10 minutes
             enableHighAccuracy: true,       // Use the GPS if possible
