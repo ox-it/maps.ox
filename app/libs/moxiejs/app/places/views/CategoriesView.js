@@ -54,27 +54,6 @@ define(['jquery', 'underscore', 'backbone', 'app', 'moxie.conf', 'moxie.position
             }
         },
 
-        setCategoryData: function(data) {
-            this.category_data = data;
-            this.renderCategories();
-        },
-
-        renderCategories: function() {
-            this.$(".preloader").hide();
-            var context;
-            if (this.category_name) {
-                var category_hierarchy = this.category_name.split('/');
-                context = utils.getCategory(category_hierarchy, this.category_data);
-                // updating base template with type name
-                this.$("#category_title").text(context.type_name_plural);
-                this.$("#input_search").attr("placeholder", "Search " + context.type_name_plural.toLowerCase() + "...");
-            } else {
-                context = {types: this.category_data.types};
-            }
-            context.category_name = (this.category_name) ? this.category_name : "";
-            this.$("#categories").html(categoriesTemplate(context));
-        },
-
         beforeRender: function() {
             Backbone.trigger('domchange:title', "Places " + this.category_name);
         },
