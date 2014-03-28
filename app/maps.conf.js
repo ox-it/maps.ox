@@ -122,7 +122,12 @@ define([], function() {
                             "type": "atm",
                             "type_name": "ATM",
                             "type_name_plural": "ATMs",
-                            "type_prefixed": "/amenities/atm"
+                            "type_prefixed": "/amenities/atm",
+                            "toggle": true,
+                            icon: {
+                                iconSize: [18, 18],
+                                iconUrl: 'maki/renders/bank-18.png',
+                            },
                         },
                         {
                             "type": "post",
@@ -142,13 +147,23 @@ define([], function() {
                                     "type_name_plural": "Post boxes",
                                     "type_prefixed": "/amenities/post/post-box"
                                 }
-                            ]
+                            ],
+                            "toggle": true,
+                            icon: {
+                                iconSize: [18, 18],
+                                iconUrl: 'maki/renders/post-18.png',
+                            },
                         },
                         {
                             "type": "recycling-facility",
                             "type_name": "Recycling",
                             "type_name_plural": "Recycling",
-                            "type_prefixed": "/amenities/recycling-facility"
+                            "type_prefixed": "/amenities/recycling-facility",
+                            "toggle": true,
+                            icon: {
+                                iconSize: [18, 18],
+                                iconUrl: 'maki/renders/waste-basket-18.png',
+                            },
                         },
                     ]
                 },
