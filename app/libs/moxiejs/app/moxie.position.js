@@ -110,6 +110,9 @@ define(["underscore", "backbone", "moxie.conf", "cordova.help"], function(_, Bac
             }
         };
         this.pauseWatching = function(options) {
+            // Pauses any new position updates being fired until `unpauseWatching` is called.
+            //
+            // Triggers EVENT_POSITION_PAUSED, unless {silent: true} is passed as an option.
             options = options || {};
             options.silent = options.silent || false;
             // Pauses all listening on position changes
@@ -120,11 +123,17 @@ define(["underscore", "backbone", "moxie.conf", "cordova.help"], function(_, Bac
                 this.trigger(EVENT_POSITION_PAUSED);
             }
         };
-        this.unpauseWatching = function() {
-            // Set positionPaused first so we actually start following
-            positionPaused = false;
+        this.unpauseWatching = function(options) {
+            // Starts watching position updates.
+            //
+            // Triggers EVENT_POSITION_UNPAUSED, unless {silent: true} is passed as an option.
+            options = options || {};
+            options.silent = options.silent || false;
+            positionPaused = false; // Set positionPaused first so we actually start following
             startWatching.apply(this);
-            this.trigger(EVENT_POSITION_UNPAUSED);
+            if (!options.silent) {
+                this.trigger(EVENT_POSITION_UNPAUSED);
+            }
         };
         this.toggleWatching = function() {
             if (this.positionInterval) {
