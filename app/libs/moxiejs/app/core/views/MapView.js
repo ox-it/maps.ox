@@ -6,6 +6,7 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
             this.interactiveMap = this.options.interactiveMap || media.isTablet();
             this.features = [];
             this.additionalLayers = {};
+            Backbone.on('map:additional-collection', this.registerAdditionalCollection, this);
         },
 
         attributes: {},
@@ -90,36 +91,47 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
             this.collection.on("sync", this.resetMapContents, this);
             this.collection.on("add", this.placePOI, this);
             if (additionalCollections) {
-                _.each(additionalCollections, function(collection, name) {
-                    collection.on("show", function(collection) {
-                        if (!this.additionalLayers[name]) {
-                            var icon = collection.getIcon();
-                            var markers = new L.MarkerClusterGroup({
-                                spiderfyOnMaxZoom: false,
-                                showCoverageOnHover: false,
-                                zoomToBoundsOnClick: false,
-                                singleMarkerMode: true,
-                                maxClusterRadius: 40,
-                                disableClusteringAtZoom: 16,
-                                iconCreateFunction: function(cluster) {
-                                    return icon;
-                                }
-                            });
-                            markers.addLayer(L.geoJson(collection.geoJSON));
-                            this.additionalLayers[name] = markers;
-                        }
-                        this.map.addLayer(this.additionalLayers[name]);
-                    }, this);
-                    collection.on("hide", function(collection) {
-                        if (this.additionalLayers[name]) {
-                            this.map.removeLayer(this.additionalLayers[name]);
-                        }
-                    }, this);
-                }, this);
+                _.each(additionalCollections, this.registerAdditionalCollection, this);
             }
             if (this.collection.length) {
                 this.resetMapContents();
             }
+        },
+
+        visibleLayers: [],
+
+        registerAdditionalCollection: function(collection, name) {
+            collection.on("show", function(collection) {
+                if (!this.additionalLayers[name]) {
+                    var icon = collection.getIcon();
+                    var markers = new L.MarkerClusterGroup({
+                        spiderfyOnMaxZoom: false,
+                        showCoverageOnHover: false,
+                        zoomToBoundsOnClick: false,
+                        singleMarkerMode: true,
+                        maxClusterRadius: 40,
+                        disableClusteringAtZoom: 16,
+                        iconCreateFunction: function(cluster) {
+                            return icon;
+                        }
+                    });
+                    markers.addLayer(L.geoJson(collection.geoJSON));
+                    if (this.visibleLayers.indexOf(name)===-1) {
+                        this.additionalLayers[name] = markers;
+                    }
+                }
+                this.visibleLayers.push(name);
+                this.map.addLayer(this.additionalLayers[name]);
+            }, this);
+            collection.on("hide", function(collection) {
+                if (this.additionalLayers[name]) {
+                    this.map.removeLayer(this.additionalLayers[name]);
+                    var index = this.visibleLayers.indexOf(name);
+                    if (index!==-1) {
+                        this.visibleLayers.splice(index, 1);
+                    }
+                }
+            }, this);
         },
 
         unsetCollection: function() {
