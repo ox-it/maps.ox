@@ -3,8 +3,8 @@
 </div>
 <div class="map-options">
     <ul>
-        <li><a href="#">A-Z</a></li>
-        <li><a href="#">Nearby</a></li>
+        <li>{{#unless sortAZ}}<a class="sort-az" href="#">A-Z</a>{{else}}A-Z{{/unless}}</li>
+        <li>{{#unless sortNearby}}<a class="sort-nearby" href="#">Nearby</a>{{else}}Nearby{{/unless}}</li>
     </ul>
 </div>
 <div class="messages">
