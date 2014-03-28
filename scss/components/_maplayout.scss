@@ -29,6 +29,27 @@
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         background: $body-background;
+        img.preloader {
+            display: block;
+            margin: 0 auto;
+        }
+
+        .messages {
+            background-color: #eee;
+            .message {
+                padding: 5px;
+                font-size: 0.8em;
+                border-bottom: $map-pane-border;
+                img.preloader {
+                    height: 0.8em;
+                    display: inline;
+                    margin: 0;
+                }
+                &.alert {
+                    color: $fail-red;
+                }
+            }
+        }
     }
 
     .map-browse-layout {

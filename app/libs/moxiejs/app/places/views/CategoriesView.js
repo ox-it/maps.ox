@@ -77,7 +77,7 @@ define(['jquery', 'underscore', 'backbone', 'app', 'moxie.conf', 'moxie.position
 
         beforeRender: function() {
             Backbone.trigger('domchange:title', "Places " + this.category_name);
-        }
+        },
     });
     return CategoriesView;
 });

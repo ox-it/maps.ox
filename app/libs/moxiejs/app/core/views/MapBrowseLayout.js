@@ -1,9 +1,8 @@
-define(['backbone', 'jquery', 'moxie.position', 'core/views/MapView', 'hbs!core/templates/map-browse'], function(Backbone, $, userPosition, MapView, mapBrowseTemplate) {
+define(['backbone', 'underscore', 'jquery', 'moxie.position', 'core/views/MapView', 'hbs!core/templates/map-browse', 'hbs!places/templates/requesting_geolocation', 'hbs!places/templates/error_geolocation'], function(Backbone, _, $, userPosition, MapView, mapBrowseTemplate, geoRequesting, geoError) {
 
     var MapBrowseLayout = Backbone.View.extend({
         initialize: function(options) {
             options = options || {};
-            this.followUser = options.followUser;
         },
         manage: true,
         template: mapBrowseTemplate,
@@ -33,14 +32,8 @@ define(['backbone', 'jquery', 'moxie.position', 'core/views/MapView', 'hbs!core/
         },
         toggleLocation: function(ev) {
             var locationButton = $('.btn-toggle-location');
-            if (!this.followingUser) {
-                userPosition.follow(this.mapView.handle_geolocation_query, this.mapView);
-                this.followingUser = true;
-                locationButton.addClass('active');
-            } else {
-                userPosition.toggleWatching();
-                locationButton.toggleClass('active');
-            }
+            userPosition.toggleWatching();
+            locationButton.toggleClass('active');
         },
 
         // Previously we set this view in 'views' this is WRONG
@@ -54,10 +47,26 @@ define(['backbone', 'jquery', 'moxie.position', 'core/views/MapView', 'hbs!core/
             this.setView(".content-map", this.mapView);
         },
         afterRender: function() {
-            if (this.followUser) {
-                userPosition.follow(this.mapView.handle_geolocation_query, this.mapView);
-                this.followingUser = true;
-            }
+            userPosition.follow(this.mapView.handle_geolocation_query, this.mapView);
+            userPosition.on('position:error', _.bind(function(err) {
+                userPosition.pauseWatching({silent: true});
+                var locationButton = $('.btn-toggle-location');
+                if (locationButton) {
+                    locationButton.removeClass('active');
+                }
+            }, this));
+            userPosition.on('position:unpaused', function() {
+                this.$('.messages').html(geoRequesting());
+            }, this);
+            userPosition.on('position:paused', function() {
+                this.$('.messages').html('');
+            }, this);
+            userPosition.on('position:updated', function() {
+                this.$('.messages').html('');
+            }, this);
+            userPosition.on('position:error', function() {
+                this.$('.messages').html(geoError());
+            }, this);
         },
         removeDetail: function() {
             this.$el.removeClass('with-detail');

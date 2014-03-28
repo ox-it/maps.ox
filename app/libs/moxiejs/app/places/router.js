@@ -1,4 +1,4 @@
-define(["app", "underscore", "backbone", "moxie.conf", "places/models/POIModel", "places/views/CategoriesView", "places/views/SearchView", "places/views/DetailView", "places/collections/POICollection", "places/collections/CategoryCollection", "core/views/MapView", "core/media", "places/collections/AdditionalPOICollection"], function(app, _, Backbone, conf, POI, CategoriesView, SearchView, DetailView, POIs, Categories, MapView, media, AdditionalPOIs){
+define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places/models/POIModel", "places/views/CategoriesView", "places/views/SearchView", "places/views/DetailView", "places/collections/POICollection", "places/collections/CategoryCollection", "core/views/MapView", "core/media", "places/collections/AdditionalPOICollection"], function(app, _, Backbone, conf, userPosition, POI, CategoriesView, SearchView, DetailView, POIs, Categories, MapView, media, AdditionalPOIs){
 
     var pois = new POIs();
     var categories = new Categories();
@@ -32,6 +32,10 @@ define(["app", "underscore", "backbone", "moxie.conf", "places/models/POIModel",
         initialize: function(options) {
             options = options || {};
             this.followUser = options.followUser;
+            if (!this.followUser) {
+                // Wait for the user to manually unpause
+                userPosition.pauseWatching();
+            }
         },
 
         routes: routes,
