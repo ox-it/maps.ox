@@ -184,9 +184,7 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
                 } else {
                     // Tablet View
                     feature.on('click', _.bind(function(ev) {
-                        var highlighted = this.collection.findWhere({'highlighted': true});
-                        if (highlighted) { highlighted.set('highlighted', false); }
-                        poi.set('highlighted', true);
+                        poi.set('scroll', true);
                         Backbone.history.navigate('#/places/'+poi.id, {trigger: true, replace: false});
                     }, this));
                 }
