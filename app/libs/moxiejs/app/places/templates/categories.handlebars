@@ -15,7 +15,7 @@
 {{#if types}}
 <ul class="results-list" id="categories">
 {{#types}}
-    <li>
+<li{{#if toggle}}{{#if checked}} class="highlighted" {{/if}}{{/if}}>
         <h3>
             {{#if toggle}}
             <label><input type="checkbox" {{#if checked}}checked="true"{{/if}} name="{{ type_prefixed }}">{{ type_name_plural }} </label>
