@@ -2,17 +2,31 @@
     <input type="text" placeholder="Search&hellip;" name="q" value="{{query.q}}">
 </div>
 <div class="map-options">
-    <ul>
-        <li>{{#unless sortAZ}}<a class="sort-az" href="#">A-Z</a>{{else}}A-Z{{/unless}}</li>
-        <li>{{#unless sortNearby}}<a class="sort-nearby" href="#">Nearby</a>{{else}}Nearby{{/unless}}</li>
-    </ul>
+    <span>{{#unless sortAZ}}<a class="sort-az" href="#">A-Z</a>{{else}}A-Z{{/unless}}</span><span>{{#unless sortNearby}}<a class="sort-nearby" href="#">Nearby</a>{{else}}Nearby{{/unless}}</span><span {{#if filtering}}class="highlighted"{{/if}}><a class="filter" href="#">Filters</a></span>
 </div>
 <div class="messages">
 </div>
-<ul class="facet-list">
-    {{#facets}}
+<div class="filters {{#unless filtering}}hide-filters{{/unless}}">
+    <div class="facets">
+        <ul>
+            {{#facets}}
+            <li><label><input {{#if checked}}checked="checked"{{/if}} type="checkbox" name="{{ name }}">{{ title }}</label></li>
+            {{/facets}}
+        </ul>
+    </div>
+    <div class="facets">
+        <h3>Accessibility</h3>
+        <ul>
+            <li><label><input type="checkbox">Ramp Access</label></li>
+            <li><label><input type="checkbox">Adapted Furniture</label></li>
+            <li><label><input type="checkbox">Accessible Toilets</label></li>
+        </ul>
+    </div>
+</div>
+<ul class="enabled-facet-list">
+    {{#enabledFacets}}
     <li class="label-facet" data-category="{{ name }}">{{ title }}</li>
-    {{/facets}}
+    {{/enabledFacets}}
 </ul>
 <ul class="results-list">
 </ul>
