@@ -97,6 +97,7 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
                 if (!browsePane) {
                     var categoriesView = new CategoriesView({
                         collection: categories,
+                        category_name: conf.defaultCategory,
                     });
                     layout.setView('.content-browse', categoriesView);
                     categoriesView.render();
