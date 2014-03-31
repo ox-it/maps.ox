@@ -50,6 +50,12 @@ define(['jquery', 'underscore', 'backbone', 'app', 'moxie.conf', 'moxie.position
         toggleCategory: function(ev) {
             var category_name = ev.target.name;
             var checked = ev.target.checked;
+            var $element = $(ev.target);
+            if (checked) {
+                $element.parent().parent().parent().addClass('highlighted');
+            } else {
+                $element.parent().parent().parent().removeClass('highlighted');
+            }
             if (category_name in this.additionalCategories) {
                 this.additionalCategories[category_name].visible = !checked;
                 this.additionalCategories[category_name].toggle();

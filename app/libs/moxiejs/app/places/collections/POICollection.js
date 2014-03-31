@@ -20,6 +20,13 @@ define(["backbone", "core/collections/MoxieCollection", "underscore", "places/mo
             this.followingPosition = false;
         },
 
+        removeHighlighting: function(options) {
+            var highlit = this.where({highlighted: true});
+            _.each(highlit, function(model) {
+                model.set({highlighted: false}, options);
+            });
+        },
+
         getBounds: function() {
             // Returns a L.LatLngBounds for the collection of POIs, follows this flow:
             //
