@@ -123,11 +123,15 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
         },
 
         detail: function(id, params) {
+            pois.removeHighlighting();
             var query = params || {};
             var showRTI = 'rti' in query ? params.rti : null;
             var poi = pois.get(id);
             if (poi) {
-                poi.set('showRTI', showRTI);
+                poi.set({
+                    showRTI: showRTI,
+                    highlighted: true,
+                });
             } else {
                 poi = new POI({id: id, showRTI: showRTI});
                 poi.fetch();
