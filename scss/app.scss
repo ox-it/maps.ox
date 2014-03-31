@@ -16,6 +16,10 @@ body {
     background: $body-background;
 }
 .map-options {
+    &.something-highlighted {
+        border-bottom: none;
+    }
+    margin-top: 1em;
     margin-bottom: 0;
     padding: 0;
     border-bottom: $map-pane-border;
@@ -23,17 +27,27 @@ body {
     a {
         color: $pantone279;
         text-decoration: none;
-        font-size: 1em;
-        line-height: 1.5em;
     }
     span {
         display: inline-block;
         padding: 5px;
-        min-width: 60px;
+        min-width: 70px;
         border-left: $map-pane-border;
+        font-size: 1em;
+        line-height: 1.5em;
     }
     span:first-child {
         border-left: none;
+    }
+}
+
+.highlighted {
+    margin: 0;
+    padding: 1em 12px;
+    background-color: $pantone279;
+    color: $body-background;
+    a {
+        color: $body-background;
     }
 }
 

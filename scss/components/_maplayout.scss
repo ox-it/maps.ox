@@ -164,7 +164,7 @@
             .content-detail-wrapper {
                 display: block;
                 height: 40%;
-                overflow-y: scroll;
+                overflow-y: auto;
                 @media #{$smartphone} {
                     height: auto;
                 }
