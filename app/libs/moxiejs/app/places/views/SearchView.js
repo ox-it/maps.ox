@@ -38,8 +38,14 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
         filtering: false,
         filter: function(ev) {
             ev.preventDefault();
-            this.$('.filters').toggleClass('hide-filters');
             this.filtering = !this.filtering;
+            // Toggle the facet lists
+            this.$('.filters').toggleClass('hide-filters');
+
+            // Highlight the button
+            this.$('.filter').toggleClass('highlighted');
+            // Remove the border on the options
+            this.$('.filter').parent().toggleClass('something-highlighted');
         },
 
         sortNearby: function(ev) {
