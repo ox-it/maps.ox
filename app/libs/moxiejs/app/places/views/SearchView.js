@@ -29,10 +29,17 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
         events: {
             'keypress :input': "searchEvent",
             'click .deleteicon': "clearSearch",
-            'click .facet-list > li[data-category]': "clickFacet",
-
+            'change .filters input': "clickFacet",
             'click .map-options .sort-nearby': "sortNearby",
             'click .map-options .sort-az': "sortAZ",
+            'click .map-options .filter': "filter",
+        },
+
+        filtering: false,
+        filter: function(ev) {
+            ev.preventDefault();
+            this.$('.filters').toggleClass('hide-filters');
+            this.filtering = !this.filtering;
         },
 
         sortNearby: function(ev) {
@@ -57,19 +64,39 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
             this.$('.search-input input').val('').focus();
         },
 
-        clickFacet: function(e) {
-            e.preventDefault();
-            this.collection.query.type = $(e.target).data('category');
-            this.collection.geoFetch();
-            Backbone.history.navigate(Backbone.history.reverse('search')+'?'+$.param(this.collection.query).replace(/\+/g, "%20"), {trigger: false});
+        parentFacets: null,
+        clickFacet: function(ev) {
+            if (!this.parentFacets) {
+                this.parentFacets = _.clone(this.collection.facets);
+            }
+            var type_exact = ev.target.name;
+            var facet = _.findWhere(this.parentFacets, {name: type_exact});
+            if (ev.target.checked) {
+                if (this.collection.query.type_exact) {
+                    this.collection.query.type_exact.push(type_exact);
+                } else {
+                    this.collection.query.type_exact = [type_exact];
+                }
+                this.collection.fetch();
+                facet.checked = true;
+            } else {
+                var index = this.collection.query.type_exact.indexOf(type_exact);
+                if (this.collection.query.type_exact && index!==-1) {
+                    this.collection.query.type_exact.splice(index, 1);
+                    this.collection.fetch();
+                }
+                facet.checked = false;
+            }
         },
 
         searchEvent: function(ev) {
             if (ev.which === 13) {
+                this.parentFacets = null;
                 this.collection.query.q = ev.target.value;
                 // User entered searches clear any existing facets
                 // and query the entire index
                 delete this.collection.query.type;
+                delete this.collection.query.type_exact;
                 this.collection.geoFetch();
                 Backbone.history.navigate(Backbone.history.reverse('search')+'?'+$.param(this.collection.query).replace(/\+/g, "%20"), {trigger: false});
             }
@@ -90,15 +117,13 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
         serialize: function() {
             var context = {
                 query: this.collection.query,
-                facets: [],
                 hasResults: Boolean(this.collection.length),
                 midRequest: this.collection.ongoingFetch,
                 sortAZ: this.sortOrder===SORT_AZ,
                 sortNearby: this.sortOrder===SORT_NEARBY,
+                filtering: this.filtering,
+                facets: this.parentFacets || this.collection.facets,
             };
-            if (this.collection.facets && (this.collection.query.q || this.collection.query.type) && this.collection.facets.length > 1) {
-                context.facets = this.collection.facets;
-            }
             return context;
         },
 
