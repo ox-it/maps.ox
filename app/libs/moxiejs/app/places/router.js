@@ -1,4 +1,4 @@
-define(["app", "underscore", "backbone", "moxie.conf", "places/models/POIModel", "places/views/CategoriesView", "places/views/SearchView", "places/views/DetailView", "places/collections/POICollection", "places/collections/CategoryCollection", "core/views/MapView", "core/media", "places/collections/AdditionalPOICollection"], function(app, _, Backbone, conf, POI, CategoriesView, SearchView, DetailView, POIs, Categories, MapView, media, AdditionalPOIs){
+define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places/models/POIModel", "places/views/CategoriesView", "places/views/SearchView", "places/views/DetailView", "places/collections/POICollection", "places/collections/CategoryCollection", "core/views/MapView", "core/media", "places/collections/AdditionalPOICollection"], function(app, _, Backbone, conf, userPosition, POI, CategoriesView, SearchView, DetailView, POIs, Categories, MapView, media, AdditionalPOIs){
 
     var pois = new POIs();
     var categories = new Categories();
@@ -32,23 +32,30 @@ define(["app", "underscore", "backbone", "moxie.conf", "places/models/POIModel",
         initialize: function(options) {
             options = options || {};
             this.followUser = options.followUser;
-            this.urlPrefix = options.urlPrefix || '#places/';
+            if (!this.followUser) {
+                // Wait for the user to manually unpause
+                userPosition.pauseWatching();
+            }
         },
 
         routes: routes,
 
         categories: function(category_name) {
+            if (_.isUndefined(category_name) && conf.defaultCategory) {
+                category_name = conf.defaultCategory;
+            }
+            var layout = app.getLayout('MapBrowseLayout', {followUser: this.followUser});
+            var mapView = layout.getView('.content-map');
+            var visibleLayers = _.clone(mapView.visibleLayers);
+            mapView.setCollection(new POIs(), additionalPOIs);
             // Navigate to the list of categories (root view of places)
             var categoriesView = new CategoriesView({
                 collection: categories,
                 category_name: category_name,
-                urlPrefix: this.urlPrefix
+                visibleLayers: visibleLayers,
             });
-            var layout = app.getLayout('MapBrowseLayout', {followUser: this.followUser});
             layout.withBrowse();
             layout.setView('.content-browse', categoriesView);
-            var mapView = layout.getView('.content-map');
-            mapView.setCollection(new POIs(), additionalPOIs);
             categoriesView.render();
         },
 
@@ -66,7 +73,6 @@ define(["app", "underscore", "backbone", "moxie.conf", "places/models/POIModel",
             layout.withBrowse();
             var searchView = new SearchView({
                 collection: pois,
-                urlPrefix: this.urlPrefix,
                 followUser: this.followUser
             });
             layout.setView('.content-browse', searchView);
@@ -91,7 +97,7 @@ define(["app", "underscore", "backbone", "moxie.conf", "places/models/POIModel",
                 if (!browsePane) {
                     var categoriesView = new CategoriesView({
                         collection: categories,
-                        urlPrefix: this.urlPrefix
+                        category_name: conf.defaultCategory,
                     });
                     layout.setView('.content-browse', categoriesView);
                     categoriesView.render();
@@ -107,20 +113,26 @@ define(["app", "underscore", "backbone", "moxie.conf", "places/models/POIModel",
                 layout.setView('.content-detail-wrapper', detailView);
                 // Remove any other mapClick listeners (if the view is being reused)
                 mapView.off('mapClick');
-                var urlPrefix = this.urlPrefix;
                 mapView.on('mapClick', function() {
-                    Backbone.history.navigate(urlPrefix + poi.id + '/map', {trigger: true, replace: false});
+                    Backbone.history.navigate(
+                        Backbone.history.reverse('detailMap', {id: poi.id}),
+                        {trigger: true, replace: false}
+                    );
                 });
                 detailView.render();
             }
         },
 
         detail: function(id, params) {
+            pois.removeHighlighting();
             var query = params || {};
             var showRTI = 'rti' in query ? params.rti : null;
             var poi = pois.get(id);
             if (poi) {
-                poi.set('showRTI', showRTI);
+                poi.set({
+                    showRTI: showRTI,
+                    highlighted: true,
+                });
             } else {
                 poi = new POI({id: id, showRTI: showRTI});
                 poi.fetch();
@@ -130,7 +142,8 @@ define(["app", "underscore", "backbone", "moxie.conf", "places/models/POIModel",
                 browsePane = true;
             }
             this.showDetail(poi, browsePane, true);
-        }
+        },
+
     };
 
     return PlacesRouter;

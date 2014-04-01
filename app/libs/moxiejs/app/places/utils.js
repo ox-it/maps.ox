@@ -9,7 +9,7 @@ define(['underscore', 'moxie.conf', 'leaflet', 'moxie.position'], function(_, Mo
         },
         getMap: function(el, options) {
             options = options || {};
-            var position = options.position || userPosition.getCurrentLocation();
+            var position = options.position || MoxieConf.defaultLocation;
             if (('device' in window) && (window.device.platform==='Android')) {
                 // Disable 3D acceleration for Android WebViews
                 if ('console' in window) {

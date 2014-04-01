@@ -1,8 +1,11 @@
 {{#if name }}
     <h3>
-        <a href="{{ urlPrefix }}places/{{ id }}">
+        <a href="{{ reverse 'detail' 'id' id }}">
             {{ name }}
         </a>
+        {{#if trackingUserPosition}}
+        <span class="distance">{{humaniseDistance distance }}</span>
+        {{/if}}
     </h3>
     {{#if userSearch}}
     <p class="type">
@@ -14,9 +17,12 @@
     {{/if}}
 {{ else }}
     <p class="type">
-        <a href="{{ urlPrefix }}places/{{ id }}">
+        <a href="{{ reverse 'detail' 'id' id }}">
         {{ type_name }}
         </a>
+        {{#if trackingUserPosition}}
+        <span class="distance">{{humaniseDistance distance }}</span>
+        {{/if}}
     </p>
     {{! opening_hours should be a string if it exists}}
     {{# if opening_hours }}
@@ -30,7 +36,4 @@
     {{#if address }}
         <p class="metadata">{{ address }}</p>
     {{/if}}
-{{/if}}
-{{#if trackingUserPosition}}
-<p class="metadata">{{humaniseDistance distance }}</p>
 {{/if}}

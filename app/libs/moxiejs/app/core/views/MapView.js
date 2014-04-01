@@ -1,10 +1,12 @@
 define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/utils', 'core/media', 'moxie.position', 'leaflet.markercluster'], function(Backbone, $, L, _, conf, utils, media, userPosition) {
     var MapView = Backbone.View.extend({
         initialize: function(options) {
+            _.bindAll(this);
             this.options = options || {};
             this.interactiveMap = this.options.interactiveMap || media.isTablet();
             this.features = [];
             this.additionalLayers = {};
+            Backbone.on('map:additional-collection', this.registerAdditionalCollection, this);
         },
 
         attributes: {},
@@ -49,13 +51,34 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
             this.map.on('dragstart', function() {
                 this.mapMoved = true;
             }, this);
-            userPosition.on('position:paused', function() {
-                this.user_position = null;
-                if (this.user_marker) {
-                    this.map.removeLayer(this.user_marker);
-                    this.setMapBounds();
-                }
-            }, this);
+        },
+
+        // Manage displaying the User marker
+        //  - Add/Remove/Toggle
+        showUser: false,
+        addUserMarker: function() {
+            this.showUser = true;
+            var listening = userPosition.listening();
+            if (listening && this.user_marker) {
+                this.map.addLayer(this.user_marker);
+                this.setMapBounds();
+            } else if (!listening) {
+                userPosition.unpauseWatching();
+            }
+        },
+        removeUserMarker: function() {
+            this.showUser = false;
+            if (this.user_marker) {
+                this.map.removeLayer(this.user_marker);
+                this.setMapBounds();
+            }
+        },
+        toggleUserMarker: function() {
+            if (this.showUser) {
+                this.removeUserMarker();
+            } else {
+                this.addUserMarker();
+            }
         },
 
         setCollection: function(collection, additionalCollections) {
@@ -68,36 +91,47 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
             this.collection.on("sync", this.resetMapContents, this);
             this.collection.on("add", this.placePOI, this);
             if (additionalCollections) {
-                _.each(additionalCollections, function(collection, name) {
-                    collection.on("show", function(collection) {
-                        if (!this.additionalLayers[name]) {
-                            var icon = collection.getIcon();
-                            var markers = new L.MarkerClusterGroup({
-                                spiderfyOnMaxZoom: false,
-                                showCoverageOnHover: false,
-                                zoomToBoundsOnClick: false,
-                                singleMarkerMode: true,
-                                maxClusterRadius: 40,
-                                disableClusteringAtZoom: 16,
-                                iconCreateFunction: function(cluster) {
-                                    return icon;
-                                }
-                            });
-                            markers.addLayer(L.geoJson(collection.geoJSON));
-                            this.additionalLayers[name] = markers;
-                        }
-                        this.map.addLayer(this.additionalLayers[name]);
-                    }, this);
-                    collection.on("hide", function(collection) {
-                        if (this.additionalLayers[name]) {
-                            this.map.removeLayer(this.additionalLayers[name]);
-                        }
-                    }, this);
-                }, this);
+                _.each(additionalCollections, this.registerAdditionalCollection, this);
             }
             if (this.collection.length) {
                 this.resetMapContents();
             }
+        },
+
+        visibleLayers: [],
+
+        registerAdditionalCollection: function(collection, name) {
+            collection.on("show", function(collection) {
+                if (!this.additionalLayers[name]) {
+                    var icon = collection.getIcon();
+                    var markers = new L.MarkerClusterGroup({
+                        spiderfyOnMaxZoom: false,
+                        showCoverageOnHover: false,
+                        zoomToBoundsOnClick: false,
+                        singleMarkerMode: true,
+                        maxClusterRadius: 40,
+                        disableClusteringAtZoom: 16,
+                        iconCreateFunction: function(cluster) {
+                            return icon;
+                        }
+                    });
+                    markers.addLayer(L.geoJson(collection.geoJSON));
+                    if (this.visibleLayers.indexOf(name)===-1) {
+                        this.additionalLayers[name] = markers;
+                    }
+                }
+                this.visibleLayers.push(name);
+                this.map.addLayer(this.additionalLayers[name]);
+            }, this);
+            collection.on("hide", function(collection) {
+                if (this.additionalLayers[name]) {
+                    this.map.removeLayer(this.additionalLayers[name]);
+                    var index = this.visibleLayers.indexOf(name);
+                    if (index!==-1) {
+                        this.visibleLayers.splice(index, 1);
+                    }
+                }
+            }, this);
         },
 
         unsetCollection: function() {
@@ -122,17 +156,21 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
             if (this.user_marker) {
                 this.map.removeLayer(this.user_marker);
             }
-            this.user_marker = L.circle(you, 10, {color: '#4891DC', opacity: 0.6, weight: 4, fillOpacity: 1});
-            this.map.addLayer(this.user_marker);
+            this.user_marker = L.circleMarker(you, {radius: 7, color: '#4891DC', opacity: 0.6, weight: 4, fillOpacity: 1});
 
-            // Generally we reset the MapBounds after each new location is
-            // reported unless the user has interacted with the map in someway.
-            //
-            // The only exception being when it's the first user position to be
-            // reported in which case we always reset the map to new bounds.
-            if (firstPosition || !this.mapMoved) {
-                this.setMapBounds();
+            if (this.showUser) {
+                this.map.addLayer(this.user_marker);
+
+                // Generally we reset the MapBounds after each new location is
+                // reported unless the user has interacted with the map in someway.
+                //
+                // The only exception being when it's the first user position to be
+                // reported in which case we always reset the map to new bounds.
+                if (firstPosition || !this.mapMoved) {
+                    this.setMapBounds();
+                }
             }
+
         },
 
         placePOI: function(poi) {
@@ -146,9 +184,7 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
                 } else {
                     // Tablet View
                     feature.on('click', _.bind(function(ev) {
-                        var highlighted = this.collection.findWhere({'highlighted': true});
-                        if (highlighted) { highlighted.set('highlighted', false); }
-                        poi.set('highlighted', true);
+                        poi.set('scroll', true);
                         Backbone.history.navigate('#/places/'+poi.id, {trigger: true, replace: false});
                     }, this));
                 }
@@ -164,10 +200,10 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
 
         setMapBounds: function() {
             // Only set map bounds if we have a collection
-            if (this.collection) {
+            if (this.collection && this.collection.length > 0) {
                 var bounds = this.collection.getBounds();
                 if (bounds) {
-                    if (this.user_position) {
+                    if (this.showUser && this.user_position) {
                         bounds.extend(this.user_position);
                     }
                     bounds = bounds.pad(conf.map.bounds.padding);
@@ -176,6 +212,8 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
                     // but setting animate: false seems to resolve things.
                     this.map.fitBounds(bounds, {animate: false});
                 }
+            } else if (this.showUser && this.user_position) {
+                this.map.panTo(this.user_position);
             }
         },
 

@@ -8,12 +8,23 @@ define(["backbone", "core/collections/MoxieCollection", "underscore", "places/mo
             this.query = {};
         },
 
+        followingPosition: false,
+
         followUser: function() {
             userPosition.follow(this.handle_geolocation_query, this);
+            this.followingPosition = true;
         },
 
         unfollowUser: function() {
             userPosition.unfollow(this.handle_geolocation_query, this);
+            this.followingPosition = false;
+        },
+
+        removeHighlighting: function(options) {
+            var highlit = this.where({highlighted: true});
+            _.each(highlit, function(model) {
+                model.set({highlighted: false}, options);
+            });
         },
 
         getBounds: function() {
@@ -70,8 +81,10 @@ define(["backbone", "core/collections/MoxieCollection", "underscore", "places/mo
             options = options || {};
             options.headers = options.headers || {};
             var position = this.latestUserPosition || userPosition.getCurrentLocation();
-            position = [position.coords.latitude, position.coords.longitude];
-            options.headers['Geo-Position'] = position.join(';');
+            if (position) {
+                position = [position.coords.latitude, position.coords.longitude];
+                options.headers['Geo-Position'] = position.join(';');
+            }
             return MoxieCollection.prototype.fetch.call(this, options);
         },
 
@@ -79,7 +92,7 @@ define(["backbone", "core/collections/MoxieCollection", "underscore", "places/mo
             // Set a boolean for while the fetch is inflight
             this.ongoingFetch = true;
             // Following user Position so send a Geo-Position header
-            if (userPosition.listening()) {
+            if (this.followingPosition) {
                 return this.geoFetch.apply(this, arguments);
             } else {
                 return MoxieCollection.prototype.fetch.apply(this, arguments);
@@ -113,6 +126,9 @@ define(["backbone", "core/collections/MoxieCollection", "underscore", "places/mo
         },
 
         parse: function(data) {
+            if (this.followingPosition) {
+                Backbone.trigger('showUser');
+            }
             // Fetch over
             this.ongoingFetch = false;
             // Called when we want to empty the existing collection

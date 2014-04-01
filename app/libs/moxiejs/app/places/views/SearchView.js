@@ -1,20 +1,26 @@
 define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView', 'hbs!places/templates/search', 'core/views/InfiniteScrollView', 'moxie.position'],
     function($, Backbone, _, MoxieConf, ItemView, searchTemplate, InfiniteScrollView, userPosition){
 
+    var SORT_AZ = 'az';
+    var SORT_NEARBY = 'nearby';
+
     var SearchView = InfiniteScrollView.extend({
 
         // View constructor
-        initialize: function() {
+        initialize: function(options) {
             _.bindAll(this);
-            this.urlPrefix = this.options.urlPrefix;
+            this.options = options;
             if (this.options.followUser) {
                 this.collection.followUser();
-            } else {
-                userPosition.once('position:unpaused', this.collection.followUser, this.collection);
             }
-            userPosition.on('position:paused', this.collection.geoFetch, this.collection);
+            userPosition.on('position:paused', function() {
+                this.collection.latestUserPosition = null;
+                this.collection.fetch();
+            }, this);
             this.collection.on("reset", this.render, this);
             this.collection.on("add", this.addResult, this);
+
+            this.sortOrder = options.sortOrder || SORT_AZ;
         },
 
         manage: true,
@@ -23,28 +29,82 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
         events: {
             'keypress :input': "searchEvent",
             'click .deleteicon': "clearSearch",
-            'click .facet-list > li[data-category]': "clickFacet"
+            'change .filters input': "clickFacet",
+            'click .map-options .sort-nearby': "sortNearby",
+            'click .map-options .sort-az': "sortAZ",
+            'click .map-options .filter': "filter",
+        },
+
+        filtering: false,
+        filter: function(ev) {
+            ev.preventDefault();
+            this.filtering = !this.filtering;
+            // Toggle the facet lists
+            this.$('.filters').toggleClass('hide-filters');
+
+            // Highlight the button
+            this.$('.filter').toggleClass('highlighted');
+            // Remove the border on the options
+            this.$('.filter').parent().toggleClass('something-highlighted');
+        },
+
+        sortNearby: function(ev) {
+            this.sortOrder = SORT_NEARBY;
+            ev.preventDefault();
+            this.collection.followUser();
+            if (!userPosition.listening()) {
+                userPosition.unpauseWatching();
+            } else if (this.collection.latestUserPosition) {
+                this.collection.fetch();
+            }
+        },
+
+        sortAZ: function(ev) {
+            this.sortOrder = SORT_AZ;
+            ev.preventDefault();
+            this.collection.unfollowUser();
+            this.collection.fetch();
         },
 
         clearSearch: function(e) {
             this.$('.search-input input').val('').focus();
         },
 
-        clickFacet: function(e) {
-            e.preventDefault();
-            this.collection.query.type = $(e.target).data('category');
-            this.collection.geoFetch();
-            Backbone.history.navigate(this.urlPrefix + 'search?'+$.param(this.collection.query).replace(/\+/g, "%20"), {trigger: false});
+        parentFacets: null,
+        clickFacet: function(ev) {
+            if (!this.parentFacets) {
+                this.parentFacets = _.clone(this.collection.facets);
+            }
+            var type_exact = ev.target.name;
+            var facet = _.findWhere(this.parentFacets, {name: type_exact});
+            if (ev.target.checked) {
+                if (this.collection.query.type_exact) {
+                    this.collection.query.type_exact.push(type_exact);
+                } else {
+                    this.collection.query.type_exact = [type_exact];
+                }
+                this.collection.fetch();
+                facet.checked = true;
+            } else {
+                var index = this.collection.query.type_exact.indexOf(type_exact);
+                if (this.collection.query.type_exact && index!==-1) {
+                    this.collection.query.type_exact.splice(index, 1);
+                    this.collection.fetch();
+                }
+                facet.checked = false;
+            }
         },
 
         searchEvent: function(ev) {
             if (ev.which === 13) {
+                this.parentFacets = null;
                 this.collection.query.q = ev.target.value;
                 // User entered searches clear any existing facets
                 // and query the entire index
                 delete this.collection.query.type;
+                delete this.collection.query.type_exact;
                 this.collection.geoFetch();
-                Backbone.history.navigate(this.urlPrefix + 'search?'+$.param(this.collection.query).replace(/\+/g, "%20"), {trigger: false});
+                Backbone.history.navigate(Backbone.history.reverse('search')+'?'+$.param(this.collection.query).replace(/\+/g, "%20"), {trigger: false});
             }
         },
 
@@ -52,7 +112,6 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
             var trackingUserPosition = userPosition.listening();
             var view = new ItemView({
                 model: model,
-                urlPrefix: this.urlPrefix,
                 trackingUserPosition: trackingUserPosition,
                 userSearch: this.collection.query.q,
             });
@@ -63,15 +122,14 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
         template: searchTemplate,
         serialize: function() {
             var context = {
-                urlPrefix: this.urlPrefix,
                 query: this.collection.query,
-                facets: [],
                 hasResults: Boolean(this.collection.length),
-                midRequest: this.collection.ongoingFetch
+                midRequest: this.collection.ongoingFetch,
+                sortAZ: this.sortOrder===SORT_AZ,
+                sortNearby: this.sortOrder===SORT_NEARBY,
+                filtering: this.filtering,
+                facets: this.parentFacets || this.collection.facets,
             };
-            if (this.collection.facets && (this.collection.query.q || this.collection.query.type) && this.collection.facets.length > 1) {
-                context.facets = this.collection.facets;
-            }
             return context;
         },
 
@@ -79,13 +137,11 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
             Backbone.trigger('domchange:title', "Search for Places of Interest");
             if (this.collection.length) {
                 var userSearch = this.collection.query.q;
-                var trackingUserPosition = userPosition.listening();
-                var urlPrefix = this.urlPrefix;
+                var trackingUserPosition = this.sortOrder===SORT_NEARBY;
                 var views = [];
                 this.collection.each(function(model) {
                     views.push(new ItemView({
                         model: model,
-                        urlPrefix: urlPrefix,
                         trackingUserPosition: trackingUserPosition,
                         userSearch: userSearch,
                     }));

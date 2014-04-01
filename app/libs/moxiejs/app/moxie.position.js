@@ -2,6 +2,7 @@ define(["underscore", "backbone", "moxie.conf", "cordova.help"], function(_, Bac
     var EVENT_POSITION_UPDATED = 'position:updated';
     var EVENT_POSITION_PAUSED = 'position:paused';
     var EVENT_POSITION_UNPAUSED = 'position:unpaused';
+    var EVENT_POSITION_ERROR = 'position:error';
     function UserPosition() {
         _.extend(this, Backbone.Events);
         var supportsGeoLocation = Boolean(navigator.geolocation),
@@ -12,7 +13,7 @@ define(["underscore", "backbone", "moxie.conf", "cordova.help"], function(_, Bac
             // This is used in lieu of conf.defaultLocation as it
             // might provide a better result (eg. a recent known
             // location from the geolocation APIs)
-            return latestPosition || conf.defaultLocation;
+            return latestPosition;
         },
         this.getLocation = function(cb, options) {
             if (cordova.isCordova() && !cordova.appReady()) {
@@ -36,8 +37,6 @@ define(["underscore", "backbone", "moxie.conf", "cordova.help"], function(_, Bac
                 navigator.geolocation.clearWatch(temporaryGeoWatchID);
                 if (latestPosition) {
                     cb(latestPosition);
-                } else {
-                    cb(conf.defaultLocation);
                 }
             }, options.timeout);
             temporaryGeoWatchID = navigator.geolocation.watchPosition(function(position) {
@@ -51,6 +50,7 @@ define(["underscore", "backbone", "moxie.conf", "cordova.help"], function(_, Bac
             {
                     enableHighAccuracy: conf.position.enableHighAccuracy,
                     maximumAge: conf.position.maximumAge,
+                    timeout: options.timeout,
             });
 
         };
@@ -62,19 +62,23 @@ define(["underscore", "backbone", "moxie.conf", "cordova.help"], function(_, Bac
             }
         }
         function locationError(err) {
-            if ('console' in window) {
-                console.log("Geolocation error: ", err);
-            }
+            this.trigger(EVENT_POSITION_ERROR, err);
         }
         function startWatching() {
             if (supportsGeoLocation) {
-                this.getLocation(_.bind(locationSuccess, this));
-                this.positionInterval = window.setInterval(this.getLocation, conf.position.updateInterval, _.bind(locationSuccess, this));
+                this.getLocation.apply(this, [_.bind(locationSuccess, this)]);
+                if (this.positionInterval) {
+                    // Prevents us from starting multiple intervals
+                    window.clearInterval(this.positionInterval);
+                }
+                this.positionInterval = window.setInterval(_.bind(this.getLocation, this), conf.position.updateInterval, _.bind(locationSuccess, this));
                 // NOTE: only trigger EVENT_POSITION_UNPAUSED *after* positionInterval is set,
                 //       we have listeners which call startWatching on EVENT_POSITION_UNPAUSED
                 //       so it has to be triggered after an interval is made otherwise recursive
                 //       calls to startWatching happen.
-                this.trigger(EVENT_POSITION_UNPAUSED);
+                if (positionPaused) {
+                    this.trigger(EVENT_POSITION_UNPAUSED);
+                }
             } else {
                 locationError.apply(this);
             }
@@ -102,20 +106,40 @@ define(["underscore", "backbone", "moxie.conf", "cordova.help"], function(_, Bac
             followerCount--;
             if (followerCount === 0) {
                 window.clearInterval(this.positionInterval);
+                this.positionInterval = null;
+            }
+        };
+        this.pauseWatching = function(options) {
+            // Pauses any new position updates being fired until `unpauseWatching` is called.
+            //
+            // Triggers EVENT_POSITION_PAUSED, unless {silent: true} is passed as an option.
+            options = options || {};
+            options.silent = options.silent || false;
+            // Pauses all listening on position changes
+            window.clearInterval(this.positionInterval);
+            this.positionInterval = null;
+            positionPaused = true;
+            if (!options.silent) {
+                this.trigger(EVENT_POSITION_PAUSED);
+            }
+        };
+        this.unpauseWatching = function(options) {
+            // Starts watching position updates.
+            //
+            // Triggers EVENT_POSITION_UNPAUSED, unless {silent: true} is passed as an option.
+            options = options || {};
+            options.silent = options.silent || false;
+            positionPaused = false; // Set positionPaused first so we actually start following
+            startWatching.apply(this);
+            if (!options.silent) {
+                this.trigger(EVENT_POSITION_UNPAUSED);
             }
         };
         this.toggleWatching = function() {
-            // Pauses all listening on position changes
             if (this.positionInterval) {
-                window.clearInterval(this.positionInterval);
-                this.positionInterval = null;
-                positionPaused = true;
-                this.trigger(EVENT_POSITION_PAUSED);
+                this.pauseWatching();
             } else if (followerCount !==0) {
-                // Set positionPaused first so we actually start following
-                positionPaused = false;
-                startWatching.apply(this);
-                this.trigger(EVENT_POSITION_UNPAUSED);
+                this.unpauseWatching();
             }
             return positionPaused;
         };

@@ -1,17 +1,30 @@
 <div class="search-input">
     <input type="text" placeholder="Search&hellip;" name="q" value="{{query.q}}">
 </div>
-<div class="map-options">
-    <ul>
-        <li><a href="#">A-Z</a></li>
-        <li><a href="#">Nearby</a></li>
-    </ul>
+<div class="map-options {{#if filtering}}something-highlighted{{/if}}">
+    <span>{{#unless sortAZ}}<a class="sort-az" href="#">A-Z</a>{{else}}A-Z{{/unless}}</span><span>{{#unless sortNearby}}<a class="sort-nearby" href="#">Nearby</a>{{else}}Nearby{{/unless}}</span><span class="filter {{#if filtering}}highlighted{{/if}}"><a href="#">Filters</a></span>
 </div>
-<ul class="facet-list">
-    {{#facets}}
-    <li class="label-facet" data-category="{{ name }}">{{ title }}</li>
-    {{/facets}}
-</ul>
+<div class="messages">
+</div>
+<div class="filters {{#unless filtering}}hide-filters{{/unless}}">
+    {{#if facets}}
+    <div class="facets">
+        <ul>
+            {{#facets}}
+            <li><label><input {{#if checked}}checked="checked"{{/if}} type="checkbox" name="{{ name }}">{{ title }}</label></li>
+            {{/facets}}
+        </ul>
+    </div>
+    {{/if}}
+    <div class="facets">
+        <h3>Accessibility</h3>
+        <ul>
+            <li><label><input type="checkbox">Ramp Access</label></li>
+            <li><label><input type="checkbox">Adapted Furniture</label></li>
+            <li><label><input type="checkbox">Accessible Toilets</label></li>
+        </ul>
+    </div>
+</div>
 <ul class="results-list">
 </ul>
 {{#if midRequest}}
