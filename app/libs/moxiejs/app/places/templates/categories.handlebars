@@ -3,10 +3,7 @@
 </div>
 
 <div class="map-options">
-    <ul>
-        <li>{{#unless university}}<a href="{{ reverse 'categories' }}">University</a>{{else}}University{{/unless}}</li>
-        <li>{{#unless amenities}}<a href="{{ reverse 'categories' 'category_name' '/amenities'}}">Amenities</a>{{else}}Amenities{{/unless}}</li>
-    </ul>
+    <span>{{#unless university}}<a href="{{ reverse 'categories' }}">University</a>{{else}}University{{/unless}}</span><span>{{#unless amenities}}<a href="{{ reverse 'categories' 'category_name' '/amenities'}}">Amenities</a>{{else}}Amenities{{/unless}}</span>
 </div>
 
 <div class="messages">
