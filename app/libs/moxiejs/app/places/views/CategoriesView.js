@@ -42,7 +42,7 @@ define(['jquery', 'underscore', 'backbone', 'app', 'moxie.conf', 'moxie.position
         events: {
             'keypress :input': "searchEvent",
             'click .deleteicon': "clearSearch",
-            'change input': "toggleCategory"
+            'change .results-list input': "toggleCategory"
         },
 
 
