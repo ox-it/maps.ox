@@ -10,7 +10,7 @@ define(['backbone', 'underscore'], function(Backbone, _) {
         this.handlers.unshift({route: route, callback: callback, name: name, routeStr: routeStr});
     };
 
-    Backbone.history.reverse = function(name, params) {
+    Backbone.history.reverse = function(name, params, options) {
         // Find a route given the name and a set of paramaters.
         //
         // If no perfect match can be found (using all the params). Then we
@@ -31,8 +31,10 @@ define(['backbone', 'underscore'], function(Backbone, _) {
         var possibleHandlers = _.where(Backbone.history.handlers, {name: name});
         var match;
         var url;
+        options = options || {};
+        var prefix = options.prefix || '';
         _.find(possibleHandlers, function(handler) {
-            url = Backbone.history.root + handler.routeStr;
+            url = prefix + Backbone.history.root + handler.routeStr;
             match = true;
             _.each(params, function(val, key) {
                 if (url.indexOf(':'+key)===-1 && url.indexOf('*'+key)===-1) {
