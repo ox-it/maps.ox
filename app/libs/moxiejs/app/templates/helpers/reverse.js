@@ -6,7 +6,7 @@ define(["handlebars", "backbone"], function(Handlebars, Backbone) {
             params[args[i]] = args[i+1];
         }
         try {
-            return Backbone.history.reverse(name, params, {prefix: '/#'});
+            return Backbone.history.reverse(name, params, {prefix: '#'});
         } catch(e) {
             // No matching URL found.
             return null;
