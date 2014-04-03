@@ -92,6 +92,11 @@
         }
     }
 
+    .btn-toggle-browse {
+        &:before {
+            padding-top: 6px;
+        }
+    }
     .btn-toggle-browse, .btn-toggle-location {
         &:before {
             vertical-align: middle;
