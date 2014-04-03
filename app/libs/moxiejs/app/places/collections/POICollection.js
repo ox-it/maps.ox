@@ -148,6 +148,7 @@ define(["backbone", "core/collections/MoxieCollection", "underscore", "places/mo
                         _.each(facet, function(f) {
                             if (f.value && (f.value===true || f.value==="true")) {
                                 var title = fieldName.replace(ACCESSIBILITY_BOOLEAN+'_', '').replace('_', ' ', 'g');
+                                title = title.substring(0,1).toUpperCase() + title.substring(1);
                                 if (!('accessibility' in this.facets)) {
                                     this.facets.accessibility = [];
                                 }
