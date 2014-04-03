@@ -2,13 +2,16 @@
     <input type="text" placeholder="Search&hellip;" name="q" value="{{query.q}}">
 </div>
 <div class="map-options {{#if filtering}}something-highlighted{{/if}}">
-    <span>{{#unless sortAZ}}<a class="sort-az" href="#">A-Z</a>{{else}}A-Z{{/unless}}</span><span>{{#unless sortNearby}}<a class="sort-nearby" href="#">Nearby</a>{{else}}Nearby{{/unless}}</span><span class="filter {{#if filtering}}highlighted{{/if}}"><a href="#">Filters</a></span>
+    <span>{{#unless sortAZ}}<a class="sort-az" href="#">A-Z</a>{{else}}A-Z{{/unless}}</span><span>{{#unless sortNearby}}<a class="sort-nearby" href="#">Nearby</a>{{else}}Nearby{{/unless}}</span><span class="filter {{#if facetsExist}}{{#if filtering}}highlighted{{/if}}{{/if}}">{{#if facetsExist}}<a href="#">Filters</a>{{else}}Filters{{/if}}</span>
 </div>
 <div class="messages">
 </div>
-<div class="filters {{#unless filtering}}hide-filters{{/unless}}">
+
+{{#if facetsExist}}
+<div class="filters {{#if singleFacetList}}single-facet-list{{/if}} {{#unless filtering}}hide-filters{{/unless}}">
     {{#if facets.type_exact}}
     <div class="facets type-exact">
+        <h3>Categories</h3>
         <ul>
             {{#facets.type_exact}}
             <li><label><input {{#if checked}}checked="checked"{{/if}} type="checkbox" name="{{ value }}">{{ title }}</label></li>
@@ -27,6 +30,7 @@
     </div>
     {{/if}}
 </div>
+{{/if}}
 <ul class="results-list">
 </ul>
 {{#if midRequest}}
