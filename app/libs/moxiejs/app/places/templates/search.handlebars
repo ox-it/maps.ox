@@ -7,23 +7,25 @@
 <div class="messages">
 </div>
 <div class="filters {{#unless filtering}}hide-filters{{/unless}}">
-    {{#if facets}}
-    <div class="facets">
+    {{#if facets.type_exact}}
+    <div class="facets type-exact">
         <ul>
-            {{#facets}}
-            <li><label><input {{#if checked}}checked="checked"{{/if}} type="checkbox" name="{{ name }}">{{ title }}</label></li>
-            {{/facets}}
+            {{#facets.type_exact}}
+            <li><label><input {{#if checked}}checked="checked"{{/if}} type="checkbox" name="{{ value }}">{{ title }}</label></li>
+            {{/facets.type_exact}}
         </ul>
     </div>
     {{/if}}
-    <div class="facets">
+    {{#if facets.accessibility}}
+    <div class="facets accessibility">
         <h3>Accessibility</h3>
         <ul>
-            <li><label><input type="checkbox">Ramp Access</label></li>
-            <li><label><input type="checkbox">Adapted Furniture</label></li>
-            <li><label><input type="checkbox">Accessible Toilets</label></li>
+            {{#facets.accessibility}}
+            <li><label><input {{#if checked}}checked="checked"{{/if}} type="checkbox" name="{{ name }}" value="{{ value }}">{{ title }}</label></li>
+            {{/facets.accessibility}}
         </ul>
     </div>
+    {{/if}}
 </div>
 <ul class="results-list">
 </ul>
