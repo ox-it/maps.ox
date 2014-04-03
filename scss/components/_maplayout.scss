@@ -73,6 +73,7 @@
             //       additional-toggles with toggle-location button
             margin: -4px 0px 0px;
             li {
+                background-position: 0px 3px;
                 background-repeat: no-repeat;
                 height: $map-controls-size;
                 display: inline-block;
@@ -92,6 +93,9 @@
     }
 
     .btn-toggle-browse, .btn-toggle-location {
+        &:before {
+            vertical-align: middle;
+        }
         overflow: hidden;
         cursor: pointer;
         position: absolute;
