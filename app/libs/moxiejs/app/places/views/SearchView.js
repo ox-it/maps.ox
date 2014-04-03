@@ -29,7 +29,8 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
         events: {
             'keypress :input': "searchEvent",
             'click .deleteicon': "clearSearch",
-            'change .filters input': "clickFacet",
+            'change .type-exact input': "clickTypeFacet",
+            'change .accessibility input': "clickAccessibilityFacet",
             'click .map-options .sort-nearby': "sortNearby",
             'click .map-options .sort-az': "sortAZ",
             'click .map-options .filter': "filter",
@@ -71,12 +72,12 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
         },
 
         parentFacets: null,
-        clickFacet: function(ev) {
+        clickTypeFacet: function(ev) {
             if (!this.parentFacets) {
                 this.parentFacets = _.clone(this.collection.facets);
             }
             var type_exact = ev.target.name;
-            var facet = _.findWhere(this.parentFacets, {name: type_exact});
+            var facet = _.findWhere(this.parentFacets.type_exact, {name: type_exact});
             if (ev.target.checked) {
                 if (this.collection.query.type_exact) {
                     this.collection.query.type_exact.push(type_exact);
@@ -89,6 +90,27 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
                 var index = this.collection.query.type_exact.indexOf(type_exact);
                 if (this.collection.query.type_exact && index!==-1) {
                     this.collection.query.type_exact.splice(index, 1);
+                    this.collection.fetch();
+                }
+                facet.checked = false;
+            }
+        },
+
+        clickAccessibilityFacet: function(ev) {
+            console.log(ev);
+            if (!this.parentFacets) {
+                this.parentFacets = _.clone(this.collection.facets);
+            }
+            var name = ev.target.name;
+            var value = ev.target.value;
+            var facet = _.findWhere(this.parentFacets.accessibility, {name: name});
+            if (ev.target.checked) {
+                this.collection.query[name] = value;
+                this.collection.fetch();
+                facet.checked = true;
+            } else {
+                if (name in this.collection.query) {
+                    delete this.collection.query[name];
                     this.collection.fetch();
                 }
                 facet.checked = false;
