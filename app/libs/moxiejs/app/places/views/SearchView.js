@@ -33,7 +33,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
             'change .accessibility input': "clickAccessibilityFacet",
             'click .map-options .sort-nearby': "sortNearby",
             'click .map-options .sort-az': "sortAZ",
-            'click .map-options .filter': "filter",
+            'click .map-options .filter a': "filter",
         },
 
         filtering: false,
@@ -97,7 +97,6 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
         },
 
         clickAccessibilityFacet: function(ev) {
-            console.log(ev);
             if (!this.parentFacets) {
                 this.parentFacets = _.clone(this.collection.facets);
             }
@@ -151,7 +150,12 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
                 sortNearby: this.sortOrder===SORT_NEARBY,
                 filtering: this.filtering,
                 facets: this.parentFacets || this.collection.facets,
+                facetsExist: false,
             };
+            if (!_.isEmpty(context.facets)) {
+                context.facetsExist = true;
+                context.singleFacetList = _.keys(context.facets).length === 1;
+            }
             return context;
         },
 
