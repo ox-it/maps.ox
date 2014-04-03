@@ -1,5 +1,7 @@
 define(["backbone", "core/collections/MoxieCollection", "underscore", "places/models/POIModel", "moxie.conf", 'moxie.position', 'leaflet'], function(Backbone, MoxieCollection, _, POI, conf, userPosition, L) {
 
+    var ACCESSIBILITY_BOOLEAN = 'accessibility_has';
+
     var POIs = MoxieCollection.extend({
         model: POI,
 
@@ -134,22 +136,64 @@ define(["backbone", "core/collections/MoxieCollection", "underscore", "places/mo
             // Called when we want to empty the existing collection
             // For example when a search is issued and we clear the existing results.
             this.next_results = data._links['hl:next'];
-            this.facets = data._links['hl:types'];
+            this.facets = {};
+            _.each(data._links, function(facet, field) {
+                if (field.indexOf('facet')===0) {
+                    var fieldName = field.substring(field.indexOf(':') + 1);
+                    if (fieldName==='type_exact') {
+                        if (facet.length > 1) {
+                            this.facets[fieldName] = facet;
+                        }
+                    } else if (fieldName.indexOf(ACCESSIBILITY_BOOLEAN)===0) {
+                        _.each(facet, function(f) {
+                            if (f.value && (f.value===true || f.value==="true")) {
+                                var title = fieldName.replace(ACCESSIBILITY_BOOLEAN+'_', '').replace('_', ' ', 'g');
+                                if (!('accessibility' in this.facets)) {
+                                    this.facets.accessibility = [];
+                                }
+                                this.facets.accessibility.push({
+                                    title: title,
+                                    name: fieldName,
+                                    value: f.value,
+                                    href: f.href,
+                                });
+                            }
+                        }, this);
+                    } else {
+                        this.facets[fieldName] = facet;
+                    }
+                }
+            }, this);
             return data._embedded.pois;
         },
+
+        defaultFacets: [
+            'type_exact',
+            'accessibility_has_accessible_toilets',
+            'accessibility_has_adapted_furniture',
+            'accessibility_has_cafe_refreshments',
+            'accessibility_has_computer_access',
+            'accessibility_has_hearing_system',
+            'accessibility_has_lifts_to_all_floors',
+            'accessibility_has_quiet_space',
+        ],
 
         url: function() {
             var query = _.clone(this.query);
             if (this.options.defaultQuery && _.isEmpty(query)) {
                 query = this.options.defaultQuery;
             }
-            var qstring = $.param(query, true);
             var searchPath;
             if (this.options.format && this.options.format === conf.formats.geoJSON) {
                 searchPath = conf.pathFor('places_search_geojson');
             } else {
+                // Only facet on non-geojson requests
+                if (!query.facet) {
+                    query.facet = this.defaultFacets;
+                }
                 searchPath = conf.pathFor('places_search');
             }
+            var qstring = $.param(query, true);
             if (qstring) {
                 searchPath += ('?' + qstring);
             }
