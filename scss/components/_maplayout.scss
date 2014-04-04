@@ -73,6 +73,7 @@
             //       additional-toggles with toggle-location button
             margin: -4px 0px 0px;
             li {
+                background-position: 0px 3px;
                 background-repeat: no-repeat;
                 height: $map-controls-size;
                 display: inline-block;
@@ -82,12 +83,21 @@
         }
         .btn-toggle-public-transport {
             background-image: url('../maki/renders/bus-18@2x.png');
+            &.selected {
+                background-image: url('../images/maki-selected/bus-selected-18@2x.png');
+            }
         }
         .btn-toggle-driving {
             background-image: url('../maki/renders/car-18@2x.png');
+            &.selected {
+                background-image: url('../images/maki-selected/car-selected-18@2x.png');
+            }
         }
         .btn-toggle-cycling {
             background-image: url('../maki/renders/bicycle-18@2x.png');
+            &.selected {
+                background-image: url('../images/maki-selected/bicycle-selected-18@2x.png');
+            }
         }
     }
 
@@ -98,13 +108,17 @@
         display: inline-block;
         background: $body-background;
         z-index: 10001;
-        width: $map-controls-size;
+        width: $map-controls-size + 3px;
         height: $map-controls-size;
         border-right: $map-pane-border;
         border-bottom: $map-pane-border;
         text-align: center;
         font-size: 1.6em;
         color: $map-toggle-active;
+    }
+    .btn-toggle-browse span {
+        // Vertical align the button
+        margin-top: 4px;
     }
     .btn-toggle-location {
         &.active {

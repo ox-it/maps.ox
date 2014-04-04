@@ -1,4 +1,6 @@
 define([], function() {
+
+    var DEFAULT_LOCATION = {latitude: 51.752018, longitude: -1.257723};
     var GEOJSON = 'geoJSON';
     var MoxieConf = {
         endpoint: 'http://new.m.ox.ac.uk/api',
@@ -14,7 +16,7 @@ define([], function() {
         pathFor: function(api_method) {
             return this.paths[api_method];
         },
-        defaultLocation: {coords: {latitude: 51.752018, longitude: -1.257723}},
+        defaultLocation: {coords: DEFAULT_LOCATION},
         mapbox: {key: 'mobileox.4xjkbj4i'},
         map: {
             defaultZoom: 15,
@@ -178,6 +180,8 @@ define([], function() {
                 defaultQuery: {
                     type_exact: ['/transport/rail-station', '/transport/bus-stop'],
                     count: 200,
+                    lat: DEFAULT_LOCATION.latitude,
+                    lon: DEFAULT_LOCATION.longitude,
                 },
                 format: GEOJSON,
                 icon: {
@@ -190,6 +194,8 @@ define([], function() {
                 defaultQuery: {
                     type_exact: '/transport/bicycle-parking',
                     count: 200,
+                    lat: DEFAULT_LOCATION.latitude,
+                    lon: DEFAULT_LOCATION.longitude,
                 },
                 format: GEOJSON,
                 icon: {
@@ -202,6 +208,8 @@ define([], function() {
                 defaultQuery: {
                     type: '/transport/car-park',
                     count: 100,
+                    lat: DEFAULT_LOCATION.latitude,
+                    lon: DEFAULT_LOCATION.longitude,
                 },
                 format: GEOJSON,
                 icon: {

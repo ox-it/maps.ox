@@ -16,13 +16,16 @@ define(['backbone', 'underscore', 'jquery', 'moxie.position', 'core/views/MapVie
             'click .btn-toggle-public-transport': 'togglePublicTransport',
         },
 
-        toggleDriving: function() {
+        toggleDriving: function(ev) {
+            $(ev.target).toggleClass('selected');
             Backbone.trigger('places:toggle-driving');
         },
-        toggleCycling: function() {
+        toggleCycling: function(ev) {
+            $(ev.target).toggleClass('selected');
             Backbone.trigger('places:toggle-cycling');
         },
-        togglePublicTransport: function() {
+        togglePublicTransport: function(ev) {
+            $(ev.target).toggleClass('selected');
             Backbone.trigger('places:toggle-public-transport');
         },
 
