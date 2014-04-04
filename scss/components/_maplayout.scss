@@ -92,28 +92,24 @@
         }
     }
 
-    .btn-toggle-browse {
-        &:before {
-            padding-top: 6px;
-        }
-    }
     .btn-toggle-browse, .btn-toggle-location {
-        &:before {
-            vertical-align: middle;
-        }
         overflow: hidden;
         cursor: pointer;
         position: absolute;
         display: inline-block;
         background: $body-background;
         z-index: 10001;
-        width: $map-controls-size;
+        width: $map-controls-size + 3px;
         height: $map-controls-size;
         border-right: $map-pane-border;
         border-bottom: $map-pane-border;
         text-align: center;
         font-size: 1.6em;
         color: $map-toggle-active;
+    }
+    .btn-toggle-browse span {
+        // Vertical align the button
+        margin-top: 4px;
     }
     .btn-toggle-location {
         &.active {
