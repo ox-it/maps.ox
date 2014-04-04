@@ -60,6 +60,11 @@ body {
     padding: 8px 5px;
     background-color: $pantone279;
     color: $body-background;
+    &.single-facet-list {
+        .facets {
+            width: 100%;
+        }
+    }
     .facets {
         display: inline-block;
         width: 49%;
