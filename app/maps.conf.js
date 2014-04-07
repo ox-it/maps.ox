@@ -176,6 +176,7 @@ define([], function() {
         },
         additionalCollections: {
             'public-transport': {
+                hasRTI: true,
                 toggleEvent: 'places:toggle-public-transport',
                 defaultQuery: {
                     type_exact: ['/transport/rail-station', '/transport/bus-stop'],
@@ -187,6 +188,7 @@ define([], function() {
                 icon: {
                     iconSize: [18, 18],
                     iconUrl: 'maki/renders/bus-18.png',
+                    clickable: true,
                 },
             },
             'cycling': {
@@ -201,6 +203,7 @@ define([], function() {
                 icon: {
                     iconSize: [18, 18],
                     iconUrl: 'maki/renders/bicycle-18.png',
+                    clickable: false,
                 },
             },
             'driving': {
@@ -215,6 +218,7 @@ define([], function() {
                 icon: {
                     iconSize: [18, 18],
                     iconUrl: 'maki/renders/car-18.png',
+                    clickable: false,
                 },
             }
         }
