@@ -121,6 +121,8 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
                     );
                 });
                 detailView.render();
+            } else {
+                layout.removeDetail();
             }
         },
 
