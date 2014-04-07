@@ -5,7 +5,12 @@ define(["backbone", "underscore", "leaflet", "moxie.conf", "places/collections/P
             if (this.options.toggleEvent) {
                 Backbone.on(this.options.toggleEvent, this.toggle, this);
             }
+            if (this.options.hasRTI) {
+                this.hasRTI = this.options.hasRTI;
+            }
         },
+
+        hasRTI: false,
 
         getIcon: function() {
             var options = this.options.icon || {};

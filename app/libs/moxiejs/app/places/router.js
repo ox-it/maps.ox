@@ -87,11 +87,12 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
                 poi = new POI({id: id});
                 poi.fetch();
             }
-            this.showDetail(poi, false, false);
+            this.showDetail(poi, false);
         },
 
-        showDetail: function(poi, browsePane, detailPane) {
+        showDetail: function(poi, detailPane) {
             var layout = app.getLayout('MapBrowseLayout', {followUser: this.followUser});
+            var browsePane = layout.hasBrowsePane();
             if (media.isPhone() || !browsePane) {
                 layout.removeBrowse();
                 if (!browsePane) {
@@ -120,6 +121,8 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
                     );
                 });
                 detailView.render();
+            } else {
+                layout.removeDetail();
             }
         },
 
@@ -137,11 +140,7 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
                 poi = new POI({id: id, showRTI: showRTI});
                 poi.fetch();
             }
-            var browsePane = false;
-            if (pois.length > 0) {
-                browsePane = true;
-            }
-            this.showDetail(poi, browsePane, true);
+            this.showDetail(poi, true);
         },
 
     };

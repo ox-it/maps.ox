@@ -94,6 +94,9 @@ define(['backbone', 'underscore', 'jquery', 'moxie.position', 'core/views/MapVie
             this.$el.addClass('with-browse');
             this.mapView.invalidateMapSize();
         },
+        hasBrowsePane: function() {
+            return this.$el.hasClass('with-browse');
+        },
     });
 
     return MapBrowseLayout;

@@ -104,18 +104,30 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
             collection.on("show", function(collection) {
                 if (!this.additionalLayers[name]) {
                     var icon = collection.getIcon();
+                    var clickable = collection.hasRTI || false;
                     var markers = new L.MarkerClusterGroup({
                         spiderfyOnMaxZoom: false,
                         showCoverageOnHover: false,
-                        zoomToBoundsOnClick: false,
+                        zoomToBoundsOnClick: clickable,
                         singleMarkerMode: true,
                         maxClusterRadius: 40,
                         disableClusteringAtZoom: 16,
                         iconCreateFunction: function(cluster) {
                             return icon;
-                        }
+                        },
                     });
-                    markers.addLayer(L.geoJson(collection.geoJSON));
+                    if (clickable) {
+                        markers.on('click', function (a) {
+                            Backbone.history.navigate('#/places/'+a.layer.feature.id, {trigger: true, replace: false});
+                        });
+                    }
+                    markers.addLayer(L.geoJson(collection.geoJSON, {
+                        pointToLayer: function(geojson, latlng) {
+                            return new L.Marker(latlng, {
+                                clickable: clickable,
+                            });
+                        }
+                    }));
                     if (this.visibleLayers.indexOf(name)===-1) {
                         this.additionalLayers[name] = markers;
                     }
