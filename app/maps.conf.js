@@ -66,7 +66,7 @@ define([], function() {
                         {
                             "type": "library",
                             "type_name": "Library",
-                            "type_name_plural": "Librairies",
+                            "type_name_plural": "Libraries",
                             "type_prefixed": "/university/library"
                         },
                         {
