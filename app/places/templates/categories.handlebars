@@ -1,0 +1,42 @@
+<div class="search-input">
+    <input type="text" id="input_search" placeholder="Search&hellip;" name="q">
+</div>
+
+<div class="map-options">
+    <span>{{#unless university}}<a href="{{ reverse 'categories' }}">University</a>{{else}}University{{/unless}}</span><span>{{#unless amenities}}<a href="{{ reverse 'categories' 'category_name' '/amenities'}}">Amenities</a>{{else}}Amenities{{/unless}}</span>
+</div>
+
+<div class="messages">
+</div>
+
+{{#if types}}
+<ul class="results-list" id="categories">
+{{#types}}
+<li{{#if toggle}}{{#if checked}} class="highlighted" {{/if}}{{/if}}>
+        <h3>
+            {{#if toggle}}
+            <label><input type="checkbox" {{#if checked}}checked="true"{{/if}} name="{{ type_prefixed }}">{{ type_name_plural }} </label>
+            {{ else }}
+                {{#if hasTypes}}
+                    {{! If this category has any sub-categories, place a link to them }}
+                    {{#if ../../category_name}}
+                        <a href="{{ reverse 'search'}}?type={{ type_prefixed }}">
+                    {{else}}
+                        <a href="{{ reverse 'categories' 'category_name' type_prefixed }}">
+                    {{/if}}
+                {{else}}
+                    <a href="{{ reverse 'search'}}?type={{ type_prefixed }}">
+                {{/if}}
+                {{ type_name_plural }}
+                {{#if description}}
+                    <p class="subtext">{{ description }}</p>
+                {{/if}}
+            {{/if}}
+            </a>
+        </h3>
+    </li>
+{{/types}}
+</ul>
+{{else}}
+<img src="images/preloader.gif" class="preloader">
+{{/if}}
