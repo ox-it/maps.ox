@@ -1,6 +1,5 @@
-define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView',
-        'hbs!places/templates/detail'],
-    function($, Backbone, _, conf, ErrorView, detailTemplate){
+define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView', 'places/collections/NumberedPOICollection', 'hbs!places/templates/detail'],
+    function($, Backbone, _, conf, ErrorView, NumberedPOICollection, detailTemplate){
     var RTI_REFRESH = 15000;    // 15 seconds
     var DetailView = Backbone.View.extend({
 
@@ -137,7 +136,27 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
         template: detailTemplate,
         manage: true,
 
+
+        additionalPOIs: null,
+
         beforeRender: function() {
+            if (!this.additionalPOIs) {
+                if (this.model.has('_links')) {
+                    var children = this.model.get('_links').child || [];
+                    console.log(children);
+                    var poids = [];
+                    _.each(children, function(child) {
+                        poids.push(child.href.split('/').pop());
+                    });
+                    console.log(poids);
+                    this.additionalPOIs =  new NumberedPOICollection({
+                        url: conf.urlFor('places_id') + poids.join(','),
+                    });
+                    this.additionalPOIs.fetch({success: _.bind(this.render, this)});
+                }
+            } else {
+                Backbone.trigger('map:numbered-collection', this.additionalPOIs);
+            }
             if (this.model.get('name')) {
                 Backbone.trigger('domchange:title', this.model.get('name'));
             } else if (this.model.get('type_name')) {
