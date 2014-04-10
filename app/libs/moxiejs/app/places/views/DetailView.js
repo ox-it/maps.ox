@@ -33,8 +33,9 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
             '/university/site': {relation: 'occupies', index: 2},
             '/university/library': {relation: 'libraries', index: 3},
             '/university/room': {relation: 'contains', index: 4},
-            '/university/department': {relation: 'organisations', index: 5},
-            '/university/college': {relation: 'organisations', index: 6},
+            '/leisure/museum': {relation: 'contains', index: 5},
+            '/university/department': {relation: 'organisations', index: 6},
+            '/university/college': {relation: 'organisations', index: 7},
         },
 
         serialize: function() {
