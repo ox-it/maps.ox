@@ -7,6 +7,7 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
             this.features = [];
             this.additionalLayers = {};
             Backbone.on('map:additional-collection', this.registerAdditionalCollection, this);
+            Backbone.on('map:numbered-collection', this.registerNumberedCollection, this);
         },
 
         attributes: {},
@@ -96,6 +97,10 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
             if (this.collection.length) {
                 this.resetMapContents();
             }
+        },
+
+        registerNumberedCollection: function(collection) {
+            collection.each(this.placePOI, this);
         },
 
         visibleLayers: [],

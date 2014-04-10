@@ -13,6 +13,7 @@ var require = {
         "json2": "libs/json2",
         "i18nprecompile": "libs/i18nprecompile",
         "leaflet": "libs/leaflet",
+        "leaflet.markercluster": "libs/leaflet.markercluster",
         "time_domain": "libs/time_domain",
         "fastclick": "libs/fastclick",
         "moment": "libs/moment",
@@ -27,6 +28,7 @@ var require = {
         "foundation": "libs/foundation/foundation",
         "foundation.tooltips": "libs/foundation/foundation.tooltips",
         "wellknown": "libs/wellknown",
+        "backbone.reverse": "libs/backbone.reverse",
 
         // Testing libs
         "jasmine": "tests/libs/jasmine-1.3.1/jasmine",
@@ -50,12 +52,11 @@ var require = {
         "backbone.queryparams": {
             "deps": ["backbone"]
         },
-        "backbone.layoutmanager": {
-            "deps": ["backbone"],
-            "exports": "Backbone.Layout"
-        },
         "leaflet": {
             "exports": "L"
+        },
+        "leaflet.markercluster": {
+            "deps": ["leaflet"],
         },
         "wellknown": {
             "exports": "parse"
