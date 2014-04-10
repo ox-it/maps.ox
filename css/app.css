@@ -380,6 +380,43 @@ ul.results-list li .distance {
   padding-left: 5px;
 }
 
+/* line 243, ../scss/components/_maplayout.scss */
+dl.poi-children dd a {
+  margin-left: 38px;
+}
+
+/* line 248, ../scss/components/_maplayout.scss */
+dl.poi-children dd > div + a {
+  margin-left: 8px;
+}
+
+/* line 252, ../scss/components/_maplayout.scss */
+.numbered-marker {
+  width: 30px;
+  height: 30px;
+  background-color: #000;
+  background-clip: padding-box;
+  border-radius: 20px;
+  display: inline-block;
+}
+
+/* line 260, ../scss/components/_maplayout.scss */
+.numbered-marker div {
+  background-color: #fff;
+  width: 26px;
+  height: 26px;
+  margin-left: 2px;
+  margin-top: 2px;
+  text-align: center;
+  border-radius: 13px;
+  font: 15px "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+
+/* line 271, ../scss/components/_maplayout.scss */
+.numbered-marker span {
+  line-height: 26px;
+}
+
 /* Initialize */
 /* line 4, ../scss/components/_places_detail.scss */
 .content-detail {
