@@ -143,8 +143,6 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                     } else {
                         this.additionalPOIs =  new NumberedPOICollection({
                             sortFunction: _.bind(function(child) {
-                                console.log("sort function");
-                                console.log(child.type[0]);
                                 if (child.type[0] in this.childTypes) {
                                     return this.childTypes[child.type[0]].index;
                                 } else {
