@@ -182,7 +182,7 @@ define(["backbone", "core/collections/MoxieCollection", "underscore", "places/mo
             'accessibility_has_computer_access',
             'accessibility_has_hearing_system',
             'accessibility_has_lifts_to_all_floors',
-            'accessibility_has_quiet_space',
+            'accessibility_has_quiet_space'
         ],
 
         url: function() {
