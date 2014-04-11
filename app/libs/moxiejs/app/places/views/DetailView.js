@@ -126,6 +126,14 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                     }
                 }
             }
+            _.each(context, function(relations, key) {
+                if (_.isArray(relations)) {
+                    var sortedRels = _.sortBy(relations, function(poi) {
+                        return poi.number || 1000;
+                    });
+                    context[key] = sortedRels;
+                }
+            });
 
             return _.extend(context, {
                 poi: poi,
