@@ -12,6 +12,16 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
             'class': 'content-detail'
         },
 
+        events: {
+            'click a.zoom-all': 'zoomToAll',
+        },
+
+        zoomToAll: function(ev) {
+            ev.preventDefault();
+            Backbone.trigger('map:zoom-all-markers');
+            return false;
+        },
+
         renderError: function(model, response) {
             // Error fetching from the API, render a nice error message.
             var message;
@@ -56,7 +66,9 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                 depiction = poi.picture_depiction[0];
             }
 
-            var context = {};
+            var context = {
+                showZoomButton: false,
+            };
             if (poi._links) {
                 for (var i in poi._links.child) {
                     var child = poi._links.child[i];
@@ -66,6 +78,9 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                         if (this.additionalPOIs && this.additionalPOIs.length > 0) {
                             var additionalPOI = this.additionalPOIs.get(child.href.split('/').pop());
                             if (additionalPOI) {
+                                if (additionalPOI.has('number')) {
+                                    context.showZoomButton = true;
+                                }
                                 childObj = additionalPOI.toJSON();
                             }
                         }
