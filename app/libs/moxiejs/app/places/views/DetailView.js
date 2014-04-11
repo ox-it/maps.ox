@@ -29,8 +29,8 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
         },
 
         childTypes: {
-            '/university/building': {relation: 'occupies', index: 1},
-            '/university/site': {relation: 'occupies', index: 2},
+            '/university/site': {relation: 'occupies', index: 1},
+            '/university/building': {relation: 'occupies', index: 2},
             '/university/library': {relation: 'libraries', index: 3},
             '/university/room': {relation: 'contains', index: 4},
             '/leisure/museum': {relation: 'contains', index: 5},
@@ -138,7 +138,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                         poids.push(child.href.split('/').pop());
                     });
                     if (poids.length === 1) {
-                        var poi = new NumberedPOI({id: poids[0], number: 1});
+                        var poi = new NumberedPOI({id: poids[0], singlePOI: true});
                         poi.fetch({success: _.bind(this.render, this)});
                         this.additionalPOIs =  new NumberedPOICollection([poi]);
                     } else {
