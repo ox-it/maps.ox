@@ -68,6 +68,9 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
 
             var context = {
                 showZoomButton: false,
+                contains: [],
+                partOf: [],
+                occupiedBy: [],
             };
             if (poi._links) {
                 for (var i in poi._links.child) {
@@ -90,16 +93,12 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                             } else {
                                 context[this.childTypes[type].relation] = [childObj];
                             }
-                        } else if ('contains' in context) {
-                            context.contains.push(childObj);
                         } else {
-                            context.contains = [childObj];
+                            context.contains.push(childObj);
                         }
                     }
                 }
                 if (poi._links.parent) {
-                    context.partOf = [];
-                    context.occupiedBy = [];
                     var parents = [];
                     if (!$.isArray(poi._links.parent)) {
                         parents.push(poi._links.parent);
