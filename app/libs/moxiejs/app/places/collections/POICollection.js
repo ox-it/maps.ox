@@ -45,7 +45,13 @@ define(["backbone", "core/collections/MoxieCollection", "underscore", "places/mo
                 // bound by shape if possible
                 var shape = this.at(0).getMapFeature();
                 if (shape) { // getMapFeature can return undefined if fails parsing
-                    bounds = shape.getBounds();
+                    // Even though we have a shape it's possible getMapFeature
+                    // couldreturn a Marker (for numbered POIs)
+                    if (shape instanceof L.Marker) {
+                        latlngs.push(shape.getLatLng());
+                    } else {
+                        bounds = shape.getBounds();
+                    }
                 }
             } else if (!userPosition.listening()) {
                 this.each(function(poi) {
