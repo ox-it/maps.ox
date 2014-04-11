@@ -13,8 +13,21 @@ define(['underscore', 'places/collections/POICollection', 'places/models/Numbere
                 if (this.sortFunction) {
                     pois = _.sortBy(pois, this.sortFunction);
                 }
-                _.each(pois, function(poi, index) {
-                    poi.number = index + 1;
+                // Give POIs with the same lat/lon the same number for the map ref
+                //
+                // Numbering maps a {lat+lon} string to an Array of pois
+                var numbering = {};
+                var count = 1;
+                _.each(pois, function(poi) {
+                    var latlon = "" + poi.lat + poi.lon;
+                    if (latlon in numbering) {
+                        poi.number = numbering[latlon][0].number;
+                        numbering[latlon].push(poi);
+                    } else {
+                        poi.number = count;
+                        numbering[latlon] = [poi];
+                        count++;
+                    }
                 });
             }
             return POICollection.prototype.parse.apply(this, arguments);
