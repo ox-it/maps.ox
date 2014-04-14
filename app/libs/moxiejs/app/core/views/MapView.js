@@ -136,7 +136,7 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
                             });
                         }
                     }));
-                    if (this.visibleLayers.indexOf(name)===-1) {
+                    if (_.indexOf(this.visibleLayers, name)===-1) {
                         this.additionalLayers[name] = markers;
                     }
                 }
