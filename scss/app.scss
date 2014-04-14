@@ -33,8 +33,11 @@ body {
         padding: 5px;
         min-width: 70px;
         border-left: $map-pane-border;
-        font-size: 1em;
+        font-size: 0.9em;
         line-height: 1.5em;
+    }
+    span.filter {
+            color: $map-toggle-inactive;
     }
     span:first-child {
         border-left: none;
