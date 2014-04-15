@@ -9,6 +9,11 @@
 @import "components/maplayout";
 @import "components/places_detail";
 
+$filter-padding: 8px;
+$filter-label-margin: 3px;
+// line up the filter labels with the results text
+$filter-label-padding: 16px;
+
 html, body { height: 100%; }
 body {
     overflow-x: hidden;
@@ -31,9 +36,9 @@ body {
     span {
         display: inline-block;
         padding: 5px;
-        min-width: 70px;
+        min-width: 65px;
         border-left: $map-pane-border;
-        font-size: 0.9em;
+        font-size: 0.95em;
         line-height: 1.5em;
         color: $oxfordBlue;
     }
@@ -61,10 +66,10 @@ body {
 }
 
 .filters {
-    padding: 8px 5px;
+    padding: $filter-padding $filter-padding ($filter-padding - 2px);
     background-color: $pantone279;
     color: $body-background;
-    &.single-facet-list {
+     &.single-facet-list {
         .facets {
             width: 100%;
         }
@@ -79,24 +84,27 @@ body {
         padding: 0;
         list-style: none;
         li {
-            margin: 5px;
+            margin: 5px 0;
         }
     }
     label {
         display: block;
-        padding-left: 15px;
-        text-indent: -15px;
+        padding-left: $filter-label-padding;
+        text-indent: -$filter-label-padding;
+        font-size: 0.9em;
     }
     input {
         position: relative;
         top: -1px;
-        margin:0;
+        margin:0 2px 0 0;
         padding: 0;
         width: 13px;
         height: 13px;
         vertical-align: middle;
     }
     h3 {
-        margin: 0;
+        margin: 0 0 $filter-label-margin;
+        font-weight: normal;
+        font-size: 0.95em;
     }
 }
