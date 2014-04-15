@@ -19,8 +19,7 @@ define(["core/collections/MoxieCollection", "underscore", "places/models/Categor
             var flattened_cats = [];
             function flatten_categories(parentcat, depth, cats) {
                 depth++;
-                for (var i=0; i < cats.length; i++) {
-                    var cat_data = cats[i];
+                _.each(cats, function(cat_data) {
                     // How far into the tree are we? This is kept around as a convenience.
                     cat_data.parentcat = parentcat;
                     cat_data.depth = depth;
@@ -30,7 +29,7 @@ define(["core/collections/MoxieCollection", "underscore", "places/models/Categor
                     }
                     // Don't include the recursive structure in the models
                     flattened_cats.push(_.omit(cat_data, ['types']));
-                }
+                });
             }
             data.type = data.type || '/';
             data.type_prefixed = data.type_prefixed || '/';

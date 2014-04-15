@@ -7,6 +7,8 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
             this.features = [];
             this.additionalLayers = {};
             Backbone.on('map:additional-collection', this.registerAdditionalCollection, this);
+            Backbone.on('map:numbered-collection', this.registerNumberedCollection, this);
+            Backbone.on('map:zoom-all-markers', this.setMapBounds, this);
         },
 
         attributes: {},
@@ -98,6 +100,12 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
             }
         },
 
+        numberedCollection: null,
+        registerNumberedCollection: function(collection) {
+            this.numberedCollection = collection;
+            collection.each(this.placePOI, this);
+        },
+
         visibleLayers: [],
 
         registerAdditionalCollection: function(collection, name) {
@@ -128,7 +136,7 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
                             });
                         }
                     }));
-                    if (this.visibleLayers.indexOf(name)===-1) {
+                    if (_.indexOf(this.visibleLayers, name)===-1) {
                         this.additionalLayers[name] = markers;
                     }
                 }
@@ -147,6 +155,7 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
         },
 
         unsetCollection: function() {
+            this.numberedCollection = null;
             if (this.collection) {
                 this.collection.off(null, null, this);
                 this.collection = null;
@@ -214,6 +223,9 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
             // Only set map bounds if we have a collection
             if (this.collection && this.collection.length > 0) {
                 var bounds = this.collection.getBounds();
+                if (this.numberedCollection) {
+                    bounds.extend(this.numberedCollection.getBounds());
+                }
                 if (bounds) {
                     if (this.showUser && this.user_position) {
                         bounds.extend(this.user_position);

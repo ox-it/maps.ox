@@ -41,7 +41,8 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
         routes: routes,
 
         categories: function(category_name) {
-            if (_.isUndefined(category_name) && conf.defaultCategory) {
+            // category_name seems to be passed as an empty string here on IE8
+            if ((_.isUndefined(category_name) || category_name === '') && conf.defaultCategory) {
                 category_name = conf.defaultCategory;
             }
             var layout = app.getLayout('MapBrowseLayout', {followUser: this.followUser});

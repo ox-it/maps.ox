@@ -165,10 +165,10 @@ define([], function() {
                             icon: {
                                 iconSize: [18, 18],
                                 iconUrl: 'maki/renders/waste-basket-18.png',
-                            },
-                        },
+                            }
+                        }
                     ]
-                },
+                }
             ]
         },
         formats: {
