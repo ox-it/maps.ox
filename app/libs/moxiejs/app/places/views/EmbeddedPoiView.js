@@ -2,7 +2,8 @@ define(['jquery', 'backbone', 'underscore', 'leaflet', 'moxie.conf', 'moxie.posi
     function($, Backbone, _, L, MoxieConf, userPosition, embeddedTemplate){
     var EmbeddedPoiView = Backbone.View.extend({
 
-        initialize: function() {
+        initialize: function(options) {
+            this.options = options;
             _.bindAll(this);
         },
 

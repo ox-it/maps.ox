@@ -50,7 +50,6 @@ var require = {
         "places/utils": "libs/moxiejs/app/places/utils",
         "places/views/ItemView": "libs/moxiejs/app/places/views/ItemView",
         "places/models/CategoryModel": "libs/moxiejs/app/places/models/CategoryModel",
-        "places/templates/categories": "libs/moxiejs/app/places/templates/categories",
         "places/templates/search": "libs/moxiejs/app/places/templates/search",
         "places/templates/detail": "libs/moxiejs/app/places/templates/detail",
         "places/templates/busrti": "libs/moxiejs/app/places/templates/busrti",
