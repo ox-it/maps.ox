@@ -37,6 +37,7 @@ $border-color: rgba(200,200,200, 0.5);
 
 $mapHeight: 140px;
 
+$default-padding: 12px;
 
 $navbarDark: $darkOxfordBlue;
 $navbarLight: $lightOxfordBlue;
@@ -48,7 +49,7 @@ $navbarBorderLight: 1px solid rgba(lighten($navbarDark, 5%),0.7);
 $sidebar-animation-time: 0.33s;
 $sidebar-width: 350px;
 $sidebar-smartphone-width: 230px;
-$sidebar-item-indent: 12px;
+$sidebar-item-indent: $default-padding;
 
 // Colours predominantly for labels and suchlike
 $fail-red: #B94A48;
