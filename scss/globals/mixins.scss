@@ -33,3 +33,26 @@
 	font-size: 11px;
 	padding-right: 8px;
 }
+
+@mixin numbered-marker($size, $border) {
+    width: $size;
+    height: $size;
+    background-color: #000;
+    background-clip: padding-box;
+    border-radius: 20px;
+    display: inline-block;
+    div {
+        background-color: #fff;
+        width: $size - $border;
+        height: $size - $border;
+        margin-left: $border / 2;
+        margin-top: $border / 2;
+
+        text-align: center;
+        border-radius: ($size - $border) / 2;
+        font: 15px "Helvetica Neue", Arial, Helvetica, sans-serif;
+    }
+    span {
+        line-height: $size - $border;
+    }
+}
