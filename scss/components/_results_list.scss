@@ -5,7 +5,8 @@
 // hidpi media queries mixins for selecting higher res images
 @import "hidpi";
 
-$meta-info-font-size: 0.8em;
+$sidebar-item-base-font-size: 0.95em;
+$meta-info-font-size: 0.9em;
 
 .search-input {
     text-align: center;
@@ -27,14 +28,15 @@ $meta-info-font-size: 0.8em;
 
 ul.results-list {
     margin: 0;
-    padding: 0;
+    padding: 0 0 1em 0;
     list-style: none;
     li {
-        margin: 0 12px;
-        padding: 1em 0;
+        margin: 0 $sidebar-item-indent;
+        padding: 1em $sidebar-item-indent;
+        font-size: $sidebar-item-base-font-size;
         &.highlighted {
             margin: 0;
-            padding: 1em 12px;
+            padding: 1em 2*$sidebar-item-indent;
             background-color: $pantone279;
             color: $body-background;
             a {
@@ -46,19 +48,18 @@ ul.results-list {
             text-decoration: none;
             color: $pantone279;
             line-height: 1.5em;
-            font-size: 1em;
         }
         input {
             margin-right: 5px;
         }
         h3 {
-            margin: 0px 0px 0px 5px;
+            margin: 0px;
             font-weight: normal;
         }
         border-bottom: 1px solid $border-color;
         color: rgba(40, 40, 40, 0.8);
         p {
-            margin-bottom: 0px;
+            margin: 0 0 0.2em 0;
         }
         > label, > a {
             display: block;
@@ -91,7 +92,9 @@ ul.results-list {
         }
         .distance {
             font-size: 0.8em;
+            line-height: 2em;
             float: right;
+            margin-left: 0.5em;
         }
     }
 }

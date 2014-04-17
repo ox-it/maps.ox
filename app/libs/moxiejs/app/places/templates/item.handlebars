@@ -1,11 +1,11 @@
 {{#if name }}
     <h3>
+        {{#if trackingUserPosition}}
+            <span class="distance">{{humaniseDistance distance }}</span>
+        {{/if}}
         <a href="{{ reverse 'detail' 'id' id }}">
             {{ name }}
         </a>
-        {{#if trackingUserPosition}}
-        <span class="distance">{{humaniseDistance distance }}</span>
-        {{/if}}
     </h3>
     {{#if userSearch}}
     <p class="type">
@@ -17,12 +17,12 @@
     {{/if}}
 {{ else }}
     <p class="type">
+        {{#if trackingUserPosition}}
+            <span class="distance">{{humaniseDistance distance }}</span>
+        {{/if}}
         <a href="{{ reverse 'detail' 'id' id }}">
         {{ type_name }}
         </a>
-        {{#if trackingUserPosition}}
-        <span class="distance">{{humaniseDistance distance }}</span>
-        {{/if}}
     </p>
     {{! opening_hours should be a string if it exists}}
     {{# if opening_hours }}

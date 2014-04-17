@@ -55,14 +55,14 @@
             {{/if}}
         </p>
 
-        <ul class="external-links">
+        <div class="external-links">
             {{#if poi.phone}}
             <a href="tel:{{ poi.phone }}">Tel: {{ poi.phone }}</a>
             {{/if}}
             {{#if poi.website}}
             <a href="{{ poi.website }}" target="_blank">{{ poi.website }}</a>
             {{/if}}
-        </ul>
+        </div>
         <div class="social-links">
             {{#if poi.social_twitter}}
             <a target="_blank" href="{{ poi.social_twitter }}">Twitter</a>
