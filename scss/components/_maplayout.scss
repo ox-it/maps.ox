@@ -22,7 +22,6 @@
         padding: 0px 0px;
         height: 100%;
         width: 0;
-        border-right: $map-pane-border;
     }
 
     .content-browse {
@@ -145,6 +144,7 @@
                 display: inline-block;
             }
             .content-browse-wrapper {
+                border-right: $map-pane-border;
                 width: 30%;
                 @media #{$smartphone} {
                     width: 85%;
@@ -162,6 +162,9 @@
             }
         }
         &.with-detail {
+            #map {
+                border-bottom: $map-pane-border;
+            }
             .btn-toggle-location {
                 bottom: 40%;
                 @media #{$smartphone} {
@@ -249,25 +252,23 @@
     @include numbered-marker(24px, 2px)
 }
 
-.numbered-marker {
-    width: 30px;
-    height: 30px;
-    background-color: #000;
-    background-clip: padding-box;
-    border-radius: 20px;
-    display: inline-block;
+.social-links a {
+    font-size: 1.7em;
+    letter-spacing: 0.2em;
 }
-.numbered-marker div {
-    background-color: #fff;
-    width: 26px;
-    height: 26px;
-    margin-left: 2px;
-    margin-top: 2px;
 
-    text-align: center;
-    border-radius: 13px;
-    font: 15px "Helvetica Neue", Arial, Helvetica, sans-serif;
+// Without a map reference
+// TODO: this causes problems with hanging indents
+//       seems to be quite tricky to solve...
+dl.poi-children dd {
+    line-height: 1.7em;
 }
-.numbered-marker span {
-    line-height: 26px;
+dl.poi-children dd a {
+    margin-left: 30px + 8px;
 }
+
+// With a map reference
+dl.poi-children dd > div + a {
+    margin-left: 6px;
+}
+
