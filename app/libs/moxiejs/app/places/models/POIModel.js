@@ -63,6 +63,13 @@ define(["MoxieModel", "underscore", "moxie.conf", "places/models/RTIModels", "pl
         },
 
         parse: function(data) {
+            // Get all images for this POI
+            data.images = [];
+            if ('_embedded' in data && 'files' in data._embedded) {
+                data.images = _.where(data._embedded.files, {type: 'depiction'});
+                // Grab a primary image if possible
+                data.primary_image = _.findWhere(data._embedded.files, {type: 'depiction', primary: true});
+            }
             data.RTI = [];
             _.each(data._links, function(val, key) {
                 if (key.indexOf('rti:') === 0) {
