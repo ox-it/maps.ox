@@ -50,6 +50,9 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
 
         serialize: function() {
             var poi = this.model.toJSON();
+            if (poi.midFetch === true) {
+                return {poi: poi};
+            }
             var currentlyOpen = null;
             var parsedOpeningHours = null;
             if (poi.opening_hours) {
@@ -61,11 +64,11 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                     currentlyOpen = null;
                 }
             }
-            var depiction;
-            if (poi.picture_depiction && poi.picture_depiction.length > 0) {
-                depiction = poi.picture_depiction[0];
+            var depiction = poi.primary_image || poi.images[0];
+            var depictionURL;
+            if (depiction && 'url' in depiction) {
+                depictionURL = depiction.url;
             }
-
             var context = {
                 showZoomButton: false,
                 contains: [],
@@ -146,7 +149,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                 alternateRTI: this.model.getAlternateRTI(),
                 currentRTI: this.model.getCurrentRTI(),
                 currentlyOpen: currentlyOpen,
-                parsedOpeningHours: parsedOpeningHours,
+                parsedOpeningHours: parsedOpeningHours
             });
         },
         template: detailTemplate,
