@@ -72,6 +72,9 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                 partOf: [],
                 occupiedBy: [],
             };
+            if (this.additionalPOIs && this.additionalPOIs.numberOfMarkers && this.additionalPOIs.numberOfMarkers > 1) {
+                context.showZoomButton = true;
+            }
             if (poi._links) {
                 for (var i in poi._links.child) {
                     var child = poi._links.child[i];
