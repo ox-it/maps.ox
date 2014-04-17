@@ -1,4 +1,5 @@
 @import "globals/variables";
+@import "globals/mixins";
 @import "globals/oxford-palette";
 
 /* Content is a container for two child divs
@@ -239,14 +240,13 @@
     }
 }
 
-// Without a map reference
-dl.poi-children dd a {
-    margin-left: 30px + 8px;
+.numbered-marker {
+    @include numbered-marker(30px, 4px)
 }
 
-// With a map reference
-dl.poi-children dd > div + a {
+.detail-numbered-marker {
     margin-left: 8px;
+    @include numbered-marker(24px, 2px)
 }
 
 .numbered-marker {
