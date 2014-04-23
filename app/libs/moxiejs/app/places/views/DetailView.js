@@ -71,7 +71,15 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                 contains: [],
                 partOf: [],
                 occupiedBy: [],
+                depiction: depictionURL,
+                socialLinks: poi.social_facebook || poi.social_twitter,
             };
+            if ('accessibility' in poi && 'access_guide_url' in poi.accessibility) {
+                context.accessibilityGuideURL = poi.accessibility.access_guide_url[0];
+            }
+            if (this.additionalPOIs && this.additionalPOIs.numberOfMarkers && this.additionalPOIs.numberOfMarkers > 1) {
+                context.showZoomButton = true;
+            }
             if (poi._links) {
                 for (var i in poi._links.child) {
                     var child = poi._links.child[i];
@@ -81,9 +89,6 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                         if (this.additionalPOIs && this.additionalPOIs.length > 0) {
                             var additionalPOI = this.additionalPOIs.get(child.href.split('/').pop());
                             if (additionalPOI) {
-                                if (additionalPOI.has('number')) {
-                                    context.showZoomButton = true;
-                                }
                                 childObj = additionalPOI.toJSON();
                             }
                         }
@@ -142,7 +147,6 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                 currentRTI: this.model.getCurrentRTI(),
                 currentlyOpen: currentlyOpen,
                 parsedOpeningHours: parsedOpeningHours,
-                depiction: depiction,
             });
         },
         template: detailTemplate,

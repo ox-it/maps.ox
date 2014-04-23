@@ -17,9 +17,6 @@
 {{/if}}
 <div class="poi-details-text {{#unless depiction}}no-depiction{{/unless}}">
     <div class="free-text">
-        {{#if poi.name }}
-            <span class="type">{{ poi.type_name }}</span>
-        {{/if}}
         {{#if poi.opening_hours }}
             {{{currentlyOpen currentlyOpen}}}
         {{/if}}
@@ -55,22 +52,28 @@
             {{/if}}
         </p>
 
-        <div class="external-links">
+        <ul class="external-links">
             {{#if poi.phone}}
-            <a href="tel:{{ poi.phone }}">Tel: {{ poi.phone }}</a>
+            <li><a href="tel:{{ poi.phone }}" class="action-button poi-phone">Tel: {{ poi.phone }}</a></li>
             {{/if}}
             {{#if poi.website}}
-            <a href="{{ poi.website }}" target="_blank">{{ poi.website }}</a>
+            <li><a href="{{ poi.website }}" target="_blank" class="action-button poi-website">Website <i class="fa fa-external-link"></i></a></li>
             {{/if}}
-        </div>
+            {{#if accessibilityGuideURL }}
+            <li><a href="{{ accessibilityGuideURL }}" target="_blank" class="action-button poi-access-guide">Accessibility Guide <i class="fa fa-wheelchair"></i></a></li>
+            {{/if}}
+        </ul>
+
+        {{#if socialLinks }}
         <div class="social-links">
             {{#if poi.social_twitter}}
-            <a target="_blank" href="{{ poi.social_twitter }}">Twitter</a>
+            <a target="_blank" href="{{ poi.social_twitter }}"><i class="fa fa-twitter-square"></i></a>
             {{/if}}
             {{#if poi.social_facebook}}
-            <a target="_blank" href="{{ poi.social_facebook }}">Facebook</a>
+            <a target="_blank" href="{{ poi.social_facebook }}"><i class="fa fa-facebook-square"></i></a>
             {{/if}}
         </div>
+        {{/if}}
 
         {{#if poi.library_opening_hours_termtime }}
             <h3>Opening hours</h3>
@@ -115,7 +118,7 @@
             {{#if href}}
             <dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
             {{else}}
-            <dd>{{#if number}}<div class="numbered-marker"><div><span>{{ number }}</span></div></div>{{/if}}<a href="{{ reverse 'detail' 'id' id }}" title="{{ name }}">{{ name }}</a></dd>
+            <dd>{{#if number}}<div class="detail-numbered-marker"><div><span>{{ number }}</span></div></div>{{/if}}<a href="{{ reverse 'detail' 'id' id }}" title="{{ name }}">{{ name }}</a></dd>
             {{/if}}
             {{/occupiedBy}}
         {{/if}}
@@ -125,7 +128,7 @@
             {{#if href}}
             <dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
             {{else}}
-            <dd>{{#if number}}<div class="numbered-marker"><div><span>{{ number }}</span></div></div>{{/if}}<a href="{{ reverse 'detail' 'id' id }}" title="{{ name }}">{{ name }}</a></dd>
+            <dd>{{#if number}}<div class="detail-numbered-marker"><div><span>{{ number }}</span></div></div>{{/if}}<a href="{{ reverse 'detail' 'id' id }}" title="{{ name }}">{{ name }}</a></dd>
             {{/if}}
             {{/partOf}}
         {{/if}}
@@ -135,7 +138,7 @@
             {{#if href}}
             <dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
             {{else}}
-            <dd>{{#if number}}<div class="numbered-marker"><div><span>{{ number }}</span></div></div>{{/if}}<a href="{{ reverse 'detail' 'id' id }}" title="{{ name }}">{{ name }}</a></dd>
+            <dd>{{#if number}}<div class="detail-numbered-marker"><div><span>{{ number }}</span></div></div>{{/if}}<a href="{{ reverse 'detail' 'id' id }}" title="{{ name }}">{{ name }}</a></dd>
             {{/if}}
             {{/occupies}}
         {{/if}}
@@ -145,7 +148,7 @@
             {{#if href}}
             <dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
             {{else}}
-            <dd>{{#if number}}<div class="numbered-marker"><div><span>{{ number }}</span></div></div>{{/if}}<a href="{{ reverse 'detail' 'id' id }}" title="{{ name }}">{{ name }}</a></dd>
+            <dd>{{#if number}}<div class="detail-numbered-marker"><div><span>{{ number }}</span></div></div>{{/if}}<a href="{{ reverse 'detail' 'id' id }}" title="{{ name }}">{{ name }}</a></dd>
             {{/if}}
             {{/libraries}}
         {{/if}}
@@ -155,7 +158,7 @@
             {{#if href}}
             <dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
             {{else}}
-            <dd>{{#if number}}<div class="numbered-marker"><div><span>{{ number }}</span></div></div>{{/if}}<a href="{{ reverse 'detail' 'id' id }}" title="{{ name }}">{{ name }}</a></dd>
+            <dd>{{#if number}}<div class="detail-numbered-marker"><div><span>{{ number }}</span></div></div>{{/if}}<a href="{{ reverse 'detail' 'id' id }}" title="{{ name }}">{{ name }}</a></dd>
             {{/if}}
             {{/contains}}
         {{/if}}
@@ -165,13 +168,13 @@
             {{#if href}}
             <dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
             {{else}}
-            <dd>{{#if number}}<div class="numbered-marker"><div><span>{{ number }}</span></div></div>{{/if}}<a href="{{ reverse 'detail' 'id' id }}" title="{{ name }}">{{ name }}</a></dd>
+            <dd>{{#if number}}<div class="detail-numbered-marker"><div><span>{{ number }}</span></div></div>{{/if}}<a href="{{ reverse 'detail' 'id' id }}" title="{{ name }}">{{ name }}</a></dd>
             {{/if}}
             {{/organisations}}
         {{/if}}
         </dl>
         {{#if showZoomButton}}
-        <a href="#" class="zoom-all">Zoom to all markers</a>
+        <a href="#" class="zoom-all"><i class="fa fa-arrows-alt"></i> Show all markers</a>
         {{/if}}
     </div>
 </div>

@@ -2,7 +2,7 @@
     <input type="text" placeholder="Search&hellip;" name="q" value="{{query.q}}">
 </div>
 <div class="map-options {{#if filtering}}something-highlighted{{/if}}">
-    <span>{{#unless sortAZ}}<a class="sort-az" href="#">A-Z</a>{{else}}A-Z{{/unless}}</span><span>{{#unless sortNearby}}<a class="sort-nearby" href="#">Nearby</a>{{else}}Nearby{{/unless}}</span><span class="filter {{#if facetsExist}}{{#if filtering}}highlighted{{/if}}{{/if}}">{{#if facetsExist}}<a href="#">Filters</a>{{else}}Filters{{/if}}</span>
+    <span>{{#unless sortAZ}}<a class="sort-az" href="#">A-Z</a>{{else}}A-Z <i class="fa fa-sort-asc"></i>{{/unless}}</span><span>{{#unless sortNearby}}<a class="sort-nearby" href="#">Nearby</a>{{else}}Nearby <i class="fa fa-sort-asc"></i>{{/unless}}</span><span class="filter {{#if facetsExist}}{{#if filtering}}highlighted{{/if}}{{/if}}">{{#if facetsExist}}<a href="#">Filters</a>{{else}}Filters{{/if}}</span>
 </div>
 <div class="messages">
 </div>

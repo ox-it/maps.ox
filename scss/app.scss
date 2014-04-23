@@ -20,6 +20,10 @@ body {
     width: 100%;
     background: $body-background;
 }
+a {
+    color: $pantone279;
+    text-decoration: none;
+}
 .map-options {
     &.something-highlighted {
         border-bottom: none;
@@ -29,10 +33,6 @@ body {
     padding: 0;
     border-bottom: $map-pane-border;
     text-align: center;
-    a {
-        color: $pantone279;
-        text-decoration: none;
-    }
     span {
         display: inline-block;
         padding: 5px;
@@ -106,5 +106,35 @@ body {
         margin: 0 0 $filter-label-margin;
         font-weight: normal;
         font-size: 0.95em;
+    }
+}
+.external-links li {
+    list-style-type: none;
+    display: inline;
+    @media #{$smartphone} {
+        display: list-item;
+    }
+}
+a.action-button {
+    text-decoration: none;
+}
+.action-button {
+    border-radius: 5px;
+    @include border-radius(5px);
+    @include background(linear-gradient(#fafafa, #dfdfdf));
+    @include box-shadow(0 0 1px rgba(0,0,0,0.4));
+
+    border: 1px solid rgba(0,0,0,0.2);
+    padding: 9px 10px 10px 10px;
+    display: inline-block;
+    color: #333;
+    font-weight: 500;
+    margin: 5px 5px 5px 0;
+    &.social {
+        // Do we need separate styling for the social
+        // link buttons?
+        @include background($pantone549);
+        color: #fafafa;
+        padding: 6px 7px 7px 7px;
     }
 }

@@ -5,6 +5,7 @@ define(['underscore', 'places/collections/POICollection', 'places/models/Numbere
             this.url = this.options.url;
             this.sortFunction = this.options.sortFunction;
         },
+        numberOfMarkers: 0,
         parse: function(data) {
             if (data && data._embedded && data._embedded.pois) {
                 var pois = _.filter(data._embedded.pois, function(poi) {
@@ -29,6 +30,7 @@ define(['underscore', 'places/collections/POICollection', 'places/models/Numbere
                         count++;
                     }
                 });
+                this.numberOfMarkers = _.size(numbering);
             }
             return POICollection.prototype.parse.apply(this, arguments);
         },

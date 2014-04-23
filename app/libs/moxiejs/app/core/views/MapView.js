@@ -32,6 +32,9 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
                  mapOptions.boxZoom = false;
             }
             this.map = utils.getMap(this.el, {mapOptions: mapOptions});
+            // Need to add a separate zoomControl here after the map is created
+            var zoomControl = new L.control.zoom({position: 'bottomright'});
+            zoomControl.addTo(this.map);
             if (!this.interactiveMap) {
                 // Note: This view can be reused for example when navigating from a POI
                 // SearchView to a DetailView. In which case we need to remove any lingering
