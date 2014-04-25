@@ -10,6 +10,7 @@ define(['backbone', 'underscore', 'jquery', 'moxie.position', 'core/views/MapVie
         name: 'MapBrowseLayout',
         events: {
             'click .btn-toggle-browse': 'toggleBrowse',
+            'click .btn-toggle-detail': 'toggleDetail',
             'click .btn-toggle-location': 'toggleLocation',
             'click .btn-toggle-cycling': 'toggleCycling',
             'click .btn-toggle-driving': 'toggleDriving',
@@ -33,6 +34,18 @@ define(['backbone', 'underscore', 'jquery', 'moxie.position', 'core/views/MapVie
             this.$el.toggleClass('with-browse');
             this.mapView.invalidateMapSize();
         },
+
+        toggleDetail: function() {
+            var detailButton = $('.btn-toggle-detail span');
+            // TODO: Navigate to /map
+            if (this.$el.hasClass('with-detail')) {
+                detailButton.removeClass('fa-chevron-down');
+                detailButton.addClass('fa-chevron-up');
+            } else {
+                detailButton.removeClass('fa-chevron-up');
+                detailButton.addClass('fa-chevron-down');
+            }
+        },
         toggleLocation: function(ev) {
             this.mapView.toggleUserMarker();
             var locationButton = $('.btn-toggle-location');
@@ -47,7 +60,7 @@ define(['backbone', 'underscore', 'jquery', 'moxie.position', 'core/views/MapVie
         // See commit #6511cae
         beforeRender: function() {
             this.mapView = new MapView();
-            this.setView(".content-map", this.mapView);
+            this.setView(".content-map", this.mapView, true);
         },
         afterRender: function() {
             userPosition.follow(this.mapView.handle_geolocation_query, this.mapView);
