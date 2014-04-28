@@ -3,7 +3,6 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
         initialize: function(options) {
             _.bindAll(this);
             this.options = options || {};
-            this.interactiveMap = this.options.interactiveMap || media.isTablet();
             this.features = [];
             this.additionalLayers = {};
             Backbone.on('map:additional-collection', this.registerAdditionalCollection, this);
@@ -19,18 +18,27 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
         // moves the map. Carefully reset when the collection is reset.
         mapMoved: false,
 
+        enableInteractiveMap: function() {
+            this.map.dragging.enable();
+            this.map.touchZoom.enable();
+            this.map.scrollWheelZoom.enable();
+            this.map.doubleClickZoom.enable();
+            this.map.boxZoom.enable();
+        },
+
+        disableInteractiveMap: function() {
+            this.map.dragging.disable();
+            this.map.touchZoom.disable();
+            this.map.scrollWheelZoom.disable();
+            this.map.doubleClickZoom.disable();
+            this.map.boxZoom.disable();
+        },
+
         beforeRender: function() {
             $('html').addClass('map');
             var mapOptions = {
                 zoomControl: false
             };
-            if (!this.interactiveMap) {
-                 mapOptions.dragging = false;
-                 mapOptions.touchZoom = false;
-                 mapOptions.scrollWheelZoom = false;
-                 mapOptions.doubleClickZoom = false;
-                 mapOptions.boxZoom = false;
-            }
             this.map = utils.getMap(this.el, {mapOptions: mapOptions});
             // Need to add a separate zoomControl here after the map is created
             var zoomControl = new L.control.zoom({position: 'bottomright'});

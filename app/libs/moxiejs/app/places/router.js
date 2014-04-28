@@ -122,6 +122,9 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
             var mapView = layout.getView('.content-map');
             mapView.setCollection(new POIs([poi]), additionalPOIs);
             if (detailPane) {
+                if (media.isPhone()) {
+                    mapView.disableInteractiveMap();
+                }
                 layout.withDetail();
                 var detailView = new DetailView({
                     model: poi
@@ -137,6 +140,7 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
                 });
                 detailView.render();
             } else {
+                mapView.enableInteractiveMap();
                 layout.removeDetail({hidden: true});
             }
         },
