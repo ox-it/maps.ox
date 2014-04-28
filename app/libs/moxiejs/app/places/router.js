@@ -92,6 +92,20 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
         },
 
         showDetail: function(poi, detailPane) {
+            Backbone.off('places:navigate-detail');
+            Backbone.off('places:navigate-map');
+            Backbone.on('places:navigate-detail', function() {
+                Backbone.history.navigate(
+                    Backbone.history.reverse('detail', {id: poi.id}),
+                    {trigger: true, replace: false}
+                );
+            });
+            Backbone.on('places:navigate-map', function() {
+                Backbone.history.navigate(
+                    Backbone.history.reverse('detailMap', {id: poi.id}),
+                    {trigger: true, replace: false}
+                );
+            });
             var layout = app.getLayout('MapBrowseLayout', {followUser: this.followUser});
             var browsePane = layout.hasBrowsePane();
             if (media.isPhone() || !browsePane) {
@@ -123,7 +137,7 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
                 });
                 detailView.render();
             } else {
-                layout.removeDetail();
+                layout.removeDetail({hidden: true});
             }
         },
 
