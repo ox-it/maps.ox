@@ -37,11 +37,12 @@ define(['backbone', 'underscore', 'jquery', 'moxie.position', 'core/views/MapVie
 
         toggleDetail: function() {
             var detailButton = $('.btn-toggle-detail span');
-            // TODO: Navigate to /map
-            if (this.$el.hasClass('with-detail')) {
+            if (detailButton.hasClass('fa-chevron-down')) {
+                Backbone.trigger('places:navigate-map');
                 detailButton.removeClass('fa-chevron-down');
                 detailButton.addClass('fa-chevron-up');
             } else {
+                Backbone.trigger('places:navigate-detail');
                 detailButton.removeClass('fa-chevron-up');
                 detailButton.addClass('fa-chevron-down');
             }
@@ -91,11 +92,23 @@ define(['backbone', 'underscore', 'jquery', 'moxie.position', 'core/views/MapVie
                 locationButton.addClass('active');
             }, this);
         },
-        removeDetail: function() {
+        removeDetail: function(options) {
+            options = options || {};
+            if (options.hidden) {
+                this.$el.addClass('detail-hidden');
+                var detailButton = $('.btn-toggle-detail span');
+                detailButton.removeClass('fa-chevron-down');
+                detailButton.addClass('fa-chevron-up');
+            } else {
+                this.$el.removeClass('detail-hidden');
+            }
             this.$el.removeClass('with-detail');
             this.mapView.invalidateMapSize();
         },
         withDetail: function() {
+            var detailButton = $('.btn-toggle-detail span');
+            detailButton.removeClass('fa-chevron-up');
+            detailButton.addClass('fa-chevron-down');
             this.$el.addClass('with-detail');
             this.mapView.invalidateMapSize();
         },
