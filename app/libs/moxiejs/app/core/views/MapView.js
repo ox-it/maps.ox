@@ -98,9 +98,7 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
             if (additionalCollections) {
                 _.each(additionalCollections, this.registerAdditionalCollection, this);
             }
-            if (this.collection.length) {
-                this.resetMapContents();
-            }
+            this.resetMapContents();
         },
 
         numberedCollection: null,

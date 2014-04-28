@@ -102,7 +102,7 @@
         }
     }
 
-    .btn-toggle-browse, .btn-toggle-location {
+    .btn-toggle-browse, .btn-toggle-detail, .btn-toggle-location {
         overflow: hidden;
         cursor: pointer;
         position: absolute;
@@ -130,8 +130,24 @@
         border-top: $map-pane-border;
         border-bottom: none;
     }
+    .btn-toggle-detail {
+        display: none;
+        bottom: -1px;
+        left: 50%;
+        border-bottom: none;
+        border-top: $map-pane-border;
+        border-left: $map-pane-border;
+        border-right: $map-pane-border;
+        height: 27px;
+        line-height: 10px;
+    }
 
     .map-browse-layout {
+        &.with-detail, &.detail-hidden {
+            .btn-toggle-detail {
+                display: inline-block;
+            }
+        }
         &.with-browse {
             .btn-toggle-browse {
                 color: $map-toggle-inactive;
@@ -192,6 +208,7 @@
     }
 
     .content-map {
+        position: relative;
         height: 100%;
     }
 
