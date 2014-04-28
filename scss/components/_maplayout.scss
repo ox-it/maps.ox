@@ -130,10 +130,14 @@
         border-top: $map-pane-border;
         border-bottom: none;
     }
+
     .btn-toggle-detail {
         display: none;
         bottom: -1px;
         left: 50%;
+        /* TODO: These calcs are hardcoded to $map-controls-size/2 because SASS doesn't seem to evaluate in calc calls */
+        left: -webkit-calc(50% - 19px);  /* WebKit 536.3 (Chrome 19) and above, experimental */
+        left: calc(50% - 19px);  /* final CSS3 compliant implementation; Firefox 16 and IE 9, and above */
         border-bottom: none;
         border-top: $map-pane-border;
         border-left: $map-pane-border;
@@ -184,7 +188,7 @@
             .btn-toggle-location {
                 bottom: 40%;
                 @media #{$smartphone} {
-                    top: $mapHeight - $map-controls-size;
+                    top: $mapHeight - $map-controls-size - 1px;
                     bottom: auto;
                 }
             }
