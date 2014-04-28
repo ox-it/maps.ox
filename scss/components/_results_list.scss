@@ -9,14 +9,38 @@ $sidebar-item-base-font-size: 0.95em;
 $meta-info-font-size: 0.9em;
 
 .search-input {
+    position: relative;
+    margin-right: 5px;
+    margin-left: 5px;
+    padding-top: 10px;
     text-align: center;
-    input {
-        width: 85%;
+    input[type="text"] {
+        width: 60%;
+        padding: 0;
         padding-left: 10px;
         border: $map-pane-border;
-        @include border-radius(8px, 8px);
+        border-right: none;
+        @include border-top-left-radius(8px);
+        @include border-bottom-left-radius(8px);
         background-color: #fff;
-        height: 1.5em;
+        line-height: 26px;
+        height: 26px;
+    }
+    input[type="submit"] {
+        line-height: 26px;
+        height: 28px;
+        width: 30%;
+        border: none;
+        border-top: 1px solid #4891dc;
+        border-bottom: 1px solid #4891dc;
+        border-left: $map-pane-border;
+        color: #fafafa;
+        @include border-top-right-radius(8px);
+        @include border-bottom-right-radius(8px);
+        background-color: #4891dc;
+        z-index: 2;
+        padding: 0;
+        margin-left: -5px;
     }
 }
 
