@@ -172,12 +172,22 @@
             }
             .content-main {
                 width: 70%;
+            }
+            .overlay, .content-main {
                 @media #{$smartphone} {
                     position: absolute;
                     width: 100%;
                     left: 85%;
                     overflow: hidden;
                     height: 100%;
+                }
+            }
+            .overlay {
+                @media #{$smartphone} {
+                    z-index: 20;
+                    background-color: rgba(0,0,0,0.5);
+                    display: inline;
+                    position: fixed;
                 }
             }
         }
