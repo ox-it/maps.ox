@@ -40,7 +40,8 @@ define(['jquery', 'underscore', 'backbone', 'app', 'moxie.conf', 'moxie.position
         },
 
         events: {
-            'keypress :input': "searchEvent",
+            'keypress :input[type="text"]': "searchKeypressEvent",
+            'click :input[type="submit"]': "searchClickEvent",
             'click .deleteicon': "clearSearch",
             'change .results-list input': "toggleCategory"
         },
@@ -79,14 +80,19 @@ define(['jquery', 'underscore', 'backbone', 'app', 'moxie.conf', 'moxie.position
         attributes: {
             'class': 'generic'
         },
-
-        searchEvent: function(ev) {
+        searchClickEvent: function(ev) {
+            var term = this.$(':input[type="text"]').val();
+            this.searchForTerm(term);
+        },
+        searchKeypressEvent: function(ev) {
             if (ev.which === 13) {
-                var query = ev.target.value;
-                var qstring = $.param({q: query}).replace(/\+/g, "%20");
-                var path = Backbone.history.reverse('search') + '?' + qstring;
-                app.navigate(path, {trigger: true, replace: false});
+                this.searchForTerm(ev.target.value);
             }
+        },
+        searchForTerm: function(term) {
+            var qstring = $.param({q: term}).replace(/\+/g, "%20");
+            var path = Backbone.history.reverse('search') + '?' + qstring;
+            app.navigate(path, {trigger: true, replace: false});
         },
 
         beforeRender: function() {

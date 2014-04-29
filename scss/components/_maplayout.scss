@@ -232,11 +232,6 @@
         }
     }
     .search-input {
-        position: relative;
-        margin-right: 5px;
-        margin-left: 5px;
-        padding-top: 10px;
-
         span.deleteicon {
             @include border-radius(30px);
             position: absolute;

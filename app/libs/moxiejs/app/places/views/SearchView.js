@@ -27,7 +27,8 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
 
         // Event Handlers
         events: {
-            'keypress :input': "searchEvent",
+            'keypress :input[type="text"]': "searchKeypressEvent",
+            'click :input[type="submit"]': "searchClickEvent",
             'click .deleteicon': "clearSearch",
             'change .type-exact input': "clickTypeFacet",
             'change .accessibility input': "clickAccessibilityFacet",
@@ -116,17 +117,24 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
             }
         },
 
-        searchEvent: function(ev) {
+        searchClickEvent: function(ev) {
+            var term = this.$(':input[type="text"]').val();
+            this.searchForTerm(term);
+        },
+        searchKeypressEvent: function(ev) {
             if (ev.which === 13) {
-                this.parentFacets = null;
-                this.collection.query.q = ev.target.value;
-                // User entered searches clear any existing facets
-                // and query the entire index
-                delete this.collection.query.type;
-                delete this.collection.query.type_exact;
-                this.collection.geoFetch();
-                Backbone.history.navigate(Backbone.history.reverse('search')+'?'+$.param(this.collection.query).replace(/\+/g, "%20"), {trigger: false});
+                this.searchForTerm(ev.target.value);
             }
+        },
+        searchForTerm: function(term) {
+            this.parentFacets = null;
+            this.collection.query.q = term;
+            // User entered searches clear any existing facets
+            // and query the entire index
+            delete this.collection.query.type;
+            delete this.collection.query.type_exact;
+            this.collection.geoFetch();
+            Backbone.history.navigate(Backbone.history.reverse('search')+'?'+$.param(this.collection.query).replace(/\+/g, "%20"), {trigger: false});
         },
 
         addResult: function(model) {
