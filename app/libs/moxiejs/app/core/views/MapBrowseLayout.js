@@ -9,6 +9,7 @@ define(['backbone', 'underscore', 'jquery', 'moxie.position', 'core/views/MapVie
         className: 'map-browse-layout',
         name: 'MapBrowseLayout',
         events: {
+            'click .overlay': 'toggleBrowse',
             'click .btn-toggle-browse': 'toggleBrowse',
             'click .btn-toggle-detail': 'toggleDetail',
             'click .btn-toggle-location': 'toggleLocation',
