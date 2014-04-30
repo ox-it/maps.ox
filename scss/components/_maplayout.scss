@@ -5,6 +5,9 @@
 /* Content is a container for two child divs
     .content-browse-wrapper which typically contains a scrolling list container
     .content-map which holds map (#map)
+
+    NOTE: Z-Indexes are used in this CSS. We start our indexes at 1001 as this
+    is greater than any z-index found in leaflet CSS which we need to overlay.
 */
 
 #content {
@@ -108,7 +111,7 @@
         position: absolute;
         display: inline-block;
         background: $body-background;
-        z-index: 10001;
+        z-index: 1001;
         width: $map-controls-size + 3px;
         height: $map-controls-size;
         border-right: $map-pane-border;
@@ -117,9 +120,13 @@
         font-size: 1.6em;
         color: $map-toggle-active;
     }
-    .btn-toggle-browse span {
-        // Vertical align the button
-        margin-top: 4px;
+    .btn-toggle-browse {
+        // The toggle-browse button needs to appear above the content-overlay
+        z-index: 1003;
+        span {
+            // Vertical align the button
+            margin-top: 4px;
+        }
     }
     .btn-toggle-location {
         &.active {
@@ -184,7 +191,7 @@
             }
             .overlay {
                 @media #{$smartphone} {
-                    z-index: 20;
+                    z-index: 1002;
                     background-color: rgba(0,0,0,0.5);
                     display: inline;
                     position: fixed;
