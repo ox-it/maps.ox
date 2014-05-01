@@ -1,7 +1,19 @@
 define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places/models/POIModel", "places/views/CategoriesView", "places/views/SearchView", "places/views/DetailView", "places/collections/POICollection", "places/collections/CategoryCollection", "core/views/MapView", "core/media", "places/collections/AdditionalPOICollection", "places/collections/CustomCollection"], function(app, _, Backbone, conf, userPosition, POI, CategoriesView, SearchView, DetailView, POIs, Categories, MapView, media, AdditionalPOIs, CustomPOIs){
 
+    // Points of Interest collections
     var pois = new POIs();
     var customPOIs = new CustomPOIs();
+
+    function getPOI(poid) {
+        var poi = false;
+        poi = pois.get(poid);
+        if (poi) {
+            return poi;
+        }
+        poi = customPOIs.get(poid);
+        return poi;
+    }
+
     var categories = new Categories();
     categories.fetch();
 
@@ -104,7 +116,7 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
         },
 
         detailMap: function(id) {
-            var poi = pois.get(id);
+            var poi = getPOI(id);
             if (!poi) {
                 poi = new POI({id: id});
                 poi.fetch();
@@ -167,10 +179,11 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
         },
 
         detail: function(id, params) {
+            customPOIs.removeHighlighting();
             pois.removeHighlighting();
             var query = params || {};
             var showRTI = 'rti' in query ? params.rti : null;
-            var poi = pois.get(id);
+            var poi = getPOI(id);
             if (poi) {
                 poi.set({
                     showRTI: showRTI,
