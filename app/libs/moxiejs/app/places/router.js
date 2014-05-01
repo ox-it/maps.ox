@@ -1,6 +1,7 @@
-define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places/models/POIModel", "places/views/CategoriesView", "places/views/SearchView", "places/views/DetailView", "places/collections/POICollection", "places/collections/CategoryCollection", "core/views/MapView", "core/media", "places/collections/AdditionalPOICollection"], function(app, _, Backbone, conf, userPosition, POI, CategoriesView, SearchView, DetailView, POIs, Categories, MapView, media, AdditionalPOIs){
+define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places/models/POIModel", "places/views/CategoriesView", "places/views/SearchView", "places/views/DetailView", "places/collections/POICollection", "places/collections/CategoryCollection", "core/views/MapView", "core/media", "places/collections/AdditionalPOICollection", "places/collections/CustomCollection"], function(app, _, Backbone, conf, userPosition, POI, CategoriesView, SearchView, DetailView, POIs, Categories, MapView, media, AdditionalPOIs, CustomPOIs){
 
     var pois = new POIs();
+    var customPOIs = new CustomPOIs();
     var categories = new Categories();
     categories.fetch();
 
@@ -23,6 +24,7 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
         "categories": "categories",
         "categories*category_name": "categories",
         "search": "search",
+        "custom": "custom",
     };
     routes[POI_PREFIX + ':id'] = 'detail';
     routes[POI_PREFIX + ':id/map'] = 'detailMap';
@@ -39,6 +41,25 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
         },
 
         routes: routes,
+
+        custom: function(params) {
+            var params = params || {};
+            customPOIs.title = params.title || "My Collection";
+            customPOIs.ids = params.ids;
+            customPOIs.showInfo = true;
+            customPOIs.fetch();
+            var layout = app.getLayout('MapBrowseLayout', {followUser: this.followUser});
+            layout.removeDetail();
+            layout.withBrowse();
+            var searchView = new SearchView({
+                collection: customPOIs,
+                followUser: this.followUser
+            });
+            layout.setView('.content-browse', searchView);
+            var mapView = layout.getView('.content-map');
+            mapView.setCollection(customPOIs, additionalPOIs);
+            searchView.render();
+        },
 
         categories: function(category_name) {
             // category_name seems to be passed as an empty string here on IE8
