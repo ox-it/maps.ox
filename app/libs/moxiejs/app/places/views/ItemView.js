@@ -1,6 +1,7 @@
 define(["backbone", "underscore", "hbs!places/templates/item"], function(Backbone, _, itemTemplate){
     var ItemView = Backbone.View.extend({
         initialize: function(options) {
+            this.options = options;
             this.trackingUserPosition = this.options.trackingUserPosition;
             this.showInfo = this.options.showInfo;
             this.model.on('change:highlighted', _.bind(this.highlight, this));
