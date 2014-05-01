@@ -127,14 +127,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
             }
         },
         searchForTerm: function(term) {
-            this.parentFacets = null;
-            this.collection.query.q = term;
-            // User entered searches clear any existing facets
-            // and query the entire index
-            delete this.collection.query.type;
-            delete this.collection.query.type_exact;
-            this.collection.geoFetch();
-            Backbone.history.navigate(Backbone.history.reverse('search')+'?'+$.param(this.collection.query).replace(/\+/g, "%20"), {trigger: false});
+            Backbone.history.navigate(Backbone.history.reverse('search')+'?'+$.param({q: term}).replace(/\+/g, "%20"), {trigger: true});
         },
 
         addResult: function(model) {
@@ -142,7 +135,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
             var view = new ItemView({
                 model: model,
                 trackingUserPosition: trackingUserPosition,
-                userSearch: this.collection.query.q,
+                showInfo: this.collection.query.q || this.collection.showInfo,
             });
             this.insertView("ul.results-list", view);
             view.render();
@@ -170,14 +163,14 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
         beforeRender: function() {
             Backbone.trigger('domchange:title', "Search for Places of Interest");
             if (this.collection.length) {
-                var userSearch = this.collection.query.q;
+                var showInfo = this.collection.query.q || this.collection.showInfo;
                 var trackingUserPosition = this.sortOrder===SORT_NEARBY;
                 var views = [];
                 this.collection.each(function(model) {
                     views.push(new ItemView({
                         model: model,
                         trackingUserPosition: trackingUserPosition,
-                        userSearch: userSearch,
+                        showInfo: showInfo,
                     }));
                 });
                 this.insertViews({"ul.results-list": views});
