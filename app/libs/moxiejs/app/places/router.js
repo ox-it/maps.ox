@@ -55,14 +55,18 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
         routes: routes,
 
         custom: function(params) {
-            var params = params || {};
-            customPOIs.title = params.title || "My Collection";
+            params = params || {};
+            var fullscreen = 'fullscreen' in params;
             customPOIs.ids = params.ids;
             customPOIs.showInfo = true;
             customPOIs.fetch();
             var layout = app.getLayout('MapBrowseLayout', {followUser: this.followUser});
             layout.removeDetail();
-            layout.withBrowse();
+            if (fullscreen) {
+                layout.removeBrowse();
+            } else {
+                layout.withBrowse();
+            }
             var searchView = new SearchView({
                 collection: customPOIs,
                 followUser: this.followUser
