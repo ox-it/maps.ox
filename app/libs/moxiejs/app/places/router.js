@@ -73,6 +73,8 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
             });
             layout.setView('.content-browse', searchView);
             var mapView = layout.getView('.content-map');
+            // Remove any other mapClick listeners (if the view is being reused)
+            mapView.off('mapClick');
             mapView.setCollection(customPOIs, additionalPOIs);
             searchView.render();
         },
@@ -115,6 +117,8 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
             });
             layout.setView('.content-browse', searchView);
             var mapView = layout.getView('.content-map');
+            // Remove any other mapClick listeners (if the view is being reused)
+            mapView.off('mapClick');
             mapView.setCollection(pois, additionalPOIs);
             searchView.render();
         },
@@ -157,24 +161,24 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
                 }
             }
             var mapView = layout.getView('.content-map');
+            // Remove any other mapClick listeners (if the view is being reused)
+            mapView.off('mapClick');
             mapView.setCollection(new POIs([poi]), additionalPOIs);
             if (detailPane) {
                 if (media.isPhone()) {
                     mapView.disableInteractiveMap();
+                    mapView.on('mapClick', function() {
+                        Backbone.history.navigate(
+                            Backbone.history.reverse('detailMap', {id: poi.id}),
+                            {trigger: true, replace: false}
+                        );
+                    });
                 }
                 layout.withDetail();
                 var detailView = new DetailView({
                     model: poi
                 });
                 layout.setView('.content-detail-wrapper', detailView);
-                // Remove any other mapClick listeners (if the view is being reused)
-                mapView.off('mapClick');
-                mapView.on('mapClick', function() {
-                    Backbone.history.navigate(
-                        Backbone.history.reverse('detailMap', {id: poi.id}),
-                        {trigger: true, replace: false}
-                    );
-                });
                 detailView.render();
             } else {
                 mapView.enableInteractiveMap();
