@@ -102,7 +102,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
                 this.collection.fetch();
                 facet.checked = true;
             } else {
-                var index = this.collection.query.type_exact.indexOf(type_exact);
+                var index = _.indexOf(this.collection.query.type_exact, type_exact);
                 if (this.collection.query.type_exact && index!==-1) {
                     this.collection.query.type_exact.splice(index, 1);
                     this.collection.fetch();
