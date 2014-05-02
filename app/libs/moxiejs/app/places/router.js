@@ -57,9 +57,17 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
         custom: function(params) {
             params = params || {};
             var fullscreen = 'fullscreen' in params;
-            customPOIs.ids = params.ids;
-            customPOIs.showInfo = true;
-            customPOIs.fetch();
+            if (params.ids.split(',').length === 1) {
+                var poi = new POI({id: params.ids});
+                poi.on('sync', function() {
+                    customPOIs.trigger('reset');
+                });
+                customPOIs.reset([poi]);
+                poi.fetch();
+            } else {
+                customPOIs.ids = params.ids;
+                customPOIs.fetch();
+            }
             var layout = app.getLayout('MapBrowseLayout', {followUser: this.followUser});
             layout.removeDetail();
             if (fullscreen) {
