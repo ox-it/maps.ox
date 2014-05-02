@@ -12,6 +12,16 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
             'class': 'content-detail'
         },
 
+        events: {
+            'click a.zoom-all': 'zoomToAll',
+        },
+
+        zoomToAll: function(ev) {
+            ev.preventDefault();
+            Backbone.trigger('map:zoom-all-markers');
+            return false;
+        },
+
         renderError: function(model, response) {
             // Error fetching from the API, render a nice error message.
             var message;
@@ -29,8 +39,8 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
         },
 
         childTypes: {
-            '/university/building': {relation: 'occupies', index: 1},
-            '/university/site': {relation: 'occupies', index: 2},
+            '/university/site': {relation: 'occupies', index: 1},
+            '/university/building': {relation: 'occupies', index: 2},
             '/university/library': {relation: 'libraries', index: 3},
             '/university/room': {relation: 'contains', index: 4},
             '/leisure/museum': {relation: 'contains', index: 5},
@@ -40,6 +50,9 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
 
         serialize: function() {
             var poi = this.model.toJSON();
+            if (poi.midFetch === true) {
+                return {poi: poi};
+            }
             var currentlyOpen = null;
             var parsedOpeningHours = null;
             if (poi.opening_hours) {
@@ -51,12 +64,25 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                     currentlyOpen = null;
                 }
             }
-            var depiction;
-            if (poi.picture_depiction && poi.picture_depiction.length > 0) {
-                depiction = poi.picture_depiction[0];
+            var depiction = poi.primary_image || poi.images[0];
+            var depictionURL;
+            if (depiction && 'url' in depiction) {
+                depictionURL = depiction.url;
             }
-
-            var context = {};
+            var context = {
+                showZoomButton: false,
+                contains: [],
+                partOf: [],
+                occupiedBy: [],
+                depiction: depictionURL,
+                socialLinks: poi.social_facebook || poi.social_twitter,
+            };
+            if ('accessibility' in poi && 'access_guide_url' in poi.accessibility) {
+                context.accessibilityGuideURL = poi.accessibility.access_guide_url[0];
+            }
+            if (this.additionalPOIs && this.additionalPOIs.numberOfMarkers && this.additionalPOIs.numberOfMarkers > 1) {
+                context.showZoomButton = true;
+            }
             if (poi._links) {
                 for (var i in poi._links.child) {
                     var child = poi._links.child[i];
@@ -75,16 +101,12 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                             } else {
                                 context[this.childTypes[type].relation] = [childObj];
                             }
-                        } else if ('contains' in context) {
-                            context.contains.push(childObj);
                         } else {
-                            context.contains = [childObj];
+                            context.contains.push(childObj);
                         }
                     }
                 }
                 if (poi._links.parent) {
-                    context.partOf = [];
-                    context.occupiedBy = [];
                     var parents = [];
                     if (!$.isArray(poi._links.parent)) {
                         parents.push(poi._links.parent);
@@ -112,6 +134,14 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                     }
                 }
             }
+            _.each(context, function(relations, key) {
+                if (_.isArray(relations)) {
+                    var sortedRels = _.sortBy(relations, function(poi) {
+                        return poi.number || 1000;
+                    });
+                    context[key] = sortedRels;
+                }
+            });
 
             return _.extend(context, {
                 poi: poi,
@@ -119,8 +149,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                 alternateRTI: this.model.getAlternateRTI(),
                 currentRTI: this.model.getCurrentRTI(),
                 currentlyOpen: currentlyOpen,
-                parsedOpeningHours: parsedOpeningHours,
-                depiction: depiction,
+                parsedOpeningHours: parsedOpeningHours
             });
         },
         template: detailTemplate,
@@ -138,10 +167,10 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                         poids.push(child.href.split('/').pop());
                     });
                     if (poids.length === 1) {
-                        var poi = new NumberedPOI({id: poids[0], number: 1});
+                        var poi = new NumberedPOI({id: poids[0], singlePOI: true});
                         poi.fetch({success: _.bind(this.render, this)});
                         this.additionalPOIs =  new NumberedPOICollection([poi]);
-                    } else {
+                    } else if (poids.length > 1) {
                         this.additionalPOIs =  new NumberedPOICollection({
                             sortFunction: _.bind(function(child) {
                                 if (child.type[0] in this.childTypes) {

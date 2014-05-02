@@ -27,13 +27,28 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
 
         // Event Handlers
         events: {
-            'keypress :input': "searchEvent",
+            'keypress :input[type="text"]': "searchKeypressEvent",
+            'click :input[type="submit"]': "searchClickEvent",
             'click .deleteicon': "clearSearch",
             'change .type-exact input': "clickTypeFacet",
             'change .accessibility input': "clickAccessibilityFacet",
             'click .map-options .sort-nearby': "sortNearby",
             'click .map-options .sort-az': "sortAZ",
             'click .map-options .filter a': "filter",
+
+            'click a.result-link': "clickResult",
+        },
+
+        clickResult: function(ev) {
+            if ($('.map-browse-layout.with-detail').length===1) {
+                // Silent browse, replace URL but don't write in history
+                ev.preventDefault();
+                Backbone.history.navigate(Backbone.history.reverse('detail', {id: ev.target.id} ), {trigger: true, replace: true});
+                return false;
+            } else {
+                // Normal browse, write to history
+                return true;
+            }
         },
 
         filtering: false,
@@ -87,7 +102,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
                 this.collection.fetch();
                 facet.checked = true;
             } else {
-                var index = this.collection.query.type_exact.indexOf(type_exact);
+                var index = _.indexOf(this.collection.query.type_exact, type_exact);
                 if (this.collection.query.type_exact && index!==-1) {
                     this.collection.query.type_exact.splice(index, 1);
                     this.collection.fetch();
@@ -116,17 +131,17 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
             }
         },
 
-        searchEvent: function(ev) {
+        searchClickEvent: function(ev) {
+            var term = this.$(':input[type="text"]').val();
+            this.searchForTerm(term);
+        },
+        searchKeypressEvent: function(ev) {
             if (ev.which === 13) {
-                this.parentFacets = null;
-                this.collection.query.q = ev.target.value;
-                // User entered searches clear any existing facets
-                // and query the entire index
-                delete this.collection.query.type;
-                delete this.collection.query.type_exact;
-                this.collection.geoFetch();
-                Backbone.history.navigate(Backbone.history.reverse('search')+'?'+$.param(this.collection.query).replace(/\+/g, "%20"), {trigger: false});
+                this.searchForTerm(ev.target.value);
             }
+        },
+        searchForTerm: function(term) {
+            Backbone.history.navigate(Backbone.history.reverse('search')+'?'+$.param({q: term}).replace(/\+/g, "%20"), {trigger: true});
         },
 
         addResult: function(model) {
@@ -134,7 +149,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
             var view = new ItemView({
                 model: model,
                 trackingUserPosition: trackingUserPosition,
-                userSearch: this.collection.query.q,
+                showInfo: this.collection.query.q || this.collection.showInfo,
             });
             this.insertView("ul.results-list", view);
             view.render();
@@ -162,14 +177,14 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
         beforeRender: function() {
             Backbone.trigger('domchange:title', "Search for Places of Interest");
             if (this.collection.length) {
-                var userSearch = this.collection.query.q;
+                var showInfo = this.collection.query.q || this.collection.showInfo;
                 var trackingUserPosition = this.sortOrder===SORT_NEARBY;
                 var views = [];
                 this.collection.each(function(model) {
                     views.push(new ItemView({
                         model: model,
                         trackingUserPosition: trackingUserPosition,
-                        userSearch: userSearch,
+                        showInfo: showInfo,
                     }));
                 });
                 this.insertViews({"ul.results-list": views});

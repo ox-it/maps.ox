@@ -2,13 +2,16 @@
 @import "globals/oxford-palette";
 
 .content-detail {
-    border-top: $map-pane-border;
-    padding: 10px;
+    padding: $default-padding;
     h2 {
-        margin: 0 0 5px 0;
+        margin: 0 0 $default-padding 0;
+        font-weight: normal;
     }
     dl dd {
-        margin-left: 15px;
+        margin-left: 0;
+    }
+    dl dt {
+        margin: 0.4em 0;
     }
     .preloader {
         display: block;
@@ -24,6 +27,7 @@
             width: auto;
             float: none;
             display: block;
+            padding-left: 0;
         }
         @media #{$smartphone} {
             float: none;
@@ -40,7 +44,7 @@
         .depiction-wrapper {
             background-color: #eee;
             border: $map-pane-border;
-            padding: 20px;
+            padding: $default-padding;
             img.depiction {
                 display: block;
                 margin: 0 auto 0 auto;

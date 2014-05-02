@@ -1,4 +1,5 @@
-require(['jquery', 'underscore', 'backbone', 'backbone.reverse', 'libs/moxiejs/app/places/router', 'fastclick', 'backbone.queryparams', 'backbone.layoutmanager'], function($, _, Backbone, ReversibleRouter, PlacesRouter, FastClick) {
+// Include all backbone plugins here then they don't need to appear in all our subrouters
+require(['jquery', 'underscore', 'backbone', 'backbone.layoutmanager', 'backbone.queryparams', 'backbone.reverse', 'libs/moxiejs/app/places/router', 'fastclick'], function($, _, Backbone, Layout, bbqp, ReversibleRouter, PlacesRouter, FastClick) {
     $(function() {
         // Initialse our router
         var Router = ReversibleRouter.extend(PlacesRouter);

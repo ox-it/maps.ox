@@ -1,59 +1,83 @@
 // Sets the require.js configuration for your application.
-var moxieJS = 'libs/moxiejs/app/';
-var moxiePlaces = ["places/models/POIModel", "places/models/NumberedPOIModel", "places/views/CategoriesView", "places/views/SearchView", "places/views/DetailView", "places/collections/POICollection", "places/collections/NumberedPOICollection", "places/collections/AdditionalPOICollection", "places/collections/CategoryCollection", "places/models/RTIModels", "places/views/RTIViews", "places/utils", "places/views/ItemView", "places/models/CategoryModel", "places/templates/categories", "places/templates/search", "places/templates/detail", "places/templates/busrti", "places/templates/trainrti", "places/templates/p-r_rti", "places/templates/item", "places/templates/requesting_geolocation", "places/templates/error_geolocation"];
-var moxieCore = ["core/views/MapView", "core/views/MapBrowseLayout", "core/views/InfiniteScrollView", "core/views/ErrorView", "core/collections/MoxieCollection", "core/media", "core/templates/map-browse", "core/templates/error"];
 var require = {
     // 3rd party script alias names (Easier to type "jquery" than "libs/jquery-1.7.2.min")
     baseUrl: './app',
     paths: {
 
         // Core Libraries
-        "jquery": moxieJS + "libs/jquery",
-        "underscore": moxieJS + "libs/underscore",
-        "backbone": moxieJS + "libs/backbone",
-        "handlebars": moxieJS + "libs/Handlebars",
-        "hbs": moxieJS + "libs/hbs",
-        "json2": moxieJS + "libs/json2",
-        "i18nprecompile": moxieJS + "libs/i18nprecompile",
-        "leaflet": moxieJS + "libs/leaflet",
-        "leaflet.markercluster": moxieJS + "libs/leaflet.markercluster",
-        "time_domain": moxieJS + "libs/time_domain",
-        "fastclick": moxieJS + "libs/fastclick",
-        "moment": moxieJS + "libs/moment",
-        "backbone.queryparams": moxieJS + "libs/backbone.queryparams",
-        "backbone.subroute": moxieJS + "libs/backbone.subroute",
-        "backbone.layoutmanager": moxieJS + "libs/backbone.layoutmanager",
-        "matchMedia": moxieJS + "libs/matchMedia",
-        "raphael": moxieJS + "libs/raphael",
-        "justgage": moxieJS + "libs/justgage",
-        "wellknown": moxieJS + "libs/wellknown",
-        "backbone.reverse": moxieJS + "libs/backbone.reverse",
+        "jquery": "libs/moxiejs/app/libs/jquery",
+        "underscore": "libs/moxiejs/app/libs/underscore",
+        "backbone": "libs/moxiejs/app/libs/backbone",
+        "handlebars": "libs/moxiejs/app/libs/Handlebars",
+        "hbs": "libs/moxiejs/app/libs/hbs",
+        "json2": "libs/moxiejs/app/libs/json2",
+        "i18nprecompile": "libs/moxiejs/app/libs/i18nprecompile",
+        "leaflet": "libs/moxiejs/app/libs/leaflet",
+        "leaflet.markercluster": "libs/moxiejs/app/libs/leaflet.markercluster",
+        "time_domain": "libs/moxiejs/app/libs/time_domain",
+        "fastclick": "libs/moxiejs/app/libs/fastclick",
+        "moment": "libs/moxiejs/app/libs/moment",
+        "backbone.queryparams": "libs/moxiejs/app/libs/backbone.queryparams",
+        "backbone.subroute": "libs/moxiejs/app/libs/backbone.subroute",
+        "backbone.layoutmanager": "libs/moxiejs/app/libs/backbone.layoutmanager",
+        "matchMedia": "libs/moxiejs/app/libs/matchMedia",
+        "raphael": "libs/moxiejs/app/libs/raphael",
+        "justgage": "libs/moxiejs/app/libs/justgage",
+        "wellknown": "libs/moxiejs/app/libs/wellknown",
+        "backbone.reverse": "libs/moxiejs/app/libs/backbone.reverse",
 
         // Testing libs
-        "jasmine": moxieJS + "tests/libs/jasmine-1.3.1/jasmine",
-        "jasmine-html": moxieJS + "tests/libs/jasmine-1.3.1/jasmine-html",
-        "jasmine-jquery": moxieJS + "tests/libs/jasmine-jquery",
-
-        // Moxie Core modules
-        "MoxieModel": moxieJS + "core/models/MoxieModel",
-        "MoxieCollection": moxieJS + "core/collections/MoxieCollection",
+        "jasmine": "libs/moxiejs/app/tests/libs/jasmine-1.3.1/jasmine",
+        "jasmine-html": "libs/moxiejs/app/tests/libs/jasmine-1.3.1/jasmine-html",
+        "jasmine-jquery": "libs/moxiejs/app/tests/libs/jasmine-jquery",
 
         "moxie.conf": "maps.conf",
-        "moxie.position": moxieJS + "moxie.position",
-        "cordova.help": moxieJS + "cordova.help"
+        "moxie.position": "libs/moxiejs/app/moxie.position",
+        "cordova.help": "libs/moxiejs/app/cordova.help",
+
+        // Moxie Places
+        "places/models/POIModel": "libs/moxiejs/app/places/models/POIModel",
+        "places/models/NumberedPOIModel": "libs/moxiejs/app/places/models/NumberedPOIModel",
+        "places/views/CategoriesView": "libs/moxiejs/app/places/views/CategoriesView",
+        "places/views/SearchView": "libs/moxiejs/app/places/views/SearchView",
+        "places/views/DetailView": "libs/moxiejs/app/places/views/DetailView",
+        "places/collections/POICollection": "libs/moxiejs/app/places/collections/POICollection",
+        "places/collections/NumberedPOICollection": "libs/moxiejs/app/places/collections/NumberedPOICollection",
+        "places/collections/AdditionalPOICollection": "libs/moxiejs/app/places/collections/AdditionalPOICollection",
+        "places/collections/CategoryCollection": "libs/moxiejs/app/places/collections/CategoryCollection",
+        "places/collections/CustomCollection": "libs/moxiejs/app/places/collections/CustomCollection",
+        "places/models/RTIModels": "libs/moxiejs/app/places/models/RTIModels",
+        "places/views/RTIViews": "libs/moxiejs/app/places/views/RTIViews",
+        "places/utils": "libs/moxiejs/app/places/utils",
+        "places/views/ItemView": "libs/moxiejs/app/places/views/ItemView",
+        "places/models/CategoryModel": "libs/moxiejs/app/places/models/CategoryModel",
+        "places/templates/search": "libs/moxiejs/app/places/templates/search",
+        "places/templates/detail": "libs/moxiejs/app/places/templates/detail",
+        "places/templates/busrti": "libs/moxiejs/app/places/templates/busrti",
+        "places/templates/trainrti": "libs/moxiejs/app/places/templates/trainrti",
+        "places/templates/p-r_rti": "libs/moxiejs/app/places/templates/p-r_rti",
+        "places/templates/item": "libs/moxiejs/app/places/templates/item",
+        "places/templates/requesting_geolocation": "libs/moxiejs/app/places/templates/requesting_geolocation",
+        "places/templates/error_geolocation": "libs/moxiejs/app/places/templates/error_geolocation",
+
+        // Moxie Core modules
+        "MoxieModel": "libs/moxiejs/app/core/models/MoxieModel",
+        "MoxieCollection": "libs/moxiejs/app/core/collections/MoxieCollection",
+
+        "core/views/MapView": "libs/moxiejs/app/core/views/MapView",
+        "core/views/MapBrowseLayout": "libs/moxiejs/app/core/views/MapBrowseLayout",
+        "core/views/InfiniteScrollView": "libs/moxiejs/app/core/views/InfiniteScrollView",
+        "core/views/ErrorView": "libs/moxiejs/app/core/views/ErrorView",
+        "core/collections/MoxieCollection": "libs/moxiejs/app/core/collections/MoxieCollection",
+        "core/media": "libs/moxiejs/app/core/media",
+        "core/templates/map-browse": "libs/moxiejs/app/core/templates/map-browse",
+        "core/templates/error": "libs/moxiejs/app/core/templates/error",
     },
 
     // Sets the configuration for your third party scripts that are not AMD compatible
     shim: {
-        "backbone": {
-            "deps": ["underscore", "jquery"],
-            "exports": "Backbone"  //attaches "Backbone" to the window object
-        },
         "underscore": {
             "exports": "_"
-        },
-        "backbone.queryparams": {
-            "deps": ["backbone"]
         },
         "leaflet": {
             "exports": "L"
@@ -94,10 +118,6 @@ var require = {
     hbs: {
         templateExtension: 'handlebars',
         disableI18n: true,
-        helperPathCallback: function(name) {return moxieJS + 'templates/helpers/' + name;}
+        helperPathCallback: function(name) {return 'libs/moxiejs/app/templates/helpers/' + name;}
     }
 };
-var moxieModules = moxiePlaces.concat(moxieCore);
-for (var i = 0; i < moxieModules.length; i++) {
-    require.paths[moxieModules[i]] = moxieJS + moxieModules[i];
-}

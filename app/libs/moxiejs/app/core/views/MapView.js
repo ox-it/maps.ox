@@ -3,11 +3,11 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
         initialize: function(options) {
             _.bindAll(this);
             this.options = options || {};
-            this.interactiveMap = this.options.interactiveMap || media.isTablet();
             this.features = [];
             this.additionalLayers = {};
             Backbone.on('map:additional-collection', this.registerAdditionalCollection, this);
             Backbone.on('map:numbered-collection', this.registerNumberedCollection, this);
+            Backbone.on('map:zoom-all-markers', this.setMapBounds, this);
         },
 
         attributes: {},
@@ -18,19 +18,31 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
         // moves the map. Carefully reset when the collection is reset.
         mapMoved: false,
 
+        enableInteractiveMap: function() {
+            this.map.dragging.enable();
+            this.map.touchZoom.enable();
+            this.map.scrollWheelZoom.enable();
+            this.map.doubleClickZoom.enable();
+            this.map.boxZoom.enable();
+        },
+
+        disableInteractiveMap: function() {
+            this.map.dragging.disable();
+            this.map.touchZoom.disable();
+            this.map.scrollWheelZoom.disable();
+            this.map.doubleClickZoom.disable();
+            this.map.boxZoom.disable();
+        },
+
         beforeRender: function() {
             $('html').addClass('map');
             var mapOptions = {
                 zoomControl: false
             };
-            if (!this.interactiveMap) {
-                 mapOptions.dragging = false;
-                 mapOptions.touchZoom = false;
-                 mapOptions.scrollWheelZoom = false;
-                 mapOptions.doubleClickZoom = false;
-                 mapOptions.boxZoom = false;
-            }
             this.map = utils.getMap(this.el, {mapOptions: mapOptions});
+            // Need to add a separate zoomControl here after the map is created
+            var zoomControl = new L.control.zoom({position: 'bottomright'});
+            zoomControl.addTo(this.map);
             if (!this.interactiveMap) {
                 // Note: This view can be reused for example when navigating from a POI
                 // SearchView to a DetailView. In which case we need to remove any lingering
@@ -94,12 +106,12 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
             if (additionalCollections) {
                 _.each(additionalCollections, this.registerAdditionalCollection, this);
             }
-            if (this.collection.length) {
-                this.resetMapContents();
-            }
+            this.resetMapContents();
         },
 
+        numberedCollection: null,
         registerNumberedCollection: function(collection) {
+            this.numberedCollection = collection;
             collection.each(this.placePOI, this);
         },
 
@@ -133,7 +145,7 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
                             });
                         }
                     }));
-                    if (this.visibleLayers.indexOf(name)===-1) {
+                    if (_.indexOf(this.visibleLayers, name)===-1) {
                         this.additionalLayers[name] = markers;
                     }
                 }
@@ -152,6 +164,7 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
         },
 
         unsetCollection: function() {
+            this.numberedCollection = null;
             if (this.collection) {
                 this.collection.off(null, null, this);
                 this.collection = null;
@@ -219,6 +232,9 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
             // Only set map bounds if we have a collection
             if (this.collection && this.collection.length > 0) {
                 var bounds = this.collection.getBounds();
+                if (this.numberedCollection) {
+                    bounds.extend(this.numberedCollection.getBounds());
+                }
                 if (bounds) {
                     if (this.showUser && this.user_position) {
                         bounds.extend(this.user_position);

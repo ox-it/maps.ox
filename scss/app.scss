@@ -9,11 +9,20 @@
 @import "components/maplayout";
 @import "components/places_detail";
 
+$filter-padding: 8px;
+$filter-label-margin: 3px;
+// line up the filter labels with the results text
+$filter-label-padding: 16px;
+
 html, body { height: 100%; }
 body {
     overflow-x: hidden;
     width: 100%;
     background: $body-background;
+}
+a {
+    color: $pantone279;
+    text-decoration: none;
 }
 .map-options {
     &.something-highlighted {
@@ -24,17 +33,17 @@ body {
     padding: 0;
     border-bottom: $map-pane-border;
     text-align: center;
-    a {
-        color: $pantone279;
-        text-decoration: none;
-    }
     span {
         display: inline-block;
         padding: 5px;
-        min-width: 70px;
+        min-width: 65px;
         border-left: $map-pane-border;
-        font-size: 1em;
+        font-size: 0.95em;
         line-height: 1.5em;
+        color: $oxfordBlue;
+    }
+    span.filter {
+            color: $map-toggle-inactive;
     }
     span:first-child {
         border-left: none;
@@ -57,10 +66,10 @@ body {
 }
 
 .filters {
-    padding: 8px 5px;
+    padding: $filter-padding $filter-padding ($filter-padding - 2px);
     background-color: $pantone279;
     color: $body-background;
-    &.single-facet-list {
+     &.single-facet-list {
         .facets {
             width: 100%;
         }
@@ -75,24 +84,57 @@ body {
         padding: 0;
         list-style: none;
         li {
-            margin: 5px;
+            margin: 5px 0;
         }
     }
     label {
         display: block;
-        padding-left: 15px;
-        text-indent: -15px;
+        padding-left: $filter-label-padding;
+        text-indent: -$filter-label-padding;
+        font-size: 0.9em;
     }
     input {
         position: relative;
         top: -1px;
-        margin:0;
+        margin:0 2px 0 0;
         padding: 0;
         width: 13px;
         height: 13px;
         vertical-align: middle;
     }
     h3 {
-        margin: 0;
+        margin: 0 0 $filter-label-margin;
+        font-weight: normal;
+        font-size: 0.95em;
+    }
+}
+.external-links li {
+    list-style-type: none;
+    display: inline;
+    @media #{$smartphone} {
+        display: list-item;
+    }
+}
+a.action-button {
+    text-decoration: none;
+}
+.action-button {
+    border-radius: 5px;
+    @include border-radius(5px);
+    @include background(linear-gradient(#fafafa, #dfdfdf));
+    @include box-shadow(0 0 1px rgba(0,0,0,0.4));
+
+    border: 1px solid rgba(0,0,0,0.2);
+    padding: 9px 10px 10px 10px;
+    display: inline-block;
+    color: #333;
+    font-weight: 500;
+    margin: 5px 5px 5px 0;
+    &.social {
+        // Do we need separate styling for the social
+        // link buttons?
+        @include background($pantone549);
+        color: #fafafa;
+        padding: 6px 7px 7px 7px;
     }
 }

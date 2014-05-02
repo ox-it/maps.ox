@@ -23,6 +23,7 @@ define(['underscore', 'moxie.conf', 'leaflet', 'moxie.position'], function(_, Mo
             // Add the tile layer
             L.tileLayer('http://maps-tiles.oucs.ox.ac.uk/{z}/{x}/{y}.png', MoxieConf.map.defaultTileLayerOptions).addTo(map);
             map.attributionControl.setPrefix('');
+            map.attributionControl.addAttribution('&copy <a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors');
             return map;
         }
     };
