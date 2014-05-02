@@ -40,8 +40,12 @@ Here's a useful git alias for merging master, building css and pushing to the `g
 Creating custom maps
 --------------------
 
-In order to create a custom map you'll need the identifiers to the points you'd like to include on the map. These identifiers can be found from the URL within maps.ox, for example [Christ Church](http://ox-it.github.io/maps.ox/#/places/oxpoints:23232352) has the URL `/#/places/oxpoints:23232352`. Therefore the identifier is `oxpoints:23232352`. Now if we want to create a custom map with Christ Church and George and Danvers's on St. Aldates (identifier `osm:553028844`) we'd use the following path.
+In order to create a custom map you'll need the identifiers to the points you'd like to include on the map. These identifiers can be found from the URL within maps.ox, for example [Christ Church](http://ox-it.github.io/maps.ox/#/places/oxpoints:23232352) has the URL `/#/places/oxpoints:23232352`. Therefore the identifier is `oxpoints:23232352`. Now if we want to create a custom map with Christ Church and George and Danvers's on St. Aldates (identifier `osm:553028844`) we'd use the following path. 
 
 > /#/custom?ids=oxpoints:23232352,osm:553028844
+
+The browse pane (on the left) can be removed leaving a fullscreen map with the fullscreen paramater.
+
+> /#/custom?ids=oxpoints:23232352,osm:553028844&fullscreen
 
 [Example embedded maps](examples/custom.html)
