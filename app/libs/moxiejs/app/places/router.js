@@ -1,6 +1,19 @@
-define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places/models/POIModel", "places/views/CategoriesView", "places/views/SearchView", "places/views/DetailView", "places/collections/POICollection", "places/collections/CategoryCollection", "core/views/MapView", "core/media", "places/collections/AdditionalPOICollection"], function(app, _, Backbone, conf, userPosition, POI, CategoriesView, SearchView, DetailView, POIs, Categories, MapView, media, AdditionalPOIs){
+define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places/models/POIModel", "places/views/CategoriesView", "places/views/SearchView", "places/views/DetailView", "places/collections/POICollection", "places/collections/CategoryCollection", "core/views/MapView", "core/media", "places/collections/AdditionalPOICollection", "places/collections/CustomCollection"], function(app, _, Backbone, conf, userPosition, POI, CategoriesView, SearchView, DetailView, POIs, Categories, MapView, media, AdditionalPOIs, CustomPOIs){
 
+    // Points of Interest collections
     var pois = new POIs();
+    var customPOIs = new CustomPOIs();
+
+    function getPOI(poid) {
+        var poi = false;
+        poi = pois.get(poid);
+        if (poi) {
+            return poi;
+        }
+        poi = customPOIs.get(poid);
+        return poi;
+    }
+
     var categories = new Categories();
     categories.fetch();
 
@@ -23,6 +36,7 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
         "categories": "categories",
         "categories*category_name": "categories",
         "search": "search",
+        "custom": "custom",
     };
     routes[POI_PREFIX + ':id'] = 'detail';
     routes[POI_PREFIX + ':id/map'] = 'detailMap';
@@ -39,6 +53,45 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
         },
 
         routes: routes,
+
+        custom: function(params) {
+            params = params || {};
+            var fullscreen = 'fullscreen' in params;
+            // Special case for custom maps with 1 POI
+            //
+            // As the API has a different response for a single resource
+            // we create the POI and call fetch on that rather than the
+            // CustomPOIs collection.
+            if (params.ids.split(',').length === 1) {
+                var poi = new POI({id: params.ids});
+                poi.on('sync', function() {
+                    customPOIs.trigger('reset');  // Make sure the SearchView refreshes
+                });
+                customPOIs.reset([poi]);
+                poi.fetch();
+            } else {
+                // Custom maps with multiple POIs
+                customPOIs.ids = params.ids;
+                customPOIs.fetch();
+            }
+            var layout = app.getLayout('MapBrowseLayout', {followUser: this.followUser});
+            layout.removeDetail();
+            if (fullscreen) {
+                layout.removeBrowse();
+            } else {
+                layout.withBrowse();
+            }
+            var searchView = new SearchView({
+                collection: customPOIs,
+                followUser: this.followUser
+            });
+            layout.setView('.content-browse', searchView);
+            var mapView = layout.getView('.content-map');
+            // Remove any other mapClick listeners (if the view is being reused)
+            mapView.off('mapClick');
+            mapView.setCollection(customPOIs, additionalPOIs);
+            searchView.render();
+        },
 
         categories: function(category_name) {
             // category_name seems to be passed as an empty string here on IE8
@@ -78,12 +131,14 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
             });
             layout.setView('.content-browse', searchView);
             var mapView = layout.getView('.content-map');
+            // Remove any other mapClick listeners (if the view is being reused)
+            mapView.off('mapClick');
             mapView.setCollection(pois, additionalPOIs);
             searchView.render();
         },
 
         detailMap: function(id) {
-            var poi = pois.get(id);
+            var poi = getPOI(id);
             if (!poi) {
                 poi = new POI({id: id});
                 poi.fetch();
@@ -120,24 +175,24 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
                 }
             }
             var mapView = layout.getView('.content-map');
+            // Remove any other mapClick listeners (if the view is being reused)
+            mapView.off('mapClick');
             mapView.setCollection(new POIs([poi]), additionalPOIs);
             if (detailPane) {
                 if (media.isPhone()) {
                     mapView.disableInteractiveMap();
+                    mapView.on('mapClick', function() {
+                        Backbone.history.navigate(
+                            Backbone.history.reverse('detailMap', {id: poi.id}),
+                            {trigger: true, replace: false}
+                        );
+                    });
                 }
                 layout.withDetail();
                 var detailView = new DetailView({
                     model: poi
                 });
                 layout.setView('.content-detail-wrapper', detailView);
-                // Remove any other mapClick listeners (if the view is being reused)
-                mapView.off('mapClick');
-                mapView.on('mapClick', function() {
-                    Backbone.history.navigate(
-                        Backbone.history.reverse('detailMap', {id: poi.id}),
-                        {trigger: true, replace: false}
-                    );
-                });
                 detailView.render();
             } else {
                 mapView.enableInteractiveMap();
@@ -146,10 +201,11 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
         },
 
         detail: function(id, params) {
+            customPOIs.removeHighlighting();
             pois.removeHighlighting();
             var query = params || {};
             var showRTI = 'rti' in query ? params.rti : null;
-            var poi = pois.get(id);
+            var poi = getPOI(id);
             if (poi) {
                 poi.set({
                     showRTI: showRTI,

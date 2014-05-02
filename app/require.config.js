@@ -45,6 +45,7 @@ var require = {
         "places/collections/NumberedPOICollection": "libs/moxiejs/app/places/collections/NumberedPOICollection",
         "places/collections/AdditionalPOICollection": "libs/moxiejs/app/places/collections/AdditionalPOICollection",
         "places/collections/CategoryCollection": "libs/moxiejs/app/places/collections/CategoryCollection",
+        "places/collections/CustomCollection": "libs/moxiejs/app/places/collections/CustomCollection",
         "places/models/RTIModels": "libs/moxiejs/app/places/models/RTIModels",
         "places/views/RTIViews": "libs/moxiejs/app/places/views/RTIViews",
         "places/utils": "libs/moxiejs/app/places/utils",

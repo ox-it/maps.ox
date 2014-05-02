@@ -1,8 +1,9 @@
 define(["backbone", "underscore", "hbs!places/templates/item"], function(Backbone, _, itemTemplate){
     var ItemView = Backbone.View.extend({
-        initialize: function() {
+        initialize: function(options) {
+            this.options = options;
             this.trackingUserPosition = this.options.trackingUserPosition;
-            this.userSearch = this.options.userSearch;
+            this.showInfo = this.options.showInfo;
             this.model.on('change:highlighted', _.bind(this.highlight, this));
             this.model.on('change:scroll', _.bind(this.scroll, this));
         },
@@ -34,7 +35,7 @@ define(["backbone", "underscore", "hbs!places/templates/item"], function(Backbon
         serialize: function() {
             var context = this.model.toJSON();
             context.trackingUserPosition = this.trackingUserPosition;
-            context.userSearch = this.userSearch;
+            context.showInfo = this.showInfo;
             return context;
         },
         template: itemTemplate

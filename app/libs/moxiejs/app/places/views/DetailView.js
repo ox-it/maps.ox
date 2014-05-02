@@ -170,7 +170,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                         var poi = new NumberedPOI({id: poids[0], singlePOI: true});
                         poi.fetch({success: _.bind(this.render, this)});
                         this.additionalPOIs =  new NumberedPOICollection([poi]);
-                    } else {
+                    } else if (poids.length > 1) {
                         this.additionalPOIs =  new NumberedPOICollection({
                             sortFunction: _.bind(function(child) {
                                 if (child.type[0] in this.childTypes) {
