@@ -3,7 +3,7 @@
         {{#if trackingUserPosition}}
             <span class="distance">{{humaniseDistance distance }}</span>
         {{/if}}
-        <a href="{{ reverse 'detail' 'id' id }}">
+        <a class="result-link" id="{{ id }}" href="{{ reverse 'detail' 'id' id }}">
             {{ name }}
         </a>
     </h3>
@@ -20,7 +20,7 @@
         {{#if trackingUserPosition}}
             <span class="distance">{{humaniseDistance distance }}</span>
         {{/if}}
-        <a href="{{ reverse 'detail' 'id' id }}">
+        <a class="result-link" id="{{ id }}" href="{{ reverse 'detail' 'id' id }}">
         {{ type_name }}
         </a>
     </p>

@@ -35,6 +35,20 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
             'click .map-options .sort-nearby': "sortNearby",
             'click .map-options .sort-az': "sortAZ",
             'click .map-options .filter a': "filter",
+
+            'click a.result-link': "clickResult",
+        },
+
+        clickResult: function(ev) {
+            if ($('.map-browse-layout.with-detail').length===1) {
+                // Silent browse, replace URL but don't write in history
+                ev.preventDefault();
+                Backbone.history.navigate(Backbone.history.reverse('detail', {id: ev.target.id} ), {trigger: true, replace: true});
+                return false;
+            } else {
+                // Normal browse, write to history
+                return true;
+            }
         },
 
         filtering: false,
