@@ -21,7 +21,20 @@ define(['underscore', 'moxie.conf', 'leaflet', 'moxie.position'], function(_, Mo
             var map = new L.map(el, mapOptions).setView([position.coords.latitude, position.coords.longitude], MoxieConf.map.defaultZoom, true);
 
             // Add the tile layer
-            L.tileLayer('http://maps-tiles.oucs.ox.ac.uk/{z}/{x}/{y}.png', MoxieConf.map.defaultTileLayerOptions).addTo(map);
+            var bounds = L.latLngBounds.apply(this, MoxieConf.map.primaryLayer.bounds);
+            MoxieConf.map.primaryLayer.options.bounds = bounds;
+            L.tileLayer(MoxieConf.map.primaryLayer.path, MoxieConf.map.primaryLayer.options).addTo(map);
+            var secondaryLayer = L.tileLayer(MoxieConf.map.secondaryLayer.path, MoxieConf.map.secondaryLayer.options);
+            map.on('moveend zoomend', function(ev) {
+                var currentBounds = map.getBounds();
+                var contained = bounds.contains(currentBounds);
+                var hasSecondaryLayer = map.hasLayer(secondaryLayer);
+                if (!contained && !hasSecondaryLayer) {
+                    map.addLayer(secondaryLayer);
+                } else if (contained && hasSecondaryLayer) {
+                    map.removeLayer(secondaryLayer);
+                }
+            });
             map.attributionControl.setPrefix('');
             map.attributionControl.addAttribution('&copy <a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors');
             return map;
