@@ -20,6 +20,21 @@ define([], function() {
         mapbox: {key: 'mobileox.4xjkbj4i'},
         map: {
             defaultZoom: 15,
+            primaryLayer: {
+                path: 'http://maps-tiles.oucs.ox.ac.uk/{z}/{x}/{y}.png',
+                bounds: [[51.6299, -1.4207], [51.8646, -1.1144]],
+                options: {
+                    maxZoom: 18,
+                    zIndex: 200,
+                }
+            },
+            secondaryLayer: {
+                path: 'https://{s}.tiles.mapbox.com/v3/mobileox.map-iihxb1dl/{z}/{x}/{y}.png',
+                options: {
+                    maxZoom: 18,
+                    zIndex: 100,
+                }
+            },
             bounds: {
                 exponent: 0.75,
                 limit: 500,
@@ -27,12 +42,6 @@ define([], function() {
                 padding: 0.1
             },
             phoneViewMediaQuery: "only screen and (max-width: 767px)",
-            defaultTileLayerOptions:  {
-                minZoom: 0,
-                maxZoom: 18,
-                // Detect retina - if true 4* map tiles are downloaded
-                detectRetina: true
-            }
         },
         position: {
             updateInterval: 600000,         // 10 minutes
