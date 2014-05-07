@@ -8,14 +8,18 @@
     <h2>{{ poi.type_name }}</h2>
 {{/if}}
 
-{{#if depiction }}
+{{#if hasDepiction }}
     <div class="poi-details-depiction">
         <div class="depiction-wrapper">
-            <img class="depiction" src="{{ depiction }}">
+            {{#if image }}
+            <img src="{{ image.src }}">
+            {{else}}
+            <img class="placeholder" src="images/placeholder.png">
+            {{/if}}
         </div>
     </div>
 {{/if}}
-<div class="poi-details-text {{#unless depiction}}no-depiction{{/unless}}">
+<div class="poi-details-text {{#unless hasDepiction}}no-depiction{{/unless}}">
     <div class="free-text">
         {{#if poi.opening_hours }}
             {{{currentlyOpen currentlyOpen}}}
