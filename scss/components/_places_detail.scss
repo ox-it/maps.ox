@@ -20,32 +20,29 @@
 
     .poi-details-text {
         width: 50%;
-        float: left;
-        display: inline;
         padding-left: 20px;
+        display: inline-block;
+        vertical-align: top;
         &.no-depiction {
             width: auto;
-            float: none;
             display: block;
             padding-left: 0;
         }
         @media #{$smartphone} {
-            float: none;
-            display: block;
             width: 100%;
+            display: block;
             padding-left: 0;
         }
     }
 
     .poi-details-depiction {
         width: 40%;
-        float: left;
-        display: inline;
+        display: inline-block;
         .depiction-wrapper {
             background-color: #eee;
             border: $map-pane-border;
             padding: $default-padding;
-            img.depiction {
+            img {
                 display: block;
                 margin: 0 auto 0 auto;
                 max-width: 100%;
