@@ -48,6 +48,11 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
             '/university/college': {relation: 'organisations', index: 7},
         },
 
+        // These each contain the Image() element as it loads
+        // and once it has fully loaded respectively.
+        image: null,
+        loadingImage: null,
+
         serialize: function() {
             var poi = this.model.toJSON();
             if (poi.midFetch === true) {
@@ -64,21 +69,34 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                     currentlyOpen = null;
                 }
             }
+
+            // Do we have an image? is it loaded?
             var depiction = poi.primary_image || poi.images[0];
-            var depictionURL;
-            if (depiction && 'url' in depiction) {
-                depictionURL = depiction.url;
+            var hasDepiction = false;
+            if (this.image || this.loadingImage) {
+                hasDepiction = true;
+            } else if (depiction && 'url' in depiction) {
+                // Create Image to load in background
+                this.loadingImage = new Image();
+                this.loadingImage.onload = _.bind(function() {
+                    this.image = this.loadingImage;
+                    this.render();  // Image has loaded, render the view
+                }, this);
+                this.loadingImage.src = depiction.url;
+                hasDepiction = true;
             }
+
             var context = {
                 showZoomButton: false,
                 contains: [],
                 partOf: [],
                 occupiedBy: [],
-                depiction: depictionURL,
+                hasDepiction: hasDepiction,
+                image: this.image,
                 socialLinks: poi.social_facebook || poi.social_twitter,
             };
             if ('accessibility' in poi && 'access_guide_url' in poi.accessibility) {
-                context.accessibilityGuideURL = poi.accessibility.access_guide_url[0];
+                context.accessibilityGuideURL = poi.accessibility.access_guide_url;
             }
             if (this.additionalPOIs && this.additionalPOIs.numberOfMarkers && this.additionalPOIs.numberOfMarkers > 1) {
                 context.showZoomButton = true;
