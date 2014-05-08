@@ -7,9 +7,8 @@ define(['underscore', 'moxie.conf', 'leaflet', 'moxie.position'], function(_, Mo
                 return _.find(categories.types, function(cat) { return (cat.type===category_name); });
             }, categories);
         },
-        getMap: function(el, options) {
-            options = options || {};
-            var position = options.position || MoxieConf.defaultLocation;
+        getMap: function(el) {
+            var position = MoxieConf.defaultLocation;
             if (('device' in window) && (window.device.platform==='Android')) {
                 // Disable 3D acceleration for Android WebViews
                 if ('console' in window) {
@@ -17,7 +16,7 @@ define(['underscore', 'moxie.conf', 'leaflet', 'moxie.position'], function(_, Mo
                 }
                 L.Browser.any3d = false;
             }
-            var mapOptions = options.mapOptions || {};
+            var mapOptions = MoxieConf.map.options || {};
             var map = new L.map(el, mapOptions).setView([position.coords.latitude, position.coords.longitude], MoxieConf.map.defaultZoom, true);
 
             // Add the tile layer
