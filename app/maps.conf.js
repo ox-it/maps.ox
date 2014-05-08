@@ -20,16 +20,22 @@ define([], function() {
         mapbox: {key: 'mobileox.4xjkbj4i'},
         map: {
             defaultZoom: 15,
+            options: {
+                zoomControl: false,
+                minZoom: 5,
+                maxZoom: 18,
+            },
             primaryLayer: {
                 path: 'http://maps-tiles.oucs.ox.ac.uk/{z}/{x}/{y}.png',
                 bounds: [[51.6299, -1.4207], [51.8646, -1.1144]],
                 options: {
                     maxZoom: 18,
+                    minZoom: 12,
                     zIndex: 200,
                 }
             },
             secondaryLayer: {
-                path: 'https://{s}.tiles.mapbox.com/v3/mobileox.map-iihxb1dl/{z}/{x}/{y}.png',
+                path: 'https://{s}.tiles.mapbox.com/v3/mobileox.h54gm7gg/{z}/{x}/{y}.png',
                 options: {
                     maxZoom: 18,
                     zIndex: 100,
