@@ -728,23 +728,11 @@ a {
 }
 
 /* line 126, ../scss/app.scss */
-.external-links li {
-  list-style-type: none;
-  display: inline;
-}
-@media only screen and (max-width: 767px) {
-  /* line 126, ../scss/app.scss */
-  .external-links li {
-    display: list-item;
-  }
-}
-
-/* line 133, ../scss/app.scss */
 a.action-button {
   text-decoration: none;
 }
 
-/* line 136, ../scss/app.scss */
+/* line 129, ../scss/app.scss */
 .action-button {
   border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -767,7 +755,7 @@ a.action-button {
   font-weight: 500;
   margin: 5px 5px 5px 0;
 }
-/* line 148, ../scss/app.scss */
+/* line 141, ../scss/app.scss */
 .action-button.social {
   background: #5f9baf;
   color: #fafafa;
