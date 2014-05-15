@@ -4,7 +4,9 @@ $ratio: golden() fourth() !default;
 
 // Variables to set our breakpoints
 $smartphone-screen: 480px;
-$small-screen: 768px;
+// NOTE: Updated by us from 768 to 767 so iPad portrait
+//       is shown as tablet view not smartphone.
+$small-screen: 767px;
 $medium-screen: 1280px;
 $large-screen: 1440px;
 
