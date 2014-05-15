@@ -16,6 +16,7 @@ define([], function() {
         pathFor: function(api_method) {
             return this.paths[api_method];
         },
+        defaultResultCount: 50,
         defaultLocation: {coords: DEFAULT_LOCATION},
         mapbox: {key: 'mobileox.4xjkbj4i'},
         map: {
