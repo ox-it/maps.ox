@@ -3,133 +3,208 @@
 /* Initialize */
 /* Initialize */
 /*! HiDPI v1 | MIT License | git.io/hidpi */
-/* line 10, ../scss/components/_results_list.scss */
+/* line 11, ../scss/components/_results_list.scss */
 .search-input {
+  margin-right: 5px;
+  margin-left: 5px;
+  padding-top: 10px;
   text-align: center;
 }
-/* line 12, ../scss/components/_results_list.scss */
-.search-input input {
-  width: 85%;
+/* line 16, ../scss/components/_results_list.scss */
+.search-input input[type="text"] {
+  width: 60%;
+  padding: 0;
   padding-left: 10px;
   border: 1px solid #aaaaaa;
-  -webkit-border-radius: 8px 8px;
-  -moz-border-radius: 8px / 8px;
-  border-radius: 8px / 8px;
+  border-right: none;
+  -moz-border-radius-topleft: 8px;
+  -webkit-border-top-left-radius: 8px;
+  border-top-left-radius: 8px;
+  -moz-border-radius-bottomleft: 8px;
+  -webkit-border-bottom-left-radius: 8px;
+  border-bottom-left-radius: 8px;
   background-color: #fff;
-  height: 1.5em;
+  line-height: 26px;
+  height: 26px;
+}
+/* line 28, ../scss/components/_results_list.scss */
+.search-input input[type="submit"] {
+  line-height: 26px;
+  height: 28px;
+  width: 30%;
+  border: none;
+  border-top: 1px solid #4891dc;
+  border-bottom: 1px solid #4891dc;
+  border-left: 1px solid #aaaaaa;
+  color: #fafafa;
+  -moz-border-radius-topright: 8px;
+  -webkit-border-top-right-radius: 8px;
+  border-top-right-radius: 8px;
+  -moz-border-radius-bottomright: 8px;
+  -webkit-border-bottom-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background-color: #4891dc;
+  z-index: 2;
+  padding: 0;
+  margin-left: -5px;
 }
 
-/* line 23, ../scss/components/_results_list.scss */
+/* line 47, ../scss/components/_results_list.scss */
 .content-browse ul.results-list {
-  margin-bottom: 0px;
   padding-bottom: 35px;
 }
 
-/* line 29, ../scss/components/_results_list.scss */
+/* line 52, ../scss/components/_results_list.scss */
 ul.results-list {
-  margin-bottom: 0;
-  padding: 0px 12px;
+  margin: 0;
+  padding: 0 0 1em 0;
   list-style: none;
 }
-/* line 33, ../scss/components/_results_list.scss */
-ul.results-list .highlighted {
-  background: rgba(200, 200, 200, 0.5);
-}
-/* line 36, ../scss/components/_results_list.scss */
+/* line 56, ../scss/components/_results_list.scss */
 ul.results-list li {
-  min-height: 43px;
+  margin: 0 12px;
+  padding: 1em 12px;
+  font-size: 0.95em;
   border-bottom: 1px solid rgba(200, 200, 200, 0.5);
   color: rgba(40, 40, 40, 0.8);
 }
-/* line 38, ../scss/components/_results_list.scss */
+/* line 60, ../scss/components/_results_list.scss */
+ul.results-list li.highlighted {
+  margin: 0;
+  padding: 1em 24px;
+  background-color: #4891dc;
+  color: #fafafa;
+}
+/* line 65, ../scss/components/_results_list.scss */
+ul.results-list li.highlighted a {
+  color: #fafafa;
+}
+/* line 70, ../scss/components/_results_list.scss */
 ul.results-list li a {
   text-decoration: none;
   color: #4891dc;
   line-height: 1.5em;
-  font-size: 1em;
 }
-/* line 44, ../scss/components/_results_list.scss */
+/* line 75, ../scss/components/_results_list.scss */
+ul.results-list li input {
+  margin-right: 5px;
+}
+/* line 78, ../scss/components/_results_list.scss */
 ul.results-list li h3 {
-  margin-left: 5px;
+  margin: 0px;
   font-weight: normal;
 }
-/* line 51, ../scss/components/_results_list.scss */
-ul.results-list li .highlighted {
-  background-color: red;
-}
-/* line 54, ../scss/components/_results_list.scss */
+/* line 84, ../scss/components/_results_list.scss */
 ul.results-list li p {
-  margin-bottom: 0px;
+  margin: 0 0 0.2em 0;
 }
-/* line 57, ../scss/components/_results_list.scss */
+/* line 87, ../scss/components/_results_list.scss */
 ul.results-list li > label, ul.results-list li > a {
   display: block;
   margin: 0;
   height: 100%;
   color: rgba(40, 40, 40, 0.8);
 }
-/* line 65, ../scss/components/_results_list.scss */
+/* line 95, ../scss/components/_results_list.scss */
 ul.results-list li .subtext {
   display: block;
   margin: 0;
   font-size: 0.9em;
 }
-/* line 70, ../scss/components/_results_list.scss */
+/* line 100, ../scss/components/_results_list.scss */
 ul.results-list li .meta-info {
   margin: 3px 0 0 5px;
   padding: 0;
   font-weight: 200;
-  font-size: 0.8em;
-  line-height: 0.8emconvert-to-em(5px);
+  font-size: 0.9em;
+  line-height: 0.9emconvert-to-em(5px);
 }
-/* line 78, ../scss/components/_results_list.scss */
+/* line 108, ../scss/components/_results_list.scss */
 ul.results-list li .meta-info-title {
   font-weight: 800;
   font-size: inherit;
 }
-/* line 83, ../scss/components/_results_list.scss */
+/* line 113, ../scss/components/_results_list.scss */
 ul.results-list li * {
   font-family: Helvetica, Verdana, sans-serif;
 }
+/* line 116, ../scss/components/_results_list.scss */
+ul.results-list li .distance {
+  font-size: 0.8em;
+  line-height: 2em;
+  float: right;
+  margin-left: 0.5em;
+}
 
+/* Initialize */
 /* Initialize */
 /* Content is a container for two child divs
     .content-browse-wrapper which typically contains a scrolling list container
     .content-map which holds map (#map)
+
+    NOTE: Z-Indexes are used in this CSS. We start our indexes at 1001 as this
+    is greater than any z-index found in leaflet CSS which we need to overlay.
 */
-/* line 9, ../scss/components/_maplayout.scss */
+/* line 13, ../scss/components/_maplayout.scss */
 #content {
+  overflow-x: hidden;
   position: absolute;
-  top: 0px;
+  top: 36px;
   right: 0;
   bottom: 0;
   left: 0;
   background: #fff;
 }
-/* line 19, ../scss/components/_maplayout.scss */
+/* line 24, ../scss/components/_maplayout.scss */
 #content .content-browse-wrapper {
   position: relative;
   padding: 0px 0px;
   height: 100%;
   width: 0;
-  border-right: 1px solid #aaaaaa;
 }
-/* line 27, ../scss/components/_maplayout.scss */
+/* line 31, ../scss/components/_maplayout.scss */
 #content .content-browse {
   height: 100%;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   background: #fafafa;
+  display: none;
 }
-/* line 34, ../scss/components/_maplayout.scss */
+/* line 37, ../scss/components/_maplayout.scss */
+#content .content-browse img.preloader {
+  display: block;
+  margin: 0 auto;
+}
+/* line 42, ../scss/components/_maplayout.scss */
+#content .content-browse .messages {
+  background-color: #eee;
+}
+/* line 44, ../scss/components/_maplayout.scss */
+#content .content-browse .messages .message {
+  padding: 5px;
+  font-size: 0.8em;
+  border-bottom: 1px solid #aaaaaa;
+}
+/* line 48, ../scss/components/_maplayout.scss */
+#content .content-browse .messages .message img.preloader {
+  height: 0.8em;
+  display: inline;
+  margin: 0;
+}
+/* line 53, ../scss/components/_maplayout.scss */
+#content .content-browse .messages .message.alert {
+  color: #b94a48;
+}
+/* line 60, ../scss/components/_maplayout.scss */
 #content .map-browse-layout {
   height: 100%;
 }
-/* line 36, ../scss/components/_maplayout.scss */
+/* line 62, ../scss/components/_maplayout.scss */
 #content .map-browse-layout .content-detail-wrapper {
+  background: #fafafa;
   display: none;
 }
-/* line 41, ../scss/components/_maplayout.scss */
+/* line 68, ../scss/components/_maplayout.scss */
 #content .additional-toggles {
   position: absolute;
   display: none;
@@ -139,40 +214,53 @@ ul.results-list li * {
   background: #fafafa;
   border-top: 1px solid #aaaaaa;
 }
-/* line 49, ../scss/components/_maplayout.scss */
+/* line 76, ../scss/components/_maplayout.scss */
 #content .additional-toggles ul {
   padding: 0;
   margin: -4px 0px 0px;
 }
-/* line 54, ../scss/components/_maplayout.scss */
+/* line 81, ../scss/components/_maplayout.scss */
 #content .additional-toggles ul li {
+  background-position: 0px 3px;
   background-repeat: no-repeat;
   height: 35px;
   display: inline-block;
   list-style: none;
   min-width: 40px;
 }
-/* line 62, ../scss/components/_maplayout.scss */
+/* line 90, ../scss/components/_maplayout.scss */
 #content .additional-toggles .btn-toggle-public-transport {
   background-image: url("../maki/renders/bus-18@2x.png");
 }
-/* line 65, ../scss/components/_maplayout.scss */
+/* line 92, ../scss/components/_maplayout.scss */
+#content .additional-toggles .btn-toggle-public-transport.selected {
+  background-image: url("../images/maki-selected/bus-selected-18@2x.png");
+}
+/* line 96, ../scss/components/_maplayout.scss */
 #content .additional-toggles .btn-toggle-driving {
   background-image: url("../maki/renders/car-18@2x.png");
 }
-/* line 68, ../scss/components/_maplayout.scss */
+/* line 98, ../scss/components/_maplayout.scss */
+#content .additional-toggles .btn-toggle-driving.selected {
+  background-image: url("../images/maki-selected/car-selected-18@2x.png");
+}
+/* line 102, ../scss/components/_maplayout.scss */
 #content .additional-toggles .btn-toggle-cycling {
   background-image: url("../maki/renders/bicycle-18@2x.png");
 }
-/* line 73, ../scss/components/_maplayout.scss */
-#content .btn-toggle-browse, #content .btn-toggle-location {
+/* line 104, ../scss/components/_maplayout.scss */
+#content .additional-toggles .btn-toggle-cycling.selected {
+  background-image: url("../images/maki-selected/bicycle-selected-18@2x.png");
+}
+/* line 110, ../scss/components/_maplayout.scss */
+#content .btn-toggle-browse, #content .btn-toggle-detail, #content .btn-toggle-location {
   overflow: hidden;
   cursor: pointer;
   position: absolute;
   display: inline-block;
   background: #fafafa;
-  z-index: 10001;
-  width: 35px;
+  z-index: 1001;
+  width: 38px;
   height: 35px;
   border-right: 1px solid #aaaaaa;
   border-bottom: 1px solid #aaaaaa;
@@ -180,47 +268,81 @@ ul.results-list li * {
   font-size: 1.6em;
   color: #444444;
 }
-/* line 88, ../scss/components/_maplayout.scss */
+/* line 125, ../scss/components/_maplayout.scss */
+#content .btn-toggle-browse {
+  z-index: 1003;
+}
+/* line 128, ../scss/components/_maplayout.scss */
+#content .btn-toggle-browse span {
+  margin-top: 4px;
+}
+/* line 133, ../scss/components/_maplayout.scss */
 #content .btn-toggle-location {
   color: #aaaaaa;
   bottom: 0;
   border-top: 1px solid #aaaaaa;
   border-bottom: none;
 }
-/* line 89, ../scss/components/_maplayout.scss */
+/* line 134, ../scss/components/_maplayout.scss */
 #content .btn-toggle-location.active {
   color: #f5cf47;
 }
-/* line 100, ../scss/components/_maplayout.scss */
+/* line 143, ../scss/components/_maplayout.scss */
+#content .btn-toggle-detail {
+  display: none;
+  bottom: -1px;
+  left: 50%;
+  /* TODO: These calcs are hardcoded to $map-controls-size/2 because SASS doesn't seem to evaluate in calc calls */
+  left: -webkit-calc(50% - 19px);
+  /* WebKit 536.3 (Chrome 19) and above, experimental */
+  left: calc(50% - 19px);
+  /* final CSS3 compliant implementation; Firefox 16 and IE 9, and above */
+  border-bottom: none;
+  border-top: 1px solid #aaaaaa;
+  border-left: 1px solid #aaaaaa;
+  border-right: 1px solid #aaaaaa;
+  height: 27px;
+  line-height: 10px;
+}
+/* line 160, ../scss/components/_maplayout.scss */
+#content .map-browse-layout.with-detail .btn-toggle-detail, #content .map-browse-layout.detail-hidden .btn-toggle-detail {
+  display: inline-block;
+}
+/* line 165, ../scss/components/_maplayout.scss */
 #content .map-browse-layout.with-browse .btn-toggle-browse {
   color: #aaaaaa;
 }
-/* line 103, ../scss/components/_maplayout.scss */
+/* line 168, ../scss/components/_maplayout.scss */
 #content .map-browse-layout.with-browse .btn-toggle-location, #content .map-browse-layout.with-browse .btn-toggle-browse {
   left: 100%;
 }
-/* line 106, ../scss/components/_maplayout.scss */
+/* line 171, ../scss/components/_maplayout.scss */
 #content .map-browse-layout.with-browse .additional-toggles {
   width: 100%;
   display: inline-block;
 }
-/* line 110, ../scss/components/_maplayout.scss */
+/* line 175, ../scss/components/_maplayout.scss */
 #content .map-browse-layout.with-browse .content-browse-wrapper {
+  border-right: 1px solid #aaaaaa;
   width: 30%;
 }
-@media only screen and (max-width: 768px) {
-  /* line 110, ../scss/components/_maplayout.scss */
+@media only screen and (max-width: 767px) {
+  /* line 175, ../scss/components/_maplayout.scss */
   #content .map-browse-layout.with-browse .content-browse-wrapper {
     width: 85%;
   }
 }
-/* line 116, ../scss/components/_maplayout.scss */
+/* line 182, ../scss/components/_maplayout.scss */
+#content .map-browse-layout.with-browse .content-browse {
+  display: block;
+}
+/* line 185, ../scss/components/_maplayout.scss */
 #content .map-browse-layout.with-browse .content-main {
   width: 70%;
 }
-@media only screen and (max-width: 768px) {
-  /* line 116, ../scss/components/_maplayout.scss */
-  #content .map-browse-layout.with-browse .content-main {
+@media only screen and (max-width: 767px) {
+  /* line 188, ../scss/components/_maplayout.scss */
+  #content .map-browse-layout.with-browse .overlay, #content .map-browse-layout.with-browse .content-main {
     position: absolute;
     width: 100%;
     left: 85%;
@@ -228,71 +350,78 @@ ul.results-list li * {
     height: 100%;
   }
 }
-/* line 128, ../scss/components/_maplayout.scss */
+@media only screen and (max-width: 767px) {
+  /* line 197, ../scss/components/_maplayout.scss */
+  #content .map-browse-layout.with-browse .overlay {
+    z-index: 1002;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: inline;
+    position: fixed;
+  }
+}
+/* line 207, ../scss/components/_maplayout.scss */
+#content .map-browse-layout.with-detail #map {
+  border-bottom: 1px solid #aaaaaa;
+}
+/* line 210, ../scss/components/_maplayout.scss */
 #content .map-browse-layout.with-detail .btn-toggle-location {
   bottom: 40%;
 }
-@media only screen and (max-width: 768px) {
-  /* line 128, ../scss/components/_maplayout.scss */
+@media only screen and (max-width: 767px) {
+  /* line 210, ../scss/components/_maplayout.scss */
   #content .map-browse-layout.with-detail .btn-toggle-location {
-    top: 105px;
+    top: 104px;
     bottom: auto;
   }
 }
-/* line 135, ../scss/components/_maplayout.scss */
+/* line 217, ../scss/components/_maplayout.scss */
 #content .map-browse-layout.with-detail .content-map {
   height: 60%;
 }
-@media only screen and (max-width: 768px) {
-  /* line 135, ../scss/components/_maplayout.scss */
+@media only screen and (max-width: 767px) {
+  /* line 217, ../scss/components/_maplayout.scss */
   #content .map-browse-layout.with-detail .content-map {
     float: none;
     width: 100%;
     height: 140px;
   }
 }
-/* line 143, ../scss/components/_maplayout.scss */
+/* line 225, ../scss/components/_maplayout.scss */
 #content .map-browse-layout.with-detail .content-detail-wrapper {
   display: block;
   height: 40%;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
-@media only screen and (max-width: 768px) {
-  /* line 143, ../scss/components/_maplayout.scss */
+@media only screen and (max-width: 767px) {
+  /* line 225, ../scss/components/_maplayout.scss */
   #content .map-browse-layout.with-detail .content-detail-wrapper {
     height: auto;
   }
 }
-/* line 154, ../scss/components/_maplayout.scss */
+/* line 236, ../scss/components/_maplayout.scss */
 #content .content-map {
+  position: relative;
   height: 100%;
 }
-/* line 158, ../scss/components/_maplayout.scss */
+/* line 241, ../scss/components/_maplayout.scss */
 #content .content-main {
   float: right;
   padding: 0px 0px;
   width: 100%;
   height: 100%;
 }
-/* line 164, ../scss/components/_maplayout.scss */
+/* line 247, ../scss/components/_maplayout.scss */
 #content #map {
   width: 100% !important;
   height: 100%;
 }
-@media only screen and (max-width: 768px) {
-  /* line 168, ../scss/components/_maplayout.scss */
+@media only screen and (max-width: 767px) {
+  /* line 251, ../scss/components/_maplayout.scss */
   #content #map .leaflet-control-zoom {
     display: none;
   }
 }
-/* line 173, ../scss/components/_maplayout.scss */
-#content .search-input {
-  position: relative;
-  margin-right: 5px;
-  margin-left: 5px;
-  padding-top: 10px;
-}
-/* line 179, ../scss/components/_maplayout.scss */
+/* line 257, ../scss/components/_maplayout.scss */
 #content .search-input span.deleteicon {
   -webkit-border-radius: 30px;
   -moz-border-radius: 30px;
@@ -311,81 +440,155 @@ ul.results-list li * {
   cursor: pointer;
 }
 
-/* line 195, ../scss/components/_maplayout.scss */
+/* line 273, ../scss/components/_maplayout.scss */
 .list-map, .detail-map, .generic {
   height: 100%;
   -webkit-overflow-scrolling: touch;
 }
-/* line 198, ../scss/components/_maplayout.scss */
+/* line 276, ../scss/components/_maplayout.scss */
 .list-map ul.facet-list, .detail-map ul.facet-list, .generic ul.facet-list {
   padding-left: 5px;
 }
-/* line 201, ../scss/components/_maplayout.scss */
+/* line 279, ../scss/components/_maplayout.scss */
 .list-map > h3, .detail-map > h3, .generic > h3 {
   padding-left: 5px;
+}
+
+/* line 284, ../scss/components/_maplayout.scss */
+.numbered-marker {
+  width: 30px;
+  height: 30px;
+  background-color: #000;
+  background-clip: padding-box;
+  border-radius: 20px;
+  display: inline-block;
+}
+/* line 44, ../scss/globals/mixins.scss */
+.numbered-marker div {
+  background-color: #fff;
+  width: 26px;
+  height: 26px;
+  margin-left: 2px;
+  margin-top: 2px;
+  text-align: center;
+  border-radius: 13px;
+  font: 15px "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+/* line 55, ../scss/globals/mixins.scss */
+.numbered-marker span {
+  line-height: 26px;
+}
+
+/* line 288, ../scss/components/_maplayout.scss */
+.detail-numbered-marker {
+  margin-left: 8px;
+  width: 24px;
+  height: 24px;
+  background-color: #000;
+  background-clip: padding-box;
+  border-radius: 20px;
+  display: inline-block;
+}
+/* line 44, ../scss/globals/mixins.scss */
+.detail-numbered-marker div {
+  background-color: #fff;
+  width: 22px;
+  height: 22px;
+  margin-left: 1px;
+  margin-top: 1px;
+  text-align: center;
+  border-radius: 11px;
+  font: 15px "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+/* line 55, ../scss/globals/mixins.scss */
+.detail-numbered-marker span {
+  line-height: 22px;
+}
+
+/* line 293, ../scss/components/_maplayout.scss */
+.social-links a {
+  font-size: 1.7em;
+  letter-spacing: 0.2em;
+}
+
+/* line 301, ../scss/components/_maplayout.scss */
+dl.poi-children dd {
+  line-height: 1.7em;
+}
+
+/* line 304, ../scss/components/_maplayout.scss */
+dl.poi-children dd a {
+  margin-left: 38px;
+}
+
+/* line 309, ../scss/components/_maplayout.scss */
+dl.poi-children dd > div + a {
+  margin-left: 6px;
 }
 
 /* Initialize */
 /* line 4, ../scss/components/_places_detail.scss */
 .content-detail {
-  border-top: 1px solid #aaaaaa;
-  padding: 10px;
+  padding: 12px;
 }
-/* line 7, ../scss/components/_places_detail.scss */
+/* line 6, ../scss/components/_places_detail.scss */
 .content-detail h2 {
-  margin: 0 0 5px 0;
+  margin: 0 0 12px 0;
+  font-weight: normal;
 }
 /* line 10, ../scss/components/_places_detail.scss */
 .content-detail dl dd {
-  margin-left: 15px;
+  margin-left: 0;
 }
 /* line 13, ../scss/components/_places_detail.scss */
+.content-detail dl dt {
+  margin: 0.4em 0;
+}
+/* line 16, ../scss/components/_places_detail.scss */
 .content-detail .preloader {
   display: block;
   margin: 10px auto 0 auto;
 }
-/* line 18, ../scss/components/_places_detail.scss */
+/* line 21, ../scss/components/_places_detail.scss */
 .content-detail .poi-details-text {
   width: 50%;
-  float: left;
-  display: inline;
   padding-left: 20px;
+  display: inline-block;
+  vertical-align: top;
 }
-/* line 23, ../scss/components/_places_detail.scss */
+/* line 26, ../scss/components/_places_detail.scss */
 .content-detail .poi-details-text.no-depiction {
   width: auto;
-  float: none;
   display: block;
+  padding-left: 0;
 }
-@media only screen and (max-width: 768px) {
-  /* line 18, ../scss/components/_places_detail.scss */
+@media only screen and (max-width: 767px) {
+  /* line 21, ../scss/components/_places_detail.scss */
   .content-detail .poi-details-text {
-    float: none;
-    display: block;
     width: 100%;
+    display: block;
     padding-left: 0;
   }
 }
-/* line 36, ../scss/components/_places_detail.scss */
+/* line 38, ../scss/components/_places_detail.scss */
 .content-detail .poi-details-depiction {
   width: 40%;
-  float: left;
-  display: inline;
+  display: inline-block;
 }
-/* line 40, ../scss/components/_places_detail.scss */
+/* line 41, ../scss/components/_places_detail.scss */
 .content-detail .poi-details-depiction .depiction-wrapper {
   background-color: #eee;
   border: 1px solid #aaaaaa;
-  padding: 20px;
+  padding: 12px;
 }
-/* line 44, ../scss/components/_places_detail.scss */
-.content-detail .poi-details-depiction .depiction-wrapper img.depiction {
+/* line 45, ../scss/components/_places_detail.scss */
+.content-detail .poi-details-depiction .depiction-wrapper img {
   display: block;
   margin: 0 auto 0 auto;
   max-width: 100%;
 }
-@media only screen and (max-width: 768px) {
-  /* line 36, ../scss/components/_places_detail.scss */
+@media only screen and (max-width: 767px) {
+  /* line 38, ../scss/components/_places_detail.scss */
   .content-detail .poi-details-depiction {
     width: 100%;
     float: none;
@@ -393,44 +596,172 @@ ul.results-list li * {
   }
 }
 
-/* line 12, ../scss/app.scss */
+/* line 17, ../scss/app.scss */
 html, body {
   height: 100%;
 }
 
-/* line 13, ../scss/app.scss */
+/* line 18, ../scss/app.scss */
 body {
   overflow-x: hidden;
   width: 100%;
   background: #fafafa;
 }
 
-/* line 18, ../scss/app.scss */
-.map-options {
-  padding: 0;
-  text-align: center;
-}
-/* line 21, ../scss/app.scss */
-.map-options ul {
-  padding: 0;
+/* line 23, ../scss/app.scss */
+#top-bar {
+  height: 35px;
   border-bottom: 1px solid #aaaaaa;
+  background-color: #002147;
 }
-/* line 25, ../scss/app.scss */
-.map-options a {
-  text-decoration: none;
-  color: #4891dc;
-  line-height: 1.5em;
-  font-size: 1em;
+/* line 24, ../scss/app.scss */
+#top-bar h1 {
+  margin: 0;
+  margin-left: 1.1em;
+  line-height: 2em;
+  font-size: 1.2em;
+  font-weight: 500;
 }
 /* line 31, ../scss/app.scss */
-.map-options li {
-  display: inline-block;
-  list-style: none;
-  border-left: 1px solid #aaaaaa;
-  padding: 5px;
-  min-width: 90px;
+#top-bar h1 a {
+  color: #fafafa;
 }
+
 /* line 38, ../scss/app.scss */
-.map-options li:first-child {
+a {
+  color: #4891dc;
+  text-decoration: none;
+}
+
+/* line 42, ../scss/app.scss */
+.map-options {
+  margin-top: 1em;
+  margin-bottom: 0;
+  padding: 0;
+  border-bottom: 1px solid #aaaaaa;
+  text-align: center;
+}
+/* line 43, ../scss/app.scss */
+.map-options.something-highlighted {
+  border-bottom: none;
+}
+/* line 51, ../scss/app.scss */
+.map-options span {
+  display: inline-block;
+  padding: 5px;
+  min-width: 65px;
+  border-left: 1px solid #aaaaaa;
+  font-size: 0.95em;
+  line-height: 1.5em;
+  color: #002147;
+}
+/* line 60, ../scss/app.scss */
+.map-options span.filter {
+  color: #aaaaaa;
+}
+/* line 63, ../scss/app.scss */
+.map-options span:first-child {
   border-left: none;
+}
+
+/* line 68, ../scss/app.scss */
+.highlighted {
+  margin: 0;
+  padding: 1em 12px;
+  background-color: #4891dc;
+  color: #fafafa;
+}
+/* line 73, ../scss/app.scss */
+.highlighted a {
+  color: #fafafa;
+}
+
+/* line 79, ../scss/app.scss */
+.hide-filters {
+  display: none;
+}
+
+/* line 83, ../scss/app.scss */
+.filters {
+  padding: 8px 8px 6px;
+  background-color: #4891dc;
+  color: #fafafa;
+}
+/* line 88, ../scss/app.scss */
+.filters.single-facet-list .facets {
+  width: 100%;
+}
+/* line 92, ../scss/app.scss */
+.filters .facets {
+  display: inline-block;
+  width: 49%;
+  vertical-align: top;
+}
+/* line 97, ../scss/app.scss */
+.filters ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+/* line 101, ../scss/app.scss */
+.filters ul li {
+  margin: 5px 0;
+}
+/* line 105, ../scss/app.scss */
+.filters label {
+  display: block;
+  padding-left: 16px;
+  text-indent: -16px;
+  font-size: 0.9em;
+}
+/* line 111, ../scss/app.scss */
+.filters input {
+  position: relative;
+  top: -1px;
+  margin: 0 2px 0 0;
+  padding: 0;
+  width: 13px;
+  height: 13px;
+  vertical-align: middle;
+}
+/* line 120, ../scss/app.scss */
+.filters h3 {
+  margin: 0 0 3px;
+  font-weight: normal;
+  font-size: 0.95em;
+}
+
+/* line 126, ../scss/app.scss */
+a.action-button {
+  text-decoration: none;
+}
+
+/* line 129, ../scss/app.scss */
+.action-button {
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #fafafa), color-stop(100%, #dfdfdf));
+  background: -webkit-linear-gradient(#fafafa, #dfdfdf);
+  background: -moz-linear-gradient(#fafafa, #dfdfdf);
+  background: -o-linear-gradient(#fafafa, #dfdfdf);
+  background: linear-gradient(#fafafa, #dfdfdf);
+  -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 9px 10px 10px 10px;
+  display: inline-block;
+  color: #333;
+  font-weight: 500;
+  margin: 5px 5px 5px 0;
+}
+/* line 141, ../scss/app.scss */
+.action-button.social {
+  background: #5f9baf;
+  color: #fafafa;
+  padding: 6px 7px 7px 7px;
 }
