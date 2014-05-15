@@ -20,6 +20,21 @@ body {
     width: 100%;
     background: $body-background;
 }
+#top-bar {
+    h1 {
+        margin: 0;
+        margin-left: 1.1em;
+        line-height: 2em;
+        font-size: 1.2em;
+        font-weight: 500;
+    }
+    h1 a {
+        color: #fafafa;
+    }
+    height: $navbarHeight - 1px;
+    border-bottom: $map-pane-border;
+    background-color: $oxfordBlue;
+}
 a {
     color: $pantone279;
     text-decoration: none;
