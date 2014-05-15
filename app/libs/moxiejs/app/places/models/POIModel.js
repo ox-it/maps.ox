@@ -27,12 +27,12 @@ define(["MoxieModel", "underscore", "moxie.conf", "places/models/RTIModels", "pl
             if (this.has('shape')) {
                 try {
                     feature = L.geoJson(wellknown(this.get('shape')), {
-                        color: '#002147', // Oxford blue
+                        color: '#44687D', // pantone 5405
                         opacity: 1,
                         fill: true,
                         fillColor: '#4891dc', // Colour of our <a>
-                        fillOpacity: 0.2,
-                        weight: 2,
+                        fillOpacity: 0.1,
+                        weight: 1,
                     });
                 } catch (e) {
                     console.log("Error parsing WKT");
