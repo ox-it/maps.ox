@@ -56,17 +56,17 @@
             {{/if}}
         </p>
 
-        <ul class="external-links">
+        <div class="external-links">
             {{#if poi.phone}}
             <li><a href="tel:{{ poi.phone }}" class="action-button poi-phone">Tel: {{ poi.phone }}</a></li>
             {{/if}}
             {{#if poi.website}}
-            <li><a href="{{ poi.website }}" target="_blank" class="action-button poi-website">Website <i class="fa fa-external-link"></i></a></li>
+            <span><a href="{{ poi.website }}" target="_blank" class="action-button poi-website">Website <i class="fa fa-external-link"></i></a></span>
             {{/if}}
             {{#if accessibilityGuideURL }}
-            <li><a href="{{ accessibilityGuideURL }}" target="_blank" class="action-button poi-access-guide">Accessibility Guide <i class="fa fa-wheelchair"></i></a></li>
+            <span><a href="{{ accessibilityGuideURL }}" target="_blank" class="action-button poi-access-guide">Accessibility Guide <i class="fa fa-wheelchair"></i></a></span>
             {{/if}}
-        </ul>
+        </div>
 
         {{#if socialLinks }}
         <div class="social-links">

@@ -123,13 +123,6 @@ a {
         font-size: 0.95em;
     }
 }
-.external-links li {
-    list-style-type: none;
-    display: inline;
-    @media #{$smartphone} {
-        display: list-item;
-    }
-}
 a.action-button {
     text-decoration: none;
 }
