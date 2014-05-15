@@ -150,7 +150,7 @@ ul.results-list li .distance {
 #content {
   overflow-x: hidden;
   position: absolute;
-  top: 0px;
+  top: 36px;
   right: 0;
   bottom: 0;
   left: 0;
@@ -326,7 +326,7 @@ ul.results-list li .distance {
   border-right: 1px solid #aaaaaa;
   width: 30%;
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 767px) {
   /* line 174, ../scss/components/_maplayout.scss */
   #content .map-browse-layout.with-browse .content-browse-wrapper {
     width: 85%;
@@ -336,7 +336,7 @@ ul.results-list li .distance {
 #content .map-browse-layout.with-browse .content-main {
   width: 70%;
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 767px) {
   /* line 184, ../scss/components/_maplayout.scss */
   #content .map-browse-layout.with-browse .overlay, #content .map-browse-layout.with-browse .content-main {
     position: absolute;
@@ -346,7 +346,7 @@ ul.results-list li .distance {
     height: 100%;
   }
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 767px) {
   /* line 193, ../scss/components/_maplayout.scss */
   #content .map-browse-layout.with-browse .overlay {
     z-index: 1002;
@@ -363,7 +363,7 @@ ul.results-list li .distance {
 #content .map-browse-layout.with-detail .btn-toggle-location {
   bottom: 40%;
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 767px) {
   /* line 206, ../scss/components/_maplayout.scss */
   #content .map-browse-layout.with-detail .btn-toggle-location {
     top: 104px;
@@ -374,7 +374,7 @@ ul.results-list li .distance {
 #content .map-browse-layout.with-detail .content-map {
   height: 60%;
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 767px) {
   /* line 213, ../scss/components/_maplayout.scss */
   #content .map-browse-layout.with-detail .content-map {
     float: none;
@@ -388,7 +388,7 @@ ul.results-list li .distance {
   height: 40%;
   overflow-y: auto;
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 767px) {
   /* line 221, ../scss/components/_maplayout.scss */
   #content .map-browse-layout.with-detail .content-detail-wrapper {
     height: auto;
@@ -411,7 +411,7 @@ ul.results-list li .distance {
   width: 100% !important;
   height: 100%;
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 767px) {
   /* line 247, ../scss/components/_maplayout.scss */
   #content #map .leaflet-control-zoom {
     display: none;
@@ -558,7 +558,7 @@ dl.poi-children dd > div + a {
   display: block;
   padding-left: 0;
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 767px) {
   /* line 21, ../scss/components/_places_detail.scss */
   .content-detail .poi-details-text {
     width: 100%;
@@ -583,7 +583,7 @@ dl.poi-children dd > div + a {
   margin: 0 auto 0 auto;
   max-width: 100%;
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 767px) {
   /* line 38, ../scss/components/_places_detail.scss */
   .content-detail .poi-details-depiction {
     width: 100%;
@@ -605,12 +605,31 @@ body {
 }
 
 /* line 23, ../scss/app.scss */
+#top-bar {
+  height: 35px;
+  border-bottom: 1px solid #aaaaaa;
+  background-color: #002147;
+}
+/* line 24, ../scss/app.scss */
+#top-bar h1 {
+  margin: 0;
+  margin-left: 1.1em;
+  line-height: 2em;
+  font-size: 1.2em;
+  font-weight: 500;
+}
+/* line 31, ../scss/app.scss */
+#top-bar h1 a {
+  color: #fafafa;
+}
+
+/* line 38, ../scss/app.scss */
 a {
   color: #4891dc;
   text-decoration: none;
 }
 
-/* line 27, ../scss/app.scss */
+/* line 42, ../scss/app.scss */
 .map-options {
   margin-top: 1em;
   margin-bottom: 0;
@@ -618,11 +637,11 @@ a {
   border-bottom: 1px solid #aaaaaa;
   text-align: center;
 }
-/* line 28, ../scss/app.scss */
+/* line 43, ../scss/app.scss */
 .map-options.something-highlighted {
   border-bottom: none;
 }
-/* line 36, ../scss/app.scss */
+/* line 51, ../scss/app.scss */
 .map-options span {
   display: inline-block;
   padding: 5px;
@@ -632,66 +651,66 @@ a {
   line-height: 1.5em;
   color: #002147;
 }
-/* line 45, ../scss/app.scss */
+/* line 60, ../scss/app.scss */
 .map-options span.filter {
   color: #aaaaaa;
 }
-/* line 48, ../scss/app.scss */
+/* line 63, ../scss/app.scss */
 .map-options span:first-child {
   border-left: none;
 }
 
-/* line 53, ../scss/app.scss */
+/* line 68, ../scss/app.scss */
 .highlighted {
   margin: 0;
   padding: 1em 12px;
   background-color: #4891dc;
   color: #fafafa;
 }
-/* line 58, ../scss/app.scss */
+/* line 73, ../scss/app.scss */
 .highlighted a {
   color: #fafafa;
 }
 
-/* line 64, ../scss/app.scss */
+/* line 79, ../scss/app.scss */
 .hide-filters {
   display: none;
 }
 
-/* line 68, ../scss/app.scss */
+/* line 83, ../scss/app.scss */
 .filters {
   padding: 8px 8px 6px;
   background-color: #4891dc;
   color: #fafafa;
 }
-/* line 73, ../scss/app.scss */
+/* line 88, ../scss/app.scss */
 .filters.single-facet-list .facets {
   width: 100%;
 }
-/* line 77, ../scss/app.scss */
+/* line 92, ../scss/app.scss */
 .filters .facets {
   display: inline-block;
   width: 49%;
   vertical-align: top;
 }
-/* line 82, ../scss/app.scss */
+/* line 97, ../scss/app.scss */
 .filters ul {
   margin: 0;
   padding: 0;
   list-style: none;
 }
-/* line 86, ../scss/app.scss */
+/* line 101, ../scss/app.scss */
 .filters ul li {
   margin: 5px 0;
 }
-/* line 90, ../scss/app.scss */
+/* line 105, ../scss/app.scss */
 .filters label {
   display: block;
   padding-left: 16px;
   text-indent: -16px;
   font-size: 0.9em;
 }
-/* line 96, ../scss/app.scss */
+/* line 111, ../scss/app.scss */
 .filters input {
   position: relative;
   top: -1px;
@@ -701,31 +720,31 @@ a {
   height: 13px;
   vertical-align: middle;
 }
-/* line 105, ../scss/app.scss */
+/* line 120, ../scss/app.scss */
 .filters h3 {
   margin: 0 0 3px;
   font-weight: normal;
   font-size: 0.95em;
 }
 
-/* line 111, ../scss/app.scss */
+/* line 126, ../scss/app.scss */
 .external-links li {
   list-style-type: none;
   display: inline;
 }
-@media only screen and (max-width: 768px) {
-  /* line 111, ../scss/app.scss */
+@media only screen and (max-width: 767px) {
+  /* line 126, ../scss/app.scss */
   .external-links li {
     display: list-item;
   }
 }
 
-/* line 118, ../scss/app.scss */
+/* line 133, ../scss/app.scss */
 a.action-button {
   text-decoration: none;
 }
 
-/* line 121, ../scss/app.scss */
+/* line 136, ../scss/app.scss */
 .action-button {
   border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -748,7 +767,7 @@ a.action-button {
   font-weight: 500;
   margin: 5px 5px 5px 0;
 }
-/* line 133, ../scss/app.scss */
+/* line 148, ../scss/app.scss */
 .action-button.social {
   background: #5f9baf;
   color: #fafafa;
