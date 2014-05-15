@@ -3,9 +3,6 @@
 
 .DS_Store
 
-# Fonts
-webfonts/*
-
 # CSS
 css/app.css
 css/components/*

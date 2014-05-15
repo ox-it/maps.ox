@@ -1,19 +1,34 @@
 define(["backbone", "core/collections/MoxieCollection", "underscore", "places/models/POIModel", "moxie.conf", 'moxie.position', 'leaflet'], function(Backbone, MoxieCollection, _, POI, conf, userPosition, L) {
 
+    var ACCESSIBILITY_BOOLEAN = 'accessibility_has';
+
     var POIs = MoxieCollection.extend({
         model: POI,
 
         initialize: function(options) {
             this.options = options || {};
-            this.query = {};
         },
+
+        query: {},
+        defaultCount: conf.defaultResultCount,
+
+        followingPosition: false,
 
         followUser: function() {
             userPosition.follow(this.handle_geolocation_query, this);
+            this.followingPosition = true;
         },
 
         unfollowUser: function() {
             userPosition.unfollow(this.handle_geolocation_query, this);
+            this.followingPosition = false;
+        },
+
+        removeHighlighting: function(options) {
+            var highlit = this.where({highlighted: true});
+            _.each(highlit, function(model) {
+                model.set({highlighted: false}, options);
+            });
         },
 
         getBounds: function() {
@@ -32,7 +47,13 @@ define(["backbone", "core/collections/MoxieCollection", "underscore", "places/mo
                 // bound by shape if possible
                 var shape = this.at(0).getMapFeature();
                 if (shape) { // getMapFeature can return undefined if fails parsing
-                    bounds = shape.getBounds();
+                    // Even though we have a shape it's possible getMapFeature
+                    // couldreturn a Marker (for numbered POIs)
+                    if (shape instanceof L.Marker) {
+                        latlngs.push(shape.getLatLng());
+                    } else {
+                        bounds = shape.getBounds();
+                    }
                 }
             } else if (!userPosition.listening()) {
                 this.each(function(poi) {
@@ -70,8 +91,10 @@ define(["backbone", "core/collections/MoxieCollection", "underscore", "places/mo
             options = options || {};
             options.headers = options.headers || {};
             var position = this.latestUserPosition || userPosition.getCurrentLocation();
-            position = [position.coords.latitude, position.coords.longitude];
-            options.headers['Geo-Position'] = position.join(';');
+            if (position) {
+                position = [position.coords.latitude, position.coords.longitude];
+                options.headers['Geo-Position'] = position.join(';');
+            }
             return MoxieCollection.prototype.fetch.call(this, options);
         },
 
@@ -79,7 +102,7 @@ define(["backbone", "core/collections/MoxieCollection", "underscore", "places/mo
             // Set a boolean for while the fetch is inflight
             this.ongoingFetch = true;
             // Following user Position so send a Geo-Position header
-            if (userPosition.listening()) {
+            if (this.followingPosition) {
                 return this.geoFetch.apply(this, arguments);
             } else {
                 return MoxieCollection.prototype.fetch.apply(this, arguments);
@@ -113,27 +136,76 @@ define(["backbone", "core/collections/MoxieCollection", "underscore", "places/mo
         },
 
         parse: function(data) {
+            if (this.followingPosition) {
+                Backbone.trigger('showUser');
+            }
             // Fetch over
             this.ongoingFetch = false;
             // Called when we want to empty the existing collection
             // For example when a search is issued and we clear the existing results.
             this.next_results = data._links['hl:next'];
-            this.facets = data._links['hl:types'];
+            this.facets = {};
+            _.each(data._links, function(facet, field) {
+                if (field.indexOf('facet')===0) {
+                    var fieldName = field.substring(field.indexOf(':') + 1);
+                    if (fieldName==='type_exact') {
+                        if (facet.length > 1) {
+                            this.facets[fieldName] = facet;
+                        }
+                    } else if (fieldName.indexOf(ACCESSIBILITY_BOOLEAN)===0) {
+                        _.each(facet, function(f) {
+                            if (f.value && (f.value===true || f.value==="true")) {
+                                var title = fieldName.replace(ACCESSIBILITY_BOOLEAN+'_', '').replace('_', ' ', 'g');
+                                title = title.substring(0,1).toUpperCase() + title.substring(1);
+                                if (!('accessibility' in this.facets)) {
+                                    this.facets.accessibility = [];
+                                }
+                                this.facets.accessibility.push({
+                                    title: title,
+                                    name: fieldName,
+                                    value: f.value,
+                                    href: f.href,
+                                });
+                            }
+                        }, this);
+                    } else {
+                        this.facets[fieldName] = facet;
+                    }
+                }
+            }, this);
             return data._embedded.pois;
         },
 
+        defaultFacets: [
+            'type_exact',
+            'accessibility_has_accessible_toilets',
+            'accessibility_has_adapted_furniture',
+            'accessibility_has_cafe_refreshments',
+            'accessibility_has_computer_access',
+            'accessibility_has_hearing_system',
+            'accessibility_has_lifts_to_all_floors',
+            'accessibility_has_quiet_space'
+        ],
+
         url: function() {
             var query = _.clone(this.query);
+            if (!('count' in query)) {
+                query.count = this.defaultCount;
+            }
             if (this.options.defaultQuery && _.isEmpty(query)) {
                 query = this.options.defaultQuery;
             }
-            var qstring = $.param(query, true);
             var searchPath;
             if (this.options.format && this.options.format === conf.formats.geoJSON) {
                 searchPath = conf.pathFor('places_search_geojson');
             } else {
+                // Only facet on non-geojson requests
+                if (!query.facet) {
+                    query.facet = this.defaultFacets;
+                }
                 searchPath = conf.pathFor('places_search');
             }
+            var qstring = $.param(query, true);
             if (qstring) {
                 searchPath += ('?' + qstring);
             }

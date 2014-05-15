@@ -1,6 +1,5 @@
-define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView',
-        'hbs!places/templates/detail'],
-    function($, Backbone, _, conf, ErrorView, detailTemplate){
+define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView', 'places/collections/NumberedPOICollection', 'places/models/NumberedPOIModel', 'hbs!places/templates/detail'],
+    function($, Backbone, _, conf, ErrorView, NumberedPOICollection, NumberedPOI, detailTemplate){
     var RTI_REFRESH = 15000;    // 15 seconds
     var DetailView = Backbone.View.extend({
 
@@ -11,6 +10,16 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
         },
         attributes: {
             'class': 'content-detail'
+        },
+
+        events: {
+            'click a.zoom-all': 'zoomToAll',
+        },
+
+        zoomToAll: function(ev) {
+            ev.preventDefault();
+            Backbone.trigger('map:zoom-all-markers');
+            return false;
         },
 
         renderError: function(model, response) {
@@ -29,8 +38,26 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
             errorView.render();
         },
 
+        childTypes: {
+            '/university/site': {relation: 'occupies', index: 1},
+            '/university/building': {relation: 'occupies', index: 2},
+            '/university/library': {relation: 'libraries', index: 3},
+            '/university/room': {relation: 'contains', index: 4},
+            '/leisure/museum': {relation: 'contains', index: 5},
+            '/university/department': {relation: 'organisations', index: 6},
+            '/university/college': {relation: 'organisations', index: 7},
+        },
+
+        // These each contain the Image() element as it loads
+        // and once it has fully loaded respectively.
+        image: null,
+        loadingImage: null,
+
         serialize: function() {
             var poi = this.model.toJSON();
+            if (poi.midFetch === true) {
+                return {poi: poi};
+            }
             var currentlyOpen = null;
             var parsedOpeningHours = null;
             if (poi.opening_hours) {
@@ -42,45 +69,58 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                     currentlyOpen = null;
                 }
             }
-            var depiction;
-            if (poi.picture_depiction && poi.picture_depiction.length > 0) {
-                depiction = poi.picture_depiction[0];
-            }
-            var libraries = [];
-            var organisations = [];
-            var occupies = [];
-            var occupiedBy = [];
-            var contains = [];
-            var containedBy = [];
-            var partOf = [];
 
+            // Do we have an image? is it loaded?
+            var depiction = poi.primary_image || poi.images[0];
+            var hasDepiction = false;
+            if (this.image || this.loadingImage) {
+                hasDepiction = true;
+            } else if (depiction && 'url' in depiction) {
+                // Create Image to load in background
+                this.loadingImage = new Image();
+                this.loadingImage.onload = _.bind(function() {
+                    this.image = this.loadingImage;
+                    this.render();  // Image has loaded, render the view
+                }, this);
+                this.loadingImage.src = depiction.url;
+                hasDepiction = true;
+            }
+
+            var context = {
+                showZoomButton: false,
+                contains: [],
+                partOf: [],
+                occupiedBy: [],
+                hasDepiction: hasDepiction,
+                image: this.image,
+                socialLinks: poi.social_facebook || poi.social_twitter,
+            };
+            if ('accessibility' in poi && 'access_guide_url' in poi.accessibility) {
+                context.accessibilityGuideURL = poi.accessibility.access_guide_url;
+            }
+            if (this.additionalPOIs && this.additionalPOIs.numberOfMarkers && this.additionalPOIs.numberOfMarkers > 1) {
+                context.showZoomButton = true;
+            }
             if (poi._links) {
                 for (var i in poi._links.child) {
                     var child = poi._links.child[i];
                     if (child.type) {
-                        switch (child.type[0]) {
-                            // example for specific relations
-                            case '/university/library':
-                                libraries.push(child);
-                                break;
-                            case '/university/building':
-                                occupies.push(child);
-                                break;
-                            case '/university/site':
-                                occupies.push(child);
-                                break;
-                            case '/university/room':
-                                occupies.push(child);
-                                break;
-                            case '/university/department':
-                                organisations.push(child);
-                                break;
-                            case '/university/college':
-                                organisations.push(child);
-                                break;
-                            default:
-                                contains.push(child);
-                                break;
+                        var type = child.type[0];
+                        var childObj = child;
+                        if (this.additionalPOIs && this.additionalPOIs.length > 0) {
+                            var additionalPOI = this.additionalPOIs.get(child.href.split('/').pop());
+                            if (additionalPOI) {
+                                childObj = additionalPOI.toJSON();
+                            }
+                        }
+                        if (type in this.childTypes) {
+                            if (this.childTypes[type].relation in context) {
+                                context[this.childTypes[type].relation].push(childObj);
+                            } else {
+                                context[this.childTypes[type].relation] = [childObj];
+                            }
+                        } else {
+                            context.contains.push(childObj);
                         }
                     }
                 }
@@ -96,48 +136,75 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                         parent = parents[i];
                         if (parent.type) {
                             switch (parent.type[0]) {
-                                case '/university/library':
-                                    partOf.push(parent);
-                                    break;
-                                case '/university/division':
+                                case '/leisure/museum':
                                 case '/university/department':
-                                    if (poi.type[0]==='/university/department' ||
-                                        poi.type[0]==='/leisure/museum') {
-                                            partOf.push(parent);
+                                    if (poi.type[0]==='/university/building') {
+                                        context.occupiedBy.push(parent);
                                     } else {
-                                        occupiedBy.push(parent);
+                                        context.partOf.push(parent);
                                     }
                                     break;
                                 default :
-                                    containedBy.push(parent);
+                                    context.partOf.push(parent);
                                     break;
                             }
                         }
                     }
                 }
             }
+            _.each(context, function(relations, key) {
+                if (_.isArray(relations)) {
+                    var sortedRels = _.sortBy(relations, function(poi) {
+                        return poi.number || 1000;
+                    });
+                    context[key] = sortedRels;
+                }
+            });
 
-            return {
+            return _.extend(context, {
                 poi: poi,
                 multiRTI: poi.RTI.length > 1,
                 alternateRTI: this.model.getAlternateRTI(),
                 currentRTI: this.model.getCurrentRTI(),
                 currentlyOpen: currentlyOpen,
-                parsedOpeningHours: parsedOpeningHours,
-                libraries: libraries,
-                organisations: organisations,
-                occupies: occupies,
-                contains: contains,
-                containedBy: containedBy,
-                occupiedBy: occupiedBy,
-                partOf: partOf,
-                depiction: depiction,
-            };
+                parsedOpeningHours: parsedOpeningHours
+            });
         },
         template: detailTemplate,
         manage: true,
 
+
+        additionalPOIs: null,
+
         beforeRender: function() {
+            if (!this.additionalPOIs) {
+                if (this.model.has('_links')) {
+                    var children = this.model.get('_links').child || [];
+                    var poids = [];
+                    _.each(children, function(child) {
+                        poids.push(child.href.split('/').pop());
+                    });
+                    if (poids.length === 1) {
+                        var poi = new NumberedPOI({id: poids[0], singlePOI: true});
+                        poi.fetch({success: _.bind(this.render, this)});
+                        this.additionalPOIs =  new NumberedPOICollection([poi]);
+                    } else if (poids.length > 1) {
+                        this.additionalPOIs =  new NumberedPOICollection({
+                            sortFunction: _.bind(function(child) {
+                                if (child.type[0] in this.childTypes) {
+                                    return this.childTypes[child.type[0]].index;
+                                } else {
+                                    return 100;
+                                }
+                            }, this),
+                            url: conf.urlFor('places_id') + poids.join(','),
+                        });
+                        this.additionalPOIs.fetch({success: _.bind(this.render, this)});
+                    }
+                }
+            } else {
+                Backbone.trigger('map:numbered-collection', this.additionalPOIs);
+            }
             if (this.model.get('name')) {
                 Backbone.trigger('domchange:title', this.model.get('name'));
             } else if (this.model.get('type_name')) {

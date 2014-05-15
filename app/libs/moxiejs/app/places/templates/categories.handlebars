@@ -1,34 +1,33 @@
 <div class="search-input">
-    <input type="text" id="input_search" placeholder="Search&hellip;" name="q">
+    <input type="text" id="input_search" placeholder="Search places..." name="q">
+    <span class="deleteicon ss-delete"></span>
 </div>
 
-<div class="map-options">
-    <ul>
-        <li><a href="#">University</a></li>
-        <li><a href="#">Amenities</a></li>
-    </ul>
-</div>
+{{#if category.type_name_plural}}
+<h2 class="free-heading" id="category_title">{{ category.type_name_plural }}</h2>
+{{else}}
+<h2 class="free-heading" id="category_title">Places</h2>
+{{/if}}
 
 {{#if types}}
 <ul class="results-list" id="categories">
 {{#types}}
     <li>
-    <h3>
     {{#if hasTypes}}
         {{! If this category has any sub-categories, place a link to them }}
         {{#if ../../category_name}}
-            <a href="{{ ../../../urlPrefix }}search?type={{ type_prefixed }}">
+            <a href="#places/search?type={{ type_prefixed }}">
         {{else}}
-            <a href="{{ ../../../urlPrefix }}categories{{ type_prefixed }}">
+            <a href="#places/categories{{ type_prefixed }}">
         {{/if}}
     {{else}}
-        <a href="{{ ../../urlPrefix }}search?type={{ type_prefixed }}">
+        <a href="#places/search?type={{ type_prefixed }}">
     {{/if}}
-    {{ type_name_plural }}
+    <h3>{{ type_name }}</h3>
     {{#if description}}
         <p class="subtext">{{ description }}</p>
     {{/if}}
-    </a></h3></li>
+    </a></li>
 {{/types}}
 </ul>
 {{else}}

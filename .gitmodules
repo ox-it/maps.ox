@@ -1,3 +1,6 @@
 [submodule "maki"]
 	path = maki
 	url = https://github.com/mapbox/maki.git
+[submodule "webfonts/font-awesome"]
+	path = webfonts/font-awesome
+	url = https://github.com/FortAwesome/Font-Awesome.git

@@ -2,7 +2,8 @@ define(['jquery', 'backbone', 'underscore', 'hbs!courses/templates/course', 'hbs
     function($, Backbone, _, courseTemplate, authTemplate, L, MoxieConf, EmbeddedPoiView){
         var CourseView = Backbone.View.extend({
 
-            initialize: function() {
+            initialize: function(options) {
+                this.options = options;
                 this.user = this.options.user;
             },
 

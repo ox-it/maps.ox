@@ -1,10 +1,13 @@
 {{#if name }}
     <h3>
-        <a href="{{ urlPrefix }}places/{{ id }}">
+        {{#if trackingUserPosition}}
+            <span class="distance">{{humaniseDistance distance }}</span>
+        {{/if}}
+        <a class="result-link" id="{{ id }}" href="{{ reverse 'detail' 'id' id }}">
             {{ name }}
         </a>
     </h3>
-    {{#if userSearch}}
+    {{#if showInfo}}
     <p class="type">
         {{ type_name }}
     </p>
@@ -14,7 +17,10 @@
     {{/if}}
 {{ else }}
     <p class="type">
-        <a href="{{ urlPrefix }}places/{{ id }}">
+        {{#if trackingUserPosition}}
+            <span class="distance">{{humaniseDistance distance }}</span>
+        {{/if}}
+        <a class="result-link" id="{{ id }}" href="{{ reverse 'detail' 'id' id }}">
         {{ type_name }}
         </a>
     </p>
@@ -26,11 +32,8 @@
 {{# if collection_times }}
     <p class="metadata">{{{collectionTimes collection_times}}}</p>
 {{/if}}
-{{#if userSearch}}
+{{#if showInfo}}
     {{#if address }}
         <p class="metadata">{{ address }}</p>
     {{/if}}
-{{/if}}
-{{#if trackingUserPosition}}
-<p class="metadata">{{humaniseDistance distance }}</p>
 {{/if}}

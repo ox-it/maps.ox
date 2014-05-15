@@ -1,17 +1,37 @@
 <div class="search-input">
-    <input type="text" placeholder="Search&hellip;" name="q" value="{{query.q}}">
+    <input type="text" name="q" value="{{query.q}}">
+    <input type="submit" value="Search" name="search">
 </div>
-<div class="map-options">
-    <ul>
-        <li><a href="#">A-Z</a></li>
-        <li><a href="#">Nearby</a></li>
-    </ul>
+<div class="map-options {{#if filtering}}something-highlighted{{/if}}">
+    <span>{{#unless sortAZ}}<a class="sort-az" href="#">A-Z</a>{{else}}A-Z <i class="fa fa-sort-asc"></i>{{/unless}}</span><span>{{#unless sortNearby}}<a class="sort-nearby" href="#">Nearby</a>{{else}}Nearby <i class="fa fa-sort-asc"></i>{{/unless}}</span><span class="filter {{#if facetsExist}}{{#if filtering}}highlighted{{/if}}{{/if}}">{{#if facetsExist}}<a href="#">Filters</a>{{else}}Filters{{/if}}</span>
 </div>
-<ul class="facet-list">
-    {{#facets}}
-    <li class="label-facet" data-category="{{ name }}">{{ title }}</li>
-    {{/facets}}
-</ul>
+<div class="messages">
+</div>
+
+{{#if facetsExist}}
+<div class="filters {{#if singleFacetList}}single-facet-list{{/if}} {{#unless filtering}}hide-filters{{/unless}}">
+    {{#if facets.type_exact}}
+    <div class="facets type-exact">
+        <h3>Categories</h3>
+        <ul>
+            {{#facets.type_exact}}
+            <li><label><input {{#if checked}}checked="checked"{{/if}} type="checkbox" name="{{ value }}">{{ title }}</label></li>
+            {{/facets.type_exact}}
+        </ul>
+    </div>
+    {{/if}}
+    {{#if facets.accessibility}}
+    <div class="facets accessibility">
+        <h3>Accessibility</h3>
+        <ul>
+            {{#facets.accessibility}}
+            <li><label><input {{#if checked}}checked="checked"{{/if}} type="checkbox" name="{{ name }}" value="{{ value }}">{{ title }}</label></li>
+            {{/facets.accessibility}}
+        </ul>
+    </div>
+    {{/if}}
+</div>
+{{/if}}
 <ul class="results-list">
 </ul>
 {{#if midRequest}}

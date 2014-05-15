@@ -8,18 +8,19 @@
     <h2>{{ poi.type_name }}</h2>
 {{/if}}
 
-{{#if depiction }}
+{{#if hasDepiction }}
     <div class="poi-details-depiction">
         <div class="depiction-wrapper">
-            <img class="depiction" src="{{ depiction }}">
+            {{#if image }}
+            <img src="{{ image.src }}">
+            {{else}}
+            <img class="placeholder" src="images/placeholder.png">
+            {{/if}}
         </div>
     </div>
 {{/if}}
-<div class="poi-details-text {{#unless depiction}}no-depiction{{/unless}}">
+<div class="poi-details-text {{#unless hasDepiction}}no-depiction{{/unless}}">
     <div class="free-text">
-        {{#if poi.name }}
-            <span class="type">{{ poi.type_name }}</span>
-        {{/if}}
         {{#if poi.opening_hours }}
             {{{currentlyOpen currentlyOpen}}}
         {{/if}}
@@ -36,7 +37,7 @@
         {{#if multiRTI}}
         <h3>{{ currentRTI.title }}
             {{#if alternateRTI}}
-            ({{#alternateRTI}}<a href="#/places/{{../poi.id}}?rti={{type}}">{{ title }}</a>{{/alternateRTI}})
+            ({{#alternateRTI}}<a href="{{ reverse 'detail' 'id' poi.id }}?rti={{type}}">{{ title }}</a>{{/alternateRTI}})
             {{/if}}
         </h3>
         {{/if}}
@@ -55,22 +56,28 @@
             {{/if}}
         </p>
 
-        <ul class="external-links">
+        <div class="external-links">
             {{#if poi.phone}}
-            <a href="tel:{{ poi.phone }}">Tel: {{ poi.phone }}</a>
+            <li><a href="tel:{{ poi.phone }}" class="action-button poi-phone">Tel: {{ poi.phone }}</a></li>
             {{/if}}
             {{#if poi.website}}
-            <a href="{{ poi.website }}" target="_blank">{{ poi.website }}</a>
+            <span><a href="{{ poi.website }}" target="_blank" class="action-button poi-website">Website <i class="fa fa-external-link"></i></a></span>
             {{/if}}
-        </ul>
-        <div class="social-links">
-            {{#if poi.social_twitter}}
-            <a target="_blank" href="{{ poi.social_twitter }}">Twitter</a>
-            {{/if}}
-            {{#if poi.social_facebook}}
-            <a target="_blank" href="{{ poi.social_facebook }}">Facebook</a>
+            {{#if accessibilityGuideURL }}
+            <span><a href="{{ accessibilityGuideURL }}" target="_blank" class="action-button poi-access-guide">Accessibility Guide <i class="fa fa-wheelchair"></i></a></span>
             {{/if}}
         </div>
+
+        {{#if socialLinks }}
+        <div class="social-links">
+            {{#if poi.social_twitter}}
+            <a target="_blank" href="{{ poi.social_twitter }}"><i class="fa fa-twitter-square"></i></a>
+            {{/if}}
+            {{#if poi.social_facebook}}
+            <a target="_blank" href="{{ poi.social_facebook }}"><i class="fa fa-facebook-square"></i></a>
+            {{/if}}
+        </div>
+        {{/if}}
 
         {{#if poi.library_opening_hours_termtime }}
             <h3>Opening hours</h3>
@@ -108,49 +115,70 @@
         {{/if}}
 
         {{! Links to parents and children }}
-        <dl>
-        {{#if libraries}}
-            <dt>Libraries</dt>
-            {{#libraries}}
-            <dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
-            {{/libraries}}
-        {{/if}}
-        {{#if occupies}}
-            <dt>Occupies</dt>
-            {{#occupies}}
-            <dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
-            {{/occupies}}
-        {{/if}}
+        <dl class="poi-children">
         {{#if occupiedBy}}
             <dt>Occupied by</dt>
             {{#occupiedBy}}
+            {{#if href}}
             <dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
+            {{else}}
+            <dd>{{#if number}}<div class="detail-numbered-marker"><div><span>{{ number }}</span></div></div>{{/if}}<a href="{{ reverse 'detail' 'id' id }}" title="{{ name }}">{{ name }}</a></dd>
+            {{/if}}
             {{/occupiedBy}}
         {{/if}}
         {{#if partOf}}
             <dt>Part of</dt>
             {{#partOf}}
+            {{#if href}}
             <dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
+            {{else}}
+            <dd>{{#if number}}<div class="detail-numbered-marker"><div><span>{{ number }}</span></div></div>{{/if}}<a href="{{ reverse 'detail' 'id' id }}" title="{{ name }}">{{ name }}</a></dd>
+            {{/if}}
             {{/partOf}}
         {{/if}}
-        {{#if organisations}}
-            <dt>Sub organisations</dt>
-            {{#organisations}}
+        {{#if occupies}}
+            <dt>Occupies</dt>
+            {{#occupies}}
+            {{#if href}}
             <dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
-            {{/organisations}}
+            {{else}}
+            <dd>{{#if number}}<div class="detail-numbered-marker"><div><span>{{ number }}</span></div></div>{{/if}}<a href="{{ reverse 'detail' 'id' id }}" title="{{ name }}">{{ name }}</a></dd>
+            {{/if}}
+            {{/occupies}}
+        {{/if}}
+        {{#if libraries}}
+            <dt>Libraries</dt>
+            {{#libraries}}
+            {{#if href}}
+            <dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
+            {{else}}
+            <dd>{{#if number}}<div class="detail-numbered-marker"><div><span>{{ number }}</span></div></div>{{/if}}<a href="{{ reverse 'detail' 'id' id }}" title="{{ name }}">{{ name }}</a></dd>
+            {{/if}}
+            {{/libraries}}
         {{/if}}
         {{#if contains}}
             <dt>Contains</dt>
             {{#contains}}
+            {{#if href}}
             <dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
+            {{else}}
+            <dd>{{#if number}}<div class="detail-numbered-marker"><div><span>{{ number }}</span></div></div>{{/if}}<a href="{{ reverse 'detail' 'id' id }}" title="{{ name }}">{{ name }}</a></dd>
+            {{/if}}
             {{/contains}}
         {{/if}}
-        {{#if containedBy}}
-            <dt>Contained by</dt>
-            {{#containedBy}}
+        {{#if organisations}}
+            <dt>Sub organisations</dt>
+            {{#organisations}}
+            {{#if href}}
             <dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
-            {{/containedBy}}
+            {{else}}
+            <dd>{{#if number}}<div class="detail-numbered-marker"><div><span>{{ number }}</span></div></div>{{/if}}<a href="{{ reverse 'detail' 'id' id }}" title="{{ name }}">{{ name }}</a></dd>
+            {{/if}}
+            {{/organisations}}
         {{/if}}
         </dl>
+        {{#if showZoomButton}}
+        <a href="#" class="zoom-all"><i class="fa fa-arrows-alt"></i> Show all markers</a>
+        {{/if}}
     </div>
 </div>

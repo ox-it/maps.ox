@@ -1,12 +1,17 @@
 @import "globals/variables";
+@import "globals/mixins";
 @import "globals/oxford-palette";
 
 /* Content is a container for two child divs
     .content-browse-wrapper which typically contains a scrolling list container
     .content-map which holds map (#map)
+
+    NOTE: Z-Indexes are used in this CSS. We start our indexes at 1001 as this
+    is greater than any z-index found in leaflet CSS which we need to overlay.
 */
 
 #content {
+    overflow-x: hidden;
     position: absolute;
     top: $navbarHeight;
     right: 0;
@@ -21,7 +26,6 @@
         padding: 0px 0px;
         height: 100%;
         width: 0;
-        border-right: $map-pane-border;
     }
 
     .content-browse {
@@ -29,11 +33,34 @@
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         background: $body-background;
+        display: none;
+        img.preloader {
+            display: block;
+            margin: 0 auto;
+        }
+
+        .messages {
+            background-color: #eee;
+            .message {
+                padding: 5px;
+                font-size: 0.8em;
+                border-bottom: $map-pane-border;
+                img.preloader {
+                    height: 0.8em;
+                    display: inline;
+                    margin: 0;
+                }
+                &.alert {
+                    color: $fail-red;
+                }
+            }
+        }
     }
 
     .map-browse-layout {
         height: 100%;
         .content-detail-wrapper {
+            background: $body-background;
             display: none;
         }
     }
@@ -52,6 +79,7 @@
             //       additional-toggles with toggle-location button
             margin: -4px 0px 0px;
             li {
+                background-position: 0px 3px;
                 background-repeat: no-repeat;
                 height: $map-controls-size;
                 display: inline-block;
@@ -61,29 +89,46 @@
         }
         .btn-toggle-public-transport {
             background-image: url('../maki/renders/bus-18@2x.png');
+            &.selected {
+                background-image: url('../images/maki-selected/bus-selected-18@2x.png');
+            }
         }
         .btn-toggle-driving {
             background-image: url('../maki/renders/car-18@2x.png');
+            &.selected {
+                background-image: url('../images/maki-selected/car-selected-18@2x.png');
+            }
         }
         .btn-toggle-cycling {
             background-image: url('../maki/renders/bicycle-18@2x.png');
+            &.selected {
+                background-image: url('../images/maki-selected/bicycle-selected-18@2x.png');
+            }
         }
     }
 
-    .btn-toggle-browse, .btn-toggle-location {
+    .btn-toggle-browse, .btn-toggle-detail, .btn-toggle-location {
         overflow: hidden;
         cursor: pointer;
         position: absolute;
         display: inline-block;
         background: $body-background;
-        z-index: 10001;
-        width: $map-controls-size;
+        z-index: 1001;
+        width: $map-controls-size + 3px;
         height: $map-controls-size;
         border-right: $map-pane-border;
         border-bottom: $map-pane-border;
         text-align: center;
         font-size: 1.6em;
         color: $map-toggle-active;
+    }
+    .btn-toggle-browse {
+        // The toggle-browse button needs to appear above the content-overlay
+        z-index: 1003;
+        span {
+            // Vertical align the button
+            margin-top: 4px;
+        }
     }
     .btn-toggle-location {
         &.active {
@@ -95,7 +140,27 @@
         border-bottom: none;
     }
 
+    .btn-toggle-detail {
+        display: none;
+        bottom: -1px;
+        left: 50%;
+        /* TODO: These calcs are hardcoded to $map-controls-size/2 because SASS doesn't seem to evaluate in calc calls */
+        left: -webkit-calc(50% - 19px);  /* WebKit 536.3 (Chrome 19) and above, experimental */
+        left: calc(50% - 19px);  /* final CSS3 compliant implementation; Firefox 16 and IE 9, and above */
+        border-bottom: none;
+        border-top: $map-pane-border;
+        border-left: $map-pane-border;
+        border-right: $map-pane-border;
+        height: 27px;
+        line-height: 10px;
+    }
+
     .map-browse-layout {
+        &.with-detail, &.detail-hidden {
+            .btn-toggle-detail {
+                display: inline-block;
+            }
+        }
         &.with-browse {
             .btn-toggle-browse {
                 color: $map-toggle-inactive;
@@ -108,13 +173,19 @@
                 display: inline-block;
             }
             .content-browse-wrapper {
+                border-right: $map-pane-border;
                 width: 30%;
                 @media #{$smartphone} {
                     width: 85%;
                 }
             }
+            .content-browse {
+                display: block;
+            }
             .content-main {
                 width: 70%;
+            }
+            .overlay, .content-main {
                 @media #{$smartphone} {
                     position: absolute;
                     width: 100%;
@@ -123,12 +194,23 @@
                     height: 100%;
                 }
             }
+            .overlay {
+                @media #{$smartphone} {
+                    z-index: 1002;
+                    background-color: rgba(0,0,0,0.5);
+                    display: inline;
+                    position: fixed;
+                }
+            }
         }
         &.with-detail {
+            #map {
+                border-bottom: $map-pane-border;
+            }
             .btn-toggle-location {
                 bottom: 40%;
                 @media #{$smartphone} {
-                    top: $mapHeight - $map-controls-size;
+                    top: $mapHeight - $map-controls-size - 1px;
                     bottom: auto;
                 }
             }
@@ -143,7 +225,7 @@
             .content-detail-wrapper {
                 display: block;
                 height: 40%;
-                overflow-y: scroll;
+                overflow-y: auto;
                 @media #{$smartphone} {
                     height: auto;
                 }
@@ -152,6 +234,7 @@
     }
 
     .content-map {
+        position: relative;
         height: 100%;
     }
 
@@ -171,11 +254,6 @@
         }
     }
     .search-input {
-        position: relative;
-        margin-right: 5px;
-        margin-left: 5px;
-        padding-top: 10px;
-
         span.deleteicon {
             @include border-radius(30px);
             position: absolute;
@@ -201,4 +279,33 @@
     > h3 {
         padding-left: 5px;
     }
+}
+
+.numbered-marker {
+    @include numbered-marker(30px, 4px)
+}
+
+.detail-numbered-marker {
+    margin-left: 8px;
+    @include numbered-marker(24px, 2px)
+}
+
+.social-links a {
+    font-size: 1.7em;
+    letter-spacing: 0.2em;
+}
+
+// Without a map reference
+// TODO: this causes problems with hanging indents
+//       seems to be quite tricky to solve...
+dl.poi-children dd {
+    line-height: 1.7em;
+}
+dl.poi-children dd a {
+    margin-left: 30px + 8px;
+}
+
+// With a map reference
+dl.poi-children dd > div + a {
+    margin-left: 6px;
 }

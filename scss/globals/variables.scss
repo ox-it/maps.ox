@@ -4,7 +4,9 @@ $ratio: golden() fourth() !default;
 
 // Variables to set our breakpoints
 $smartphone-screen: 480px;
-$small-screen: 768px;
+// NOTE: Updated by us from 768 to 767 so iPad portrait
+//       is shown as tablet view not smartphone.
+$small-screen: 767px;
 $medium-screen: 1280px;
 $large-screen: 1440px;
 
@@ -37,10 +39,11 @@ $border-color: rgba(200,200,200, 0.5);
 
 $mapHeight: 140px;
 
+$default-padding: 12px;
 
 $navbarDark: $darkOxfordBlue;
 $navbarLight: $lightOxfordBlue;
-$navbarHeight: 0px;
+$navbarHeight: 36px;
 $navbarItemWidth: 50px;
 $navbarBorderDark: 1px solid rgba(darken($navbarDark, 10%),0.7);
 $navbarBorderLight: 1px solid rgba(lighten($navbarDark, 5%),0.7);
@@ -48,6 +51,7 @@ $navbarBorderLight: 1px solid rgba(lighten($navbarDark, 5%),0.7);
 $sidebar-animation-time: 0.33s;
 $sidebar-width: 350px;
 $sidebar-smartphone-width: 230px;
+$sidebar-item-indent: $default-padding;
 
 // Colours predominantly for labels and suchlike
 $fail-red: #B94A48;
