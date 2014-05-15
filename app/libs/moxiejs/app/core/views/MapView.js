@@ -36,10 +36,7 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
 
         beforeRender: function() {
             $('html').addClass('map');
-            var mapOptions = {
-                zoomControl: false
-            };
-            this.map = utils.getMap(this.el, {mapOptions: mapOptions});
+            this.map = utils.getMap(this.el);
             // Need to add a separate zoomControl here after the map is created
             var zoomControl = new L.control.zoom({position: 'bottomright'});
             zoomControl.addTo(this.map);
