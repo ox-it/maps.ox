@@ -7,8 +7,10 @@ define(["backbone", "core/collections/MoxieCollection", "underscore", "places/mo
 
         initialize: function(options) {
             this.options = options || {};
-            this.query = {};
         },
+
+        query: {},
+        defaultCount: conf.defaultResultCount,
 
         followingPosition: false,
 
@@ -187,6 +189,9 @@ define(["backbone", "core/collections/MoxieCollection", "underscore", "places/mo
 
         url: function() {
             var query = _.clone(this.query);
+            if (!('count' in query)) {
+                query.count = this.defaultCount;
+            }
             if (this.options.defaultQuery && _.isEmpty(query)) {
                 query = this.options.defaultQuery;
             }
