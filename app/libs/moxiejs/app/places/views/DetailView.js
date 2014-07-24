@@ -39,9 +39,11 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
         },
 
         excludedTypes: ['/university/room'],
-        // This predicate returns false for any pois of a type in excludedTypes
+        // Used to filter down to the POIs we display in the DetailView
+        // these are all POIs not of a type in excludedTypes or any POI
+        // with multiple `type`s
         inclusionPredicate: function(poi) {
-            return (poi.type && !_.contains(this.excludedTypes, poi.type[0]));
+            return (poi.type && ((poi.type.length > 1) || (!_.contains(this.excludedTypes, poi.type[0]))));
         },
 
         childTypes: {
