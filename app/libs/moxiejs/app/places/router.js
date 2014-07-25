@@ -1,7 +1,9 @@
 define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places/models/POIModel", "places/views/CategoriesView", "places/views/SearchView", "places/views/DetailView", "places/collections/POICollection", "places/collections/CategoryCollection", "core/views/MapView", "core/media", "places/collections/AdditionalPOICollection", "places/collections/CustomCollection"], function(app, _, Backbone, conf, userPosition, POI, CategoriesView, SearchView, DetailView, POIs, Categories, MapView, media, AdditionalPOIs, CustomPOIs){
 
     // Points of Interest collections
-    var pois = new POIs();
+    var pois = new POIs({
+        excludeTypes: conf.excludeTypes,
+    });
     var customPOIs = new CustomPOIs();
 
     function getPOI(poid) {
