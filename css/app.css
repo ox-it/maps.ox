@@ -5,13 +5,12 @@
 /*! HiDPI v1 | MIT License | git.io/hidpi */
 /* line 11, ../scss/components/_results_list.scss */
 .search-input {
-  position: relative;
   margin-right: 5px;
   margin-left: 5px;
   padding-top: 10px;
   text-align: center;
 }
-/* line 17, ../scss/components/_results_list.scss */
+/* line 16, ../scss/components/_results_list.scss */
 .search-input input[type="text"] {
   width: 60%;
   padding: 0;
@@ -28,7 +27,7 @@
   line-height: 26px;
   height: 26px;
 }
-/* line 29, ../scss/components/_results_list.scss */
+/* line 28, ../scss/components/_results_list.scss */
 .search-input input[type="submit"] {
   line-height: 26px;
   height: 28px;
@@ -50,18 +49,18 @@
   margin-left: -5px;
 }
 
-/* line 48, ../scss/components/_results_list.scss */
+/* line 47, ../scss/components/_results_list.scss */
 .content-browse ul.results-list {
   padding-bottom: 35px;
 }
 
-/* line 53, ../scss/components/_results_list.scss */
+/* line 52, ../scss/components/_results_list.scss */
 ul.results-list {
   margin: 0;
   padding: 0 0 1em 0;
   list-style: none;
 }
-/* line 57, ../scss/components/_results_list.scss */
+/* line 56, ../scss/components/_results_list.scss */
 ul.results-list li {
   margin: 0 12px;
   padding: 1em 12px;
@@ -69,50 +68,50 @@ ul.results-list li {
   border-bottom: 1px solid rgba(200, 200, 200, 0.5);
   color: rgba(40, 40, 40, 0.8);
 }
-/* line 61, ../scss/components/_results_list.scss */
+/* line 60, ../scss/components/_results_list.scss */
 ul.results-list li.highlighted {
   margin: 0;
   padding: 1em 24px;
   background-color: #4891dc;
   color: #fafafa;
 }
-/* line 66, ../scss/components/_results_list.scss */
+/* line 65, ../scss/components/_results_list.scss */
 ul.results-list li.highlighted a {
   color: #fafafa;
 }
-/* line 71, ../scss/components/_results_list.scss */
+/* line 70, ../scss/components/_results_list.scss */
 ul.results-list li a {
   text-decoration: none;
   color: #4891dc;
   line-height: 1.5em;
 }
-/* line 76, ../scss/components/_results_list.scss */
+/* line 75, ../scss/components/_results_list.scss */
 ul.results-list li input {
   margin-right: 5px;
 }
-/* line 79, ../scss/components/_results_list.scss */
+/* line 78, ../scss/components/_results_list.scss */
 ul.results-list li h3 {
   margin: 0px;
   font-weight: normal;
 }
-/* line 85, ../scss/components/_results_list.scss */
+/* line 84, ../scss/components/_results_list.scss */
 ul.results-list li p {
   margin: 0 0 0.2em 0;
 }
-/* line 88, ../scss/components/_results_list.scss */
+/* line 87, ../scss/components/_results_list.scss */
 ul.results-list li > label, ul.results-list li > a {
   display: block;
   margin: 0;
   height: 100%;
   color: rgba(40, 40, 40, 0.8);
 }
-/* line 96, ../scss/components/_results_list.scss */
+/* line 95, ../scss/components/_results_list.scss */
 ul.results-list li .subtext {
   display: block;
   margin: 0;
   font-size: 0.9em;
 }
-/* line 101, ../scss/components/_results_list.scss */
+/* line 100, ../scss/components/_results_list.scss */
 ul.results-list li .meta-info {
   margin: 3px 0 0 5px;
   padding: 0;
@@ -120,16 +119,16 @@ ul.results-list li .meta-info {
   font-size: 0.9em;
   line-height: 0.9emconvert-to-em(5px);
 }
-/* line 109, ../scss/components/_results_list.scss */
+/* line 108, ../scss/components/_results_list.scss */
 ul.results-list li .meta-info-title {
   font-weight: 800;
   font-size: inherit;
 }
-/* line 114, ../scss/components/_results_list.scss */
+/* line 113, ../scss/components/_results_list.scss */
 ul.results-list li * {
   font-family: Helvetica, Verdana, sans-serif;
 }
-/* line 117, ../scss/components/_results_list.scss */
+/* line 116, ../scss/components/_results_list.scss */
 ul.results-list li .distance {
   font-size: 0.8em;
   line-height: 2em;
@@ -169,42 +168,43 @@ ul.results-list li .distance {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   background: #fafafa;
+  display: none;
 }
-/* line 36, ../scss/components/_maplayout.scss */
+/* line 37, ../scss/components/_maplayout.scss */
 #content .content-browse img.preloader {
   display: block;
   margin: 0 auto;
 }
-/* line 41, ../scss/components/_maplayout.scss */
+/* line 42, ../scss/components/_maplayout.scss */
 #content .content-browse .messages {
   background-color: #eee;
 }
-/* line 43, ../scss/components/_maplayout.scss */
+/* line 44, ../scss/components/_maplayout.scss */
 #content .content-browse .messages .message {
   padding: 5px;
   font-size: 0.8em;
   border-bottom: 1px solid #aaaaaa;
 }
-/* line 47, ../scss/components/_maplayout.scss */
+/* line 48, ../scss/components/_maplayout.scss */
 #content .content-browse .messages .message img.preloader {
   height: 0.8em;
   display: inline;
   margin: 0;
 }
-/* line 52, ../scss/components/_maplayout.scss */
+/* line 53, ../scss/components/_maplayout.scss */
 #content .content-browse .messages .message.alert {
   color: #b94a48;
 }
-/* line 59, ../scss/components/_maplayout.scss */
+/* line 60, ../scss/components/_maplayout.scss */
 #content .map-browse-layout {
   height: 100%;
 }
-/* line 61, ../scss/components/_maplayout.scss */
+/* line 62, ../scss/components/_maplayout.scss */
 #content .map-browse-layout .content-detail-wrapper {
   background: #fafafa;
   display: none;
 }
-/* line 67, ../scss/components/_maplayout.scss */
+/* line 68, ../scss/components/_maplayout.scss */
 #content .additional-toggles {
   position: absolute;
   display: none;
@@ -214,12 +214,12 @@ ul.results-list li .distance {
   background: #fafafa;
   border-top: 1px solid #aaaaaa;
 }
-/* line 75, ../scss/components/_maplayout.scss */
+/* line 76, ../scss/components/_maplayout.scss */
 #content .additional-toggles ul {
   padding: 0;
   margin: -4px 0px 0px;
 }
-/* line 80, ../scss/components/_maplayout.scss */
+/* line 81, ../scss/components/_maplayout.scss */
 #content .additional-toggles ul li {
   background-position: 0px 3px;
   background-repeat: no-repeat;
@@ -228,31 +228,31 @@ ul.results-list li .distance {
   list-style: none;
   min-width: 40px;
 }
-/* line 89, ../scss/components/_maplayout.scss */
+/* line 90, ../scss/components/_maplayout.scss */
 #content .additional-toggles .btn-toggle-public-transport {
   background-image: url("../maki/renders/bus-18@2x.png");
 }
-/* line 91, ../scss/components/_maplayout.scss */
+/* line 92, ../scss/components/_maplayout.scss */
 #content .additional-toggles .btn-toggle-public-transport.selected {
   background-image: url("../images/maki-selected/bus-selected-18@2x.png");
 }
-/* line 95, ../scss/components/_maplayout.scss */
+/* line 96, ../scss/components/_maplayout.scss */
 #content .additional-toggles .btn-toggle-driving {
   background-image: url("../maki/renders/car-18@2x.png");
 }
-/* line 97, ../scss/components/_maplayout.scss */
+/* line 98, ../scss/components/_maplayout.scss */
 #content .additional-toggles .btn-toggle-driving.selected {
   background-image: url("../images/maki-selected/car-selected-18@2x.png");
 }
-/* line 101, ../scss/components/_maplayout.scss */
+/* line 102, ../scss/components/_maplayout.scss */
 #content .additional-toggles .btn-toggle-cycling {
   background-image: url("../maki/renders/bicycle-18@2x.png");
 }
-/* line 103, ../scss/components/_maplayout.scss */
+/* line 104, ../scss/components/_maplayout.scss */
 #content .additional-toggles .btn-toggle-cycling.selected {
   background-image: url("../images/maki-selected/bicycle-selected-18@2x.png");
 }
-/* line 109, ../scss/components/_maplayout.scss */
+/* line 110, ../scss/components/_maplayout.scss */
 #content .btn-toggle-browse, #content .btn-toggle-detail, #content .btn-toggle-location {
   overflow: hidden;
   cursor: pointer;
@@ -268,26 +268,26 @@ ul.results-list li .distance {
   font-size: 1.6em;
   color: #444444;
 }
-/* line 124, ../scss/components/_maplayout.scss */
+/* line 125, ../scss/components/_maplayout.scss */
 #content .btn-toggle-browse {
   z-index: 1003;
 }
-/* line 127, ../scss/components/_maplayout.scss */
+/* line 128, ../scss/components/_maplayout.scss */
 #content .btn-toggle-browse span {
   margin-top: 4px;
 }
-/* line 132, ../scss/components/_maplayout.scss */
+/* line 133, ../scss/components/_maplayout.scss */
 #content .btn-toggle-location {
   color: #aaaaaa;
   bottom: 0;
   border-top: 1px solid #aaaaaa;
   border-bottom: none;
 }
-/* line 133, ../scss/components/_maplayout.scss */
+/* line 134, ../scss/components/_maplayout.scss */
 #content .btn-toggle-location.active {
   color: #f5cf47;
 }
-/* line 142, ../scss/components/_maplayout.scss */
+/* line 143, ../scss/components/_maplayout.scss */
 #content .btn-toggle-detail {
   display: none;
   bottom: -1px;
@@ -304,40 +304,44 @@ ul.results-list li .distance {
   height: 27px;
   line-height: 10px;
 }
-/* line 159, ../scss/components/_maplayout.scss */
+/* line 160, ../scss/components/_maplayout.scss */
 #content .map-browse-layout.with-detail .btn-toggle-detail, #content .map-browse-layout.detail-hidden .btn-toggle-detail {
   display: inline-block;
 }
-/* line 164, ../scss/components/_maplayout.scss */
+/* line 165, ../scss/components/_maplayout.scss */
 #content .map-browse-layout.with-browse .btn-toggle-browse {
   color: #aaaaaa;
 }
-/* line 167, ../scss/components/_maplayout.scss */
+/* line 168, ../scss/components/_maplayout.scss */
 #content .map-browse-layout.with-browse .btn-toggle-location, #content .map-browse-layout.with-browse .btn-toggle-browse {
   left: 100%;
 }
-/* line 170, ../scss/components/_maplayout.scss */
+/* line 171, ../scss/components/_maplayout.scss */
 #content .map-browse-layout.with-browse .additional-toggles {
   width: 100%;
   display: inline-block;
 }
-/* line 174, ../scss/components/_maplayout.scss */
+/* line 175, ../scss/components/_maplayout.scss */
 #content .map-browse-layout.with-browse .content-browse-wrapper {
   border-right: 1px solid #aaaaaa;
   width: 30%;
 }
 @media only screen and (max-width: 767px) {
-  /* line 174, ../scss/components/_maplayout.scss */
+  /* line 175, ../scss/components/_maplayout.scss */
   #content .map-browse-layout.with-browse .content-browse-wrapper {
     width: 85%;
   }
 }
-/* line 181, ../scss/components/_maplayout.scss */
+/* line 182, ../scss/components/_maplayout.scss */
+#content .map-browse-layout.with-browse .content-browse {
+  display: block;
+}
+/* line 185, ../scss/components/_maplayout.scss */
 #content .map-browse-layout.with-browse .content-main {
   width: 70%;
 }
 @media only screen and (max-width: 767px) {
-  /* line 184, ../scss/components/_maplayout.scss */
+  /* line 188, ../scss/components/_maplayout.scss */
   #content .map-browse-layout.with-browse .overlay, #content .map-browse-layout.with-browse .content-main {
     position: absolute;
     width: 100%;
@@ -347,7 +351,7 @@ ul.results-list li .distance {
   }
 }
 @media only screen and (max-width: 767px) {
-  /* line 193, ../scss/components/_maplayout.scss */
+  /* line 197, ../scss/components/_maplayout.scss */
   #content .map-browse-layout.with-browse .overlay {
     z-index: 1002;
     background-color: rgba(0, 0, 0, 0.5);
@@ -355,69 +359,69 @@ ul.results-list li .distance {
     position: fixed;
   }
 }
-/* line 203, ../scss/components/_maplayout.scss */
+/* line 207, ../scss/components/_maplayout.scss */
 #content .map-browse-layout.with-detail #map {
   border-bottom: 1px solid #aaaaaa;
 }
-/* line 206, ../scss/components/_maplayout.scss */
+/* line 210, ../scss/components/_maplayout.scss */
 #content .map-browse-layout.with-detail .btn-toggle-location {
   bottom: 40%;
 }
 @media only screen and (max-width: 767px) {
-  /* line 206, ../scss/components/_maplayout.scss */
+  /* line 210, ../scss/components/_maplayout.scss */
   #content .map-browse-layout.with-detail .btn-toggle-location {
     top: 104px;
     bottom: auto;
   }
 }
-/* line 213, ../scss/components/_maplayout.scss */
+/* line 217, ../scss/components/_maplayout.scss */
 #content .map-browse-layout.with-detail .content-map {
   height: 60%;
 }
 @media only screen and (max-width: 767px) {
-  /* line 213, ../scss/components/_maplayout.scss */
+  /* line 217, ../scss/components/_maplayout.scss */
   #content .map-browse-layout.with-detail .content-map {
     float: none;
     width: 100%;
     height: 140px;
   }
 }
-/* line 221, ../scss/components/_maplayout.scss */
+/* line 225, ../scss/components/_maplayout.scss */
 #content .map-browse-layout.with-detail .content-detail-wrapper {
   display: block;
   height: 40%;
   overflow-y: auto;
 }
 @media only screen and (max-width: 767px) {
-  /* line 221, ../scss/components/_maplayout.scss */
+  /* line 225, ../scss/components/_maplayout.scss */
   #content .map-browse-layout.with-detail .content-detail-wrapper {
     height: auto;
   }
 }
-/* line 232, ../scss/components/_maplayout.scss */
+/* line 236, ../scss/components/_maplayout.scss */
 #content .content-map {
   position: relative;
   height: 100%;
 }
-/* line 237, ../scss/components/_maplayout.scss */
+/* line 241, ../scss/components/_maplayout.scss */
 #content .content-main {
   float: right;
   padding: 0px 0px;
   width: 100%;
   height: 100%;
 }
-/* line 243, ../scss/components/_maplayout.scss */
+/* line 247, ../scss/components/_maplayout.scss */
 #content #map {
   width: 100% !important;
   height: 100%;
 }
 @media only screen and (max-width: 767px) {
-  /* line 247, ../scss/components/_maplayout.scss */
+  /* line 251, ../scss/components/_maplayout.scss */
   #content #map .leaflet-control-zoom {
     display: none;
   }
 }
-/* line 253, ../scss/components/_maplayout.scss */
+/* line 257, ../scss/components/_maplayout.scss */
 #content .search-input span.deleteicon {
   -webkit-border-radius: 30px;
   -moz-border-radius: 30px;
@@ -436,21 +440,21 @@ ul.results-list li .distance {
   cursor: pointer;
 }
 
-/* line 269, ../scss/components/_maplayout.scss */
+/* line 273, ../scss/components/_maplayout.scss */
 .list-map, .detail-map, .generic {
   height: 100%;
   -webkit-overflow-scrolling: touch;
 }
-/* line 272, ../scss/components/_maplayout.scss */
+/* line 276, ../scss/components/_maplayout.scss */
 .list-map ul.facet-list, .detail-map ul.facet-list, .generic ul.facet-list {
   padding-left: 5px;
 }
-/* line 275, ../scss/components/_maplayout.scss */
+/* line 279, ../scss/components/_maplayout.scss */
 .list-map > h3, .detail-map > h3, .generic > h3 {
   padding-left: 5px;
 }
 
-/* line 280, ../scss/components/_maplayout.scss */
+/* line 284, ../scss/components/_maplayout.scss */
 .numbered-marker {
   width: 30px;
   height: 30px;
@@ -475,7 +479,7 @@ ul.results-list li .distance {
   line-height: 26px;
 }
 
-/* line 284, ../scss/components/_maplayout.scss */
+/* line 288, ../scss/components/_maplayout.scss */
 .detail-numbered-marker {
   margin-left: 8px;
   width: 24px;
@@ -501,23 +505,23 @@ ul.results-list li .distance {
   line-height: 22px;
 }
 
-/* line 289, ../scss/components/_maplayout.scss */
+/* line 293, ../scss/components/_maplayout.scss */
 .social-links a {
   font-size: 1.7em;
   letter-spacing: 0.2em;
 }
 
-/* line 297, ../scss/components/_maplayout.scss */
+/* line 301, ../scss/components/_maplayout.scss */
 dl.poi-children dd {
   line-height: 1.7em;
 }
 
-/* line 300, ../scss/components/_maplayout.scss */
+/* line 304, ../scss/components/_maplayout.scss */
 dl.poi-children dd a {
   margin-left: 38px;
 }
 
-/* line 305, ../scss/components/_maplayout.scss */
+/* line 309, ../scss/components/_maplayout.scss */
 dl.poi-children dd > div + a {
   margin-left: 6px;
 }
