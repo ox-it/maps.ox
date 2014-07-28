@@ -58,6 +58,7 @@ define([], function() {
             enableHighAccuracy: true,       // Use the GPS if possible
         },
         defaultCategory: "/university",
+        excludeTypes: ['/university/sub-library'],
         categories: {
             "types": [
                 {
