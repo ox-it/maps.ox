@@ -102,8 +102,13 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                 image: this.image,
                 socialLinks: poi.social_facebook || poi.social_twitter,
             };
-            if ('accessibility' in poi && 'access_guide_url' in poi.accessibility) {
-                context.accessibilityGuideURL = poi.accessibility.access_guide_url;
+            if ('accessibility' in poi) {
+                if ('access_guide_url' in poi.accessibility) {
+                    context.accessibilityGuideURL = poi.accessibility.access_guide_url;
+                }
+                if ('access_guide_contents' in poi.accessibility) {
+                    context.accessibilityGuideContents = poi.accessibility.access_guide_contents;
+                }
             }
             if (this.additionalPOIs && this.additionalPOIs.numberOfMarkers && this.additionalPOIs.numberOfMarkers > 1) {
                 context.showZoomButton = true;

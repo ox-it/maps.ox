@@ -21,6 +21,11 @@
 {{/if}}
 <div class="poi-details-text {{#unless hasDepiction}}no-depiction{{/unless}}">
     <div class="free-text">
+        {{#if accessibilityGuideContents }}
+            <p class="description">
+                {{ accessibilityGuideContents }}
+            </p>
+        {{/if}}
         {{#if poi.opening_hours }}
             {{{currentlyOpen currentlyOpen}}}
         {{/if}}
