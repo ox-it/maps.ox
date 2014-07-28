@@ -23,16 +23,19 @@ define(["MoxieModel", "underscore", "moxie.conf", "places/models/RTIModels", "pl
         },
 
         getMapFeature: function() {
+            // Returns a Leaflet object ready for placing a map.
+            //
+            // Shapes are preferred over markers
             var feature;
             if (this.has('shape')) {
                 try {
                     feature = L.geoJson(wellknown(this.get('shape')), {
-                        color: '#44687D', // pantone 5405
+                        color: '#44687D', // Outline colour - pantone 5405
                         opacity: 1,
                         fill: true,
                         fillColor: '#4891dc', // Colour of our <a>
-                        fillOpacity: 0.1,
-                        weight: 1,
+                        fillOpacity: 0.3,
+                        weight: 2, // Outline weight in pixels
                     });
                 } catch (e) {
                     console.log("Error parsing WKT");

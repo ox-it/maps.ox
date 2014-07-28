@@ -189,11 +189,15 @@ define(["backbone", "core/collections/MoxieCollection", "underscore", "places/mo
 
         url: function() {
             var query = _.clone(this.query);
-            if (!('count' in query)) {
-                query.count = this.defaultCount;
-            }
             if (this.options.defaultQuery && _.isEmpty(query)) {
                 query = this.options.defaultQuery;
+            }
+            if (this.options.excludeTypes) {
+                // Map updates types from /university/sub-libraries to \/university\/sub-library
+                query['-type_exact'] = _.map(this.options.excludeTypes, function(t) { return t.replace(/\//g, '\\/'); });
+            }
+            if (!('count' in query)) {
+                query.count = this.defaultCount;
             }
             var searchPath;
             if (this.options.format && this.options.format === conf.formats.geoJSON) {

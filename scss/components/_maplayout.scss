@@ -33,6 +33,7 @@
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         background: $body-background;
+        display: none;
         img.preloader {
             display: block;
             margin: 0 auto;
@@ -178,6 +179,9 @@
                     width: 85%;
                 }
             }
+            .content-browse {
+                display: block;
+            }
             .content-main {
                 width: 70%;
             }
@@ -305,4 +309,3 @@ dl.poi-children dd a {
 dl.poi-children dd > div + a {
     margin-left: 6px;
 }
-

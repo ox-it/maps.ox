@@ -38,11 +38,18 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
             errorView.render();
         },
 
+        excludedTypes: ['/university/room'],
+        // Used to filter down to the POIs we display in the DetailView
+        // these are all POIs not of a type in excludedTypes or any POI
+        // with multiple `type`s
+        inclusionPredicate: function(poi) {
+            return (poi.type && ((poi.type.length > 1) || (!_.contains(this.excludedTypes, poi.type[0]))));
+        },
+
         childTypes: {
             '/university/site': {relation: 'occupies', index: 1},
             '/university/building': {relation: 'occupies', index: 2},
             '/university/library': {relation: 'libraries', index: 3},
-            '/university/room': {relation: 'contains', index: 4},
             '/leisure/museum': {relation: 'contains', index: 5},
             '/university/department': {relation: 'organisations', index: 6},
             '/university/college': {relation: 'organisations', index: 7},
@@ -95,35 +102,41 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                 image: this.image,
                 socialLinks: poi.social_facebook || poi.social_twitter,
             };
-            if ('accessibility' in poi && 'access_guide_url' in poi.accessibility) {
-                context.accessibilityGuideURL = poi.accessibility.access_guide_url;
+            if ('accessibility' in poi) {
+                if ('access_guide_url' in poi.accessibility) {
+                    context.accessibilityGuideURL = poi.accessibility.access_guide_url;
+                }
+                if ('access_guide_contents' in poi.accessibility) {
+                    context.accessibilityGuideContents = poi.accessibility.access_guide_contents;
+                }
             }
             if (this.additionalPOIs && this.additionalPOIs.numberOfMarkers && this.additionalPOIs.numberOfMarkers > 1) {
                 context.showZoomButton = true;
             }
             if (poi._links) {
-                for (var i in poi._links.child) {
-                    var child = poi._links.child[i];
-                    if (child.type) {
-                        var type = child.type[0];
-                        var childObj = child;
-                        if (this.additionalPOIs && this.additionalPOIs.length > 0) {
-                            var additionalPOI = this.additionalPOIs.get(child.href.split('/').pop());
-                            if (additionalPOI) {
-                                childObj = additionalPOI.toJSON();
-                            }
-                        }
-                        if (type in this.childTypes) {
-                            if (this.childTypes[type].relation in context) {
-                                context[this.childTypes[type].relation].push(childObj);
-                            } else {
-                                context[this.childTypes[type].relation] = [childObj];
-                            }
-                        } else {
-                            context.contains.push(childObj);
+                var links = _.filter(poi._links.child, this.inclusionPredicate, this);
+                _.each(links, function(child) {
+                    var type = child.type[0];
+                    var childObj = child;
+                    // We look in additionalPOIs for the child as we *may* have it
+                    // this depends on if the request to get all the children objects
+                    // has completed.
+                    if (this.additionalPOIs && this.additionalPOIs.length > 0) {
+                        var additionalPOI = this.additionalPOIs.get(child.href.split('/').pop());
+                        if (additionalPOI) {
+                            childObj = additionalPOI.toJSON();
                         }
                     }
-                }
+                    if (type in this.childTypes) {
+                        if (this.childTypes[type].relation in context) {
+                            context[this.childTypes[type].relation].push(childObj);
+                        } else {
+                            context[this.childTypes[type].relation] = [childObj];
+                        }
+                    } else {
+                        context.contains.push(childObj);
+                    }
+                }, this);
                 if (poi._links.parent) {
                     var parents = [];
                     if (!$.isArray(poi._links.parent)) {
@@ -182,8 +195,10 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                     var children = this.model.get('_links').child || [];
                     var poids = [];
                     _.each(children, function(child) {
-                        poids.push(child.href.split('/').pop());
-                    });
+                        if (this.inclusionPredicate(child)) {
+                            poids.push(child.href.split('/').pop());
+                        }
+                    }, this);
                     if (poids.length === 1) {
                         var poi = new NumberedPOI({id: poids[0], singlePOI: true});
                         poi.fetch({success: _.bind(this.render, this)});
