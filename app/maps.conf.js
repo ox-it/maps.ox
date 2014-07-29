@@ -59,6 +59,7 @@ define([], function() {
         },
         defaultCategory: "/university",
         excludeTypes: ['/university/sub-library'],
+        oxfordOnly: true,      // only search POIs in oxford
         categories: {
             "types": [
                 {

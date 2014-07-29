@@ -3,6 +3,7 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
     // Points of Interest collections
     var pois = new POIs({
         excludeTypes: conf.excludeTypes,
+        oxfordOnly: conf.oxfordOnly
     });
     var customPOIs = new CustomPOIs();
 
