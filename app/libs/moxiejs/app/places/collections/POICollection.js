@@ -192,6 +192,9 @@ define(["backbone", "core/collections/MoxieCollection", "underscore", "places/mo
             if (this.options.defaultQuery && _.isEmpty(query)) {
                 query = this.options.defaultQuery;
             }
+            if (this.options.oxfordOnly) {
+                query['inoxford'] = 'true';
+            }
             if (this.options.excludeTypes) {
                 // Map updates types from /university/sub-libraries to \/university\/sub-library
                 query['-type_exact'] = _.map(this.options.excludeTypes, function(t) { return t.replace(/\//g, '\\/'); });
