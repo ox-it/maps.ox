@@ -130,7 +130,8 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
             layout.withBrowse();
             var searchView = new SearchView({
                 collection: pois,
-                followUser: this.followUser
+                followUser: this.followUser,
+                type: params.type
             });
             layout.setView('.content-browse', searchView);
             var mapView = layout.getView('.content-map');

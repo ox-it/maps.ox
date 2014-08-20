@@ -21,6 +21,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
             this.collection.on("add", this.addResult, this);
 
             this.sortOrder = options.sortOrder || SORT_AZ;
+            this.topLevelCategory = this.options.type;
         },
 
         manage: true,
@@ -141,7 +142,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
             }
         },
         searchForTerm: function(term) {
-            Backbone.history.navigate(Backbone.history.reverse('search')+'?'+$.param({q: term}).replace(/\+/g, "%20"), {trigger: true});
+            Backbone.history.navigate(Backbone.history.reverse('search')+'?'+$.param({q: term, type: this.topLevelCategory}).replace(/\+/g, "%20"), {trigger: true});
         },
 
         addResult: function(model) {
