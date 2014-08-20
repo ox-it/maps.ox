@@ -117,7 +117,6 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
         },
 
         search: function(params) {
-            console.log(params);
             var query = params || {};
             if (!_.isEqual(query, pois.query) || (pois.length <= 1)) {
                 // If the Collection has the correct query and we have items don't bother fetching new results now
