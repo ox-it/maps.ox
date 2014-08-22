@@ -570,25 +570,29 @@ dl.poi-children dd > div + a {
     padding-left: 0;
   }
 }
-/* line 38, ../scss/components/_places_detail.scss */
+/* line 36, ../scss/components/_places_detail.scss */
+.content-detail .poi-details-text .alternative-names {
+  font-size: 0.8em;
+}
+/* line 41, ../scss/components/_places_detail.scss */
 .content-detail .poi-details-depiction {
   width: 40%;
   display: inline-block;
 }
-/* line 41, ../scss/components/_places_detail.scss */
+/* line 44, ../scss/components/_places_detail.scss */
 .content-detail .poi-details-depiction .depiction-wrapper {
   background-color: #eee;
   border: 1px solid #aaaaaa;
   padding: 12px;
 }
-/* line 45, ../scss/components/_places_detail.scss */
+/* line 48, ../scss/components/_places_detail.scss */
 .content-detail .poi-details-depiction .depiction-wrapper img {
   display: block;
   margin: 0 auto 0 auto;
   max-width: 100%;
 }
 @media only screen and (max-width: 767px) {
-  /* line 38, ../scss/components/_places_detail.scss */
+  /* line 41, ../scss/components/_places_detail.scss */
   .content-detail .poi-details-depiction {
     width: 100%;
     float: none;
