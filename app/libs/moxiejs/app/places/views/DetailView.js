@@ -65,6 +65,10 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
             if (poi.midFetch === true) {
                 return {poi: poi};
             }
+            var alternativeNames = null;
+            if (poi.alternative_names) {
+                alternativeNames = poi.alternative_names.join(', ');
+            }
             var currentlyOpen = null;
             var parsedOpeningHours = null;
             if (poi.opening_hours) {
@@ -180,7 +184,8 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                 alternateRTI: this.model.getAlternateRTI(),
                 currentRTI: this.model.getCurrentRTI(),
                 currentlyOpen: currentlyOpen,
-                parsedOpeningHours: parsedOpeningHours
+                parsedOpeningHours: parsedOpeningHours,
+                alternativeNames: alternativeNames
             });
         },
         template: detailTemplate,

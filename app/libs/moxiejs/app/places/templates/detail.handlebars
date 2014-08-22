@@ -26,6 +26,10 @@
                 {{ accessibilityGuideContents }}
             </p>
         {{/if}}
+        {{#if alternativeNames }}
+            <p class="alternative-names"><span class="alternative-names-label">Other names: </span>{{ alternativeNames }}</p>
+    
+        {{/if}}
         {{#if poi.opening_hours }}
             {{{currentlyOpen currentlyOpen}}}
         {{/if}}
