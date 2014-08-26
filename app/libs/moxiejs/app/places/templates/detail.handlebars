@@ -189,5 +189,14 @@
         {{#if showZoomButton}}
         <a href="#" class="zoom-all"><i class="fa fa-arrows-alt"></i> Show all markers</a>
         {{/if}}
+        {{#if poi.courses_name }}
+            <h3>Courses</h3>
+            <ul>
+            {{#poi.courses_name}}
+            <li>{{this}}</li>
+            {{/poi.courses_name}}
+            </ul>
+        {{/if}}
+
     </div>
 </div>
