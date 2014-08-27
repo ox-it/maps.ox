@@ -56,6 +56,13 @@ a {
         font-size: 0.95em;
         line-height: 1.5em;
         color: $oxfordBlue;
+        &.highlighted {
+            background-color: $pantone279;
+            color: $body-background;
+            a {
+                color: $body-background;
+            }
+        }
     }
     span.filter {
             color: $map-toggle-inactive;

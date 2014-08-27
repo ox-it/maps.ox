@@ -3,15 +3,15 @@
     <input type="submit" value="Search" name="search">
 </div>
 
-<div class="map-options">
-    <span>{{#unless university}}<a href="{{ reverse 'categories' }}">University</a>{{else}}University{{/unless}}</span><span>{{#unless amenities}}<a href="{{ reverse 'categories' 'category_name' '/amenities'}}">Amenities</a>{{else}}Amenities{{/unless}}</span>
+<div class="map-options{{#if amenities}} something-highlighted{{/if}}">
+    <span>{{#unless university}}<a href="{{ reverse 'categories' }}">University</a>{{else}}University{{/unless}}</span>{{#unless amenities}}<span><a href="{{ reverse 'categories' 'category_name' '/amenities'}}">Amenities</a></span>{{else}}<span class="highlighted">Amenities</span>{{/unless}}
 </div>
 
 <div class="messages">
 </div>
 
 {{#if types}}
-<ul class="results-list" id="categories">
+<ul class="results-list{{#if amenities}} reverse-styled{{/if}}" id="categories">
 {{#types}}
 <li{{#if toggle}}{{#if checked}} class="highlighted" {{/if}}{{/if}}>
         <h3>

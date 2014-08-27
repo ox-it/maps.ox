@@ -66,6 +66,7 @@ ul.results-list {
                 color: $body-background;
             }
         }
+
         // Used to convey complex list items such as library search results
         a {
             text-decoration: none;
@@ -118,6 +119,24 @@ ul.results-list {
             line-height: 2em;
             float: right;
             margin-left: 0.5em;
+        }
+    }
+    &.reverse-styled
+    {
+        background-color: $pantone279;
+        li {
+            &.highlighted {
+                background-color: $body-background;
+                color: $pantone279;
+                a {
+                    color: $pantone279;
+                }
+                border-top: 1px solid $body-background;
+            }
+            a {
+                color: $body-background;
+            }
+            color: $body-background;
         }
     }
 }
