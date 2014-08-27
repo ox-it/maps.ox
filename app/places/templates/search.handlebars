@@ -1,0 +1,43 @@
+<div class="search-input">
+    <input type="text" name="q" value="{{query.q}}">
+    <input type="submit" value="Search" name="search">
+</div>
+<div class="map-options {{#if filtering}}something-highlighted{{/if}}">
+    <span class="university">{{#unless university}}<a href="#">University</a>{{else}}University{{/unless}}</span><span class="amenities">{{#unless amenities}}<a href="#">Amenities</a>{{else}}Amenities{{/unless}}</span><span class="filter {{#if facetsExist}}{{#if filtering}}highlighted{{/if}}{{/if}}">{{#if facetsExist}}<a href="#">Filters</a>{{else}}Filters{{/if}}</span>
+</div>
+<div class="messages">
+</div>
+
+{{#if facetsExist}}
+<div class="filters {{#if singleFacetList}}single-facet-list{{/if}} {{#unless filtering}}hide-filters{{/unless}}">
+    {{#if facets.type_exact}}
+    <div class="facets type-exact">
+        <h3>Categories</h3>
+        <ul>
+            {{#facets.type_exact}}
+            <li><label><input {{#if checked}}checked="checked"{{/if}} type="checkbox" name="{{ value }}">{{ title }}</label></li>
+            {{/facets.type_exact}}
+        </ul>
+    </div>
+    {{/if}}
+    {{#if facets.accessibility}}
+    <div class="facets accessibility">
+        <h3>Accessibility</h3>
+        <ul>
+            {{#facets.accessibility}}
+            <li><label><input {{#if checked}}checked="checked"{{/if}} type="checkbox" name="{{ name }}" value="{{ value }}">{{ title }}</label></li>
+            {{/facets.accessibility}}
+        </ul>
+    </div>
+    {{/if}}
+</div>
+{{/if}}
+<ul class="results-list">
+</ul>
+{{#if midRequest}}
+<img src="images/preloader.gif" class="preloader">
+{{else}}
+{{#unless hasResults}}
+<p>Your search - <strong>{{ query.q }}</strong> - did not match any places of interest.</p>
+{{/unless}}
+{{/if}}
