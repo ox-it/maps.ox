@@ -46,7 +46,8 @@ define([], function() {
                 exponent: 0.75,
                 limit: 500,
                 fallback: 5,
-                padding: 0.1
+                collectionPadding: 0.1,
+                poiPadding: 0.6,
             },
             phoneViewMediaQuery: "only screen and (max-width: 767px)",
         },

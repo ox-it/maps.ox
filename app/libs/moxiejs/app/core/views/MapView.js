@@ -1,4 +1,4 @@
-define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/utils', 'core/media', 'moxie.position', 'leaflet.markercluster'], function(Backbone, $, L, _, conf, utils, media, userPosition) {
+    define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/utils', 'core/media', 'moxie.position', 'leaflet.markercluster'], function(Backbone, $, L, _, conf, utils, media, userPosition) {
     var MapView = Backbone.View.extend({
         initialize: function(options) {
             _.bindAll(this);
@@ -236,7 +236,8 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
                     if (this.showUser && this.user_position) {
                         bounds.extend(this.user_position);
                     }
-                    bounds = bounds.pad(conf.map.bounds.padding);
+                    var padding = (this.collection.length > 1)? conf.map.bounds.collectionPadding : conf.map.bounds.poiPadding;
+                    bounds = bounds.pad(padding);
                     // Animating here seemed to cause a problem when we call fitBounds several
                     // times during a quick succession, not sure if this is a bug with leaflet
                     // but setting animate: false seems to resolve things.
