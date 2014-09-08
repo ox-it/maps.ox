@@ -89,7 +89,6 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
 
                 this.searchForTerm(term);
             } else {
-                console.log("going back");
                 Backbone.history.navigate("#/categories/university");
             }
             return false;
@@ -164,7 +163,6 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
             }
         },
         searchForTerm: function(term) {
-            console.log("searching for "+term);
             Backbone.history.navigate(Backbone.history.reverse('search')+'?'+$.param({q: term, type: this.topLevelCategory}).replace(/\+/g, "%20"), {trigger: true});
         },
 
