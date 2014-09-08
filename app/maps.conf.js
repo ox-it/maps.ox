@@ -150,6 +150,60 @@ define([], function() {
                             },
                         },
                         {
+                            "type": "parking",
+                            "type_name": "Parking",
+                            "type_name_plural": "Parking",
+                            "type_prefixed": "/transport/car-park",
+                            "toggle": true,
+                            icon: {
+                                iconSize: [18, 18],
+                                iconUrl: 'maki/renders/car-18.png',
+                            },
+                            defaultQuery: {
+                                type: '/transport/car-park',
+                                count: 100,
+                                lat: DEFAULT_LOCATION.latitude,
+                                lon: DEFAULT_LOCATION.longitude,
+                            },
+                        },
+                        {
+                            "type": "public-transport",
+                            "type_name": "Public Transport",
+                            "type_name_plural": "Public Transport",
+                            "type_prefixed": "/transport/bus-stop",
+                            "toggle": true,
+                            icon: {
+                                iconSize: [18, 18],
+                                iconUrl: 'maki/renders/bus-18.png',
+                                clickable: true
+                            },
+                             defaultQuery: {
+                                type_exact: ['/transport/rail-station', '/transport/bus-stop'],
+                                count: 200,
+                                lat: DEFAULT_LOCATION.latitude,
+                                lon: DEFAULT_LOCATION.longitude,
+                            },
+                            hasRTI: true
+                        },
+                        {
+                            "type": "bicycle-parking",
+                            "type_name": "Bicycle Parking",
+                            "type_name_plural": "Bicycle Parking",
+                            "type_prefixed": "/transport/bicycle-parking",
+                            "toggle": true,
+                            icon: {
+                                iconSize: [18, 18],
+                                iconUrl: 'maki/renders/bicycle-18.png',
+                            },
+                            defaultQuery: {
+                                type_exact: '/transport/bicycle-parking',
+                                count: 200,
+                                lat: DEFAULT_LOCATION.latitude,
+                                lon: DEFAULT_LOCATION.longitude,
+                            },
+
+                        },
+                        {
                             "type": "post",
                             "type_name": "Post",
                             "type_name_plural": "Post",
@@ -193,52 +247,6 @@ define([], function() {
             geoJSON: GEOJSON,
         },
         additionalCollections: {
-            'public-transport': {
-                hasRTI: true,
-                toggleEvent: 'places:toggle-public-transport',
-                defaultQuery: {
-                    type_exact: ['/transport/rail-station', '/transport/bus-stop'],
-                    count: 200,
-                    lat: DEFAULT_LOCATION.latitude,
-                    lon: DEFAULT_LOCATION.longitude,
-                },
-                format: GEOJSON,
-                icon: {
-                    iconSize: [18, 18],
-                    iconUrl: 'maki/renders/bus-18.png',
-                    clickable: true,
-                },
-            },
-            'cycling': {
-                toggleEvent: 'places:toggle-cycling',
-                defaultQuery: {
-                    type_exact: '/transport/bicycle-parking',
-                    count: 200,
-                    lat: DEFAULT_LOCATION.latitude,
-                    lon: DEFAULT_LOCATION.longitude,
-                },
-                format: GEOJSON,
-                icon: {
-                    iconSize: [18, 18],
-                    iconUrl: 'maki/renders/bicycle-18.png',
-                    clickable: false,
-                },
-            },
-            'driving': {
-                toggleEvent: 'places:toggle-driving',
-                defaultQuery: {
-                    type: '/transport/car-park',
-                    count: 100,
-                    lat: DEFAULT_LOCATION.latitude,
-                    lon: DEFAULT_LOCATION.longitude,
-                },
-                format: GEOJSON,
-                icon: {
-                    iconSize: [18, 18],
-                    iconUrl: 'maki/renders/car-18.png',
-                    clickable: false,
-                },
-            }
         }
     };
     return MoxieConf;

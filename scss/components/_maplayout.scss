@@ -87,24 +87,6 @@
                 min-width: 40px;
             }
         }
-        .btn-toggle-public-transport {
-            background-image: url('../maki/renders/bus-18@2x.png');
-            &.selected {
-                background-image: url('../images/maki-selected/bus-selected-18@2x.png');
-            }
-        }
-        .btn-toggle-driving {
-            background-image: url('../maki/renders/car-18@2x.png');
-            &.selected {
-                background-image: url('../images/maki-selected/car-selected-18@2x.png');
-            }
-        }
-        .btn-toggle-cycling {
-            background-image: url('../maki/renders/bicycle-18@2x.png');
-            &.selected {
-                background-image: url('../images/maki-selected/bicycle-selected-18@2x.png');
-            }
-        }
     }
 
     .btn-toggle-browse, .btn-toggle-detail, .btn-toggle-location {

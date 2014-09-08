@@ -13,29 +13,11 @@ define(['backbone', 'underscore', 'jquery', 'moxie.position', 'core/views/MapVie
             'click .btn-toggle-browse': 'toggleBrowse',
             'click .btn-toggle-detail': 'toggleDetail',
             'click .btn-toggle-location': 'toggleLocation',
-            'click .btn-toggle-cycling': 'toggleCycling',
-            'click .btn-toggle-driving': 'toggleDriving',
-            'click .btn-toggle-public-transport': 'togglePublicTransport',
         },
-
-        toggleDriving: function(ev) {
-            $(ev.target).toggleClass('selected');
-            Backbone.trigger('places:toggle-driving');
-        },
-        toggleCycling: function(ev) {
-            $(ev.target).toggleClass('selected');
-            Backbone.trigger('places:toggle-cycling');
-        },
-        togglePublicTransport: function(ev) {
-            $(ev.target).toggleClass('selected');
-            Backbone.trigger('places:toggle-public-transport');
-        },
-
         toggleBrowse: function() {
             this.$el.toggleClass('with-browse');
             this.mapView.invalidateMapSize();
         },
-
         toggleDetail: function() {
             var detailButton = $('.btn-toggle-detail span');
             if (detailButton.hasClass('fa-chevron-down')) {
