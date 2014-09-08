@@ -51,7 +51,6 @@ var require = {
         "places/utils": "libs/moxiejs/app/places/utils",
         "places/views/ItemView": "libs/moxiejs/app/places/views/ItemView",
         "places/models/CategoryModel": "libs/moxiejs/app/places/models/CategoryModel",
-        "places/templates/search": "libs/moxiejs/app/places/templates/search",
         "places/templates/detail": "libs/moxiejs/app/places/templates/detail",
         "places/templates/busrti": "libs/moxiejs/app/places/templates/busrti",
         "places/templates/trainrti": "libs/moxiejs/app/places/templates/trainrti",

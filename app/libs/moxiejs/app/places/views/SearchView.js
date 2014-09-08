@@ -33,8 +33,8 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
             'click .deleteicon': "clearSearch",
             'change .type-exact input': "clickTypeFacet",
             'change .accessibility input': "clickAccessibilityFacet",
-            'click .map-options .sort-nearby': "sortNearby",
-            'click .map-options .sort-az': "sortAZ",
+            'click .map-options .university': "university",
+            'click .map-options .amenities': "amenities",
             'click .map-options .filter a': "filter",
 
             'click a.result-link': "clickResult",
@@ -81,6 +81,27 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
             ev.preventDefault();
             this.collection.unfollowUser();
             this.collection.fetch();
+        },
+        university: function(ev) {
+            this.topLevelCategory = "/university";
+            var term = this.$(':input[type="text"]').val();
+            if (term !== "") {
+
+                this.searchForTerm(term);
+            } else {
+                Backbone.history.navigate("#/categories/university");
+            }
+            return false;
+        },
+        amenities: function(ev) {
+            this.topLevelCategory = "/amenities";
+            var term = this.$(':input[type="text"]').val();
+            if (term !== "" && this.collection.length == 0) {
+                this.searchForTerm(term);
+            } else {
+                Backbone.history.navigate("#/categories/amenities");
+            }
+            return false;
         },
 
         clearSearch: function(e) {
