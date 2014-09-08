@@ -62,10 +62,12 @@ define(['jquery', 'underscore', 'backbone', 'app', 'moxie.conf', 'moxie.position
                 this.additionalCategories[category_name].toggle();
             } else {
                 var category = this.collection.findWhere({type_prefixed: category_name});
+                var defaultQuery = category.get('defaultQuery') || {type: category_name, count: 200};
                 var pois = new AdditionalPOIs({
-                    defaultQuery: {type: category_name, count: 200},
+                    defaultQuery: defaultQuery,
                     format: conf.formats.geoJSON,
                     icon: category.get('icon'),
+                    hasRTI: category.get('hasRTI')
                 });
                 this.additionalCategories[category_name] = pois;
                 Backbone.trigger('map:additional-collection', pois, category_name);
