@@ -3,7 +3,7 @@
     <input type="submit" value="Search" name="search">
 </div>
 <div class="map-options {{#if filtering}}something-highlighted{{/if}}">
-    <span class="university">{{#unless university}}<a href="#">University</a>{{else}}University{{/unless}}</span><span class="amenities">{{#unless amenities}}<a href="#">Amenities</a>{{else}}Amenities{{/unless}}</span><span class="filter {{#if facetsExist}}{{#if filtering}}highlighted{{/if}}{{/if}}">{{#if facetsExist}}<a href="#">Filters</a>{{else}}Filters{{/if}}</span>
+    <span class="university">{{#unless university}}<a href="#">University</a>{{else}}University{{/unless}}</span>{{#unless amenities}}<span class="amenities"><a href="#">Amenities</a></span>{{else}}<span class="amenities highlighted">Amenities</span>{{/unless}}<span class="filter {{#if facetsExist}}{{#if filtering}}highlighted{{/if}}{{/if}}">{{#if facetsExist}}<a href="#">Filters</a>{{else}}Filters{{/if}}</span>
 </div>
 <div class="messages">
 </div>
@@ -32,7 +32,7 @@
     {{/if}}
 </div>
 {{/if}}
-<ul class="results-list">
+<ul class="results-list{{#if amenities}} reverse-styled{{/if}}">
 </ul>
 {{#if midRequest}}
 <img src="images/preloader.gif" class="preloader">
