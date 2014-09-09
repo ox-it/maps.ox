@@ -191,7 +191,6 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
                 amenities: this.topLevelCategory.indexOf('/amenities') === 0,
                 university: this.topLevelCategory.indexOf('/university') === 0,
             };
-            console.log(this.topLevelCategory);
             if (!_.isEmpty(context.facets)) {
                 context.facetsExist = true;
                 context.singleFacetList = _.keys(context.facets).length === 1;
