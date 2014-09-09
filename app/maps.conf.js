@@ -119,25 +119,53 @@ define([], function() {
                             "type": "cafe",
                             "type_name": "Caf\u00e9",
                             "type_name_plural": "Caf\u00e9s",
-                            "type_prefixed": "/amenities/food-drink/cafe"
+                            "type_prefixed": "/amenities/food-drink/cafe",
+                            "toggle": true,
+                            icon: {
+                                iconSize: [18, 18],
+                                iconUrl: 'maki/renders/cafe-18.png',
+                                clickable: true
+                            },
+                            hasInfo: true
                         },
                         {
                             "type": "restaurant",
                             "type_name": "Restaurant",
                             "type_name_plural": "Restaurants",
-                            "type_prefixed": "/amenities/food-drink/restaurant"
+                            "type_prefixed": "/amenities/food-drink/restaurant",
+                            "toggle": true,
+                            icon: {
+                                iconSize: [18, 18],
+                                iconUrl: 'maki/renders/restaurant-18.png',
+                                clickable: true
+                            },
+                            hasInfo: true
                         },
                         {
                             "type": "pub",
                             "type_name": "Pub",
                             "type_name_plural": "Pubs",
-                            "type_prefixed": "/amenities/food-drink/pub"
+                            "type_prefixed": "/amenities/food-drink/pub",
+                            "toggle": true,
+                            icon: {
+                                iconSize: [18, 18],
+                                iconUrl: 'maki/renders/pub-18.png',
+                                clickable: true
+                            },
+                            hasInfo: true
                         },
                         {
                             "type": "bar",
                             "type_name": "Bar",
                             "type_name_plural": "Bars",
-                            "type_prefixed": "/amenities/food-drink/bar"
+                            "type_prefixed": "/amenities/food-drink/bar",
+                            "toggle": true,
+                            icon: {
+                                iconSize: [18, 18],
+                                iconUrl: 'maki/renders/bar-18.png',
+                                clickable: true
+                            },
+                            hasInfo: true
                         },
                         {
                             "type": "atm",
@@ -148,7 +176,9 @@ define([], function() {
                             icon: {
                                 iconSize: [18, 18],
                                 iconUrl: 'maki/renders/bank-18.png',
+                                clickable: true
                             },
+                            hasInfo: true
                         },
                         {
                             "type": "parking",
