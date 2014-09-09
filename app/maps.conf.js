@@ -159,6 +159,7 @@ define([], function() {
                             icon: {
                                 iconSize: [18, 18],
                                 iconUrl: 'maki/renders/car-18.png',
+                                clickable: true
                             },
                             defaultQuery: {
                                 type: '/transport/car-park',
@@ -166,6 +167,7 @@ define([], function() {
                                 lat: DEFAULT_LOCATION.latitude,
                                 lon: DEFAULT_LOCATION.longitude,
                             },
+                            hasInfo: true
                         },
                         {
                             "type": "public-transport",
@@ -184,7 +186,7 @@ define([], function() {
                                 lat: DEFAULT_LOCATION.latitude,
                                 lon: DEFAULT_LOCATION.longitude,
                             },
-                            hasRTI: true
+                            hasInfo: true
                         },
                         {
                             "type": "bicycle-parking",
