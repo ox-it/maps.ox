@@ -43,15 +43,9 @@ $meta-info-font-size: 0.9em;
     }
 }
 
-.content-browse {
-    ul.results-list {
-        padding-bottom: $map-controls-size;
-    }
-}
-
 ul.results-list {
     margin: 0;
-    padding: 0 0 1em 0;
+    padding: 0;
     list-style: none;
     li {
         margin: 0 $sidebar-item-indent;
