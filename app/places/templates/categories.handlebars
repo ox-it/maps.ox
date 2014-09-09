@@ -13,7 +13,7 @@
 {{#if types}}
 <ul class="results-list{{#if amenities}} reverse-styled{{/if}}" id="categories">
 {{#types}}
-<li{{#if toggle}}{{#if checked}} class="highlighted" {{/if}}{{/if}}>
+    <li{{#if toggle}} class="toggle" {{/if}}>
         <h3>
             {{#if toggle}}
             <label><input type="checkbox" {{#if checked}}checked="true"{{/if}} name="{{ type_prefixed }}">{{ type_name_plural }} </label>

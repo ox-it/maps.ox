@@ -119,7 +119,7 @@ ul.results-list {
     {
         background-color: $pantone279;
         li {
-            &.highlighted {
+            &.highlighted:not(.toggle) {
                 background-color: $body-background;
                 color: $pantone279;
                 a {
