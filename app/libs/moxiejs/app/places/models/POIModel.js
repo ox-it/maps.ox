@@ -38,9 +38,11 @@ define(["MoxieModel", "underscore", "moxie.conf", "places/models/RTIModels", "pl
                         weight: 2, // Outline weight in pixels
                     });
                 } catch (e) {
-                    console.log("Error parsing WKT");
-                    console.log(this.get('shape'));
-                    console.log(e);
+                    if ('console' in window) {
+                        console.log("Error parsing WKT");
+                        console.log(this.get('shape'));
+                        console.log(e);
+                    }
                 }
             } else if (this.hasLocation()) {
                 var latlng = new L.LatLng(this.get('lat'), this.get('lon'));

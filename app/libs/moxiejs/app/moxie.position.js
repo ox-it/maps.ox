@@ -56,7 +56,7 @@ define(["underscore", "backbone", "moxie.conf", "cordova.help"], function(_, Bac
         };
         function locationSuccess(position) {
             if (positionPaused) {
-                console.log("Position captured whilst paused. Callback not fired.");
+                if ('console' in window) console.log("Position captured whilst paused. Callback not fired.");
             } else {
                 this.trigger(EVENT_POSITION_UPDATED, position);
             }

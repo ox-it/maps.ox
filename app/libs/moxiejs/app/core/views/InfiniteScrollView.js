@@ -1,7 +1,7 @@
 define(['jquery', 'backbone', 'underscore'], function($, Backbone, _){
     var InfiniteScrollView = Backbone.View.extend({
         // Generic InfiniteScrollView implementation
-        scrollCallbacks: [function(){ console.log("Scrolled!"); }],
+        scrollCallbacks: [function(){}],
         infiniteScrollEnabled: true,
 
         // Used to capture once a scroll has occured and on which element
