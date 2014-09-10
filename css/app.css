@@ -49,18 +49,13 @@
   margin-left: -5px;
 }
 
-/* line 47, ../scss/components/_results_list.scss */
-.content-browse ul.results-list {
-  padding-bottom: 35px;
-}
-
-/* line 52, ../scss/components/_results_list.scss */
+/* line 46, ../scss/components/_results_list.scss */
 ul.results-list {
   margin: 0;
-  padding: 0 0 1em 0;
+  padding: 0;
   list-style: none;
 }
-/* line 56, ../scss/components/_results_list.scss */
+/* line 50, ../scss/components/_results_list.scss */
 ul.results-list li {
   margin: 0 12px;
   padding: 1em 12px;
@@ -68,50 +63,50 @@ ul.results-list li {
   border-bottom: 1px solid rgba(200, 200, 200, 0.5);
   color: rgba(40, 40, 40, 0.8);
 }
-/* line 60, ../scss/components/_results_list.scss */
+/* line 54, ../scss/components/_results_list.scss */
 ul.results-list li.highlighted {
   margin: 0;
   padding: 1em 24px;
   background-color: #4891dc;
   color: #fafafa;
 }
-/* line 65, ../scss/components/_results_list.scss */
+/* line 59, ../scss/components/_results_list.scss */
 ul.results-list li.highlighted a {
   color: #fafafa;
 }
-/* line 70, ../scss/components/_results_list.scss */
+/* line 65, ../scss/components/_results_list.scss */
 ul.results-list li a {
   text-decoration: none;
   color: #4891dc;
   line-height: 1.5em;
 }
-/* line 75, ../scss/components/_results_list.scss */
+/* line 70, ../scss/components/_results_list.scss */
 ul.results-list li input {
   margin-right: 5px;
 }
-/* line 78, ../scss/components/_results_list.scss */
+/* line 73, ../scss/components/_results_list.scss */
 ul.results-list li h3 {
   margin: 0px;
   font-weight: normal;
 }
-/* line 84, ../scss/components/_results_list.scss */
+/* line 79, ../scss/components/_results_list.scss */
 ul.results-list li p {
   margin: 0 0 0.2em 0;
 }
-/* line 87, ../scss/components/_results_list.scss */
+/* line 82, ../scss/components/_results_list.scss */
 ul.results-list li > label, ul.results-list li > a {
   display: block;
   margin: 0;
   height: 100%;
   color: rgba(40, 40, 40, 0.8);
 }
-/* line 95, ../scss/components/_results_list.scss */
+/* line 90, ../scss/components/_results_list.scss */
 ul.results-list li .subtext {
   display: block;
   margin: 0;
   font-size: 0.9em;
 }
-/* line 100, ../scss/components/_results_list.scss */
+/* line 95, ../scss/components/_results_list.scss */
 ul.results-list li .meta-info {
   margin: 3px 0 0 5px;
   padding: 0;
@@ -119,21 +114,43 @@ ul.results-list li .meta-info {
   font-size: 0.9em;
   line-height: 0.9emconvert-to-em(5px);
 }
-/* line 108, ../scss/components/_results_list.scss */
+/* line 103, ../scss/components/_results_list.scss */
 ul.results-list li .meta-info-title {
   font-weight: 800;
   font-size: inherit;
 }
-/* line 113, ../scss/components/_results_list.scss */
+/* line 108, ../scss/components/_results_list.scss */
 ul.results-list li * {
   font-family: Helvetica, Verdana, sans-serif;
 }
-/* line 116, ../scss/components/_results_list.scss */
+/* line 111, ../scss/components/_results_list.scss */
 ul.results-list li .distance {
   font-size: 0.8em;
   line-height: 2em;
   float: right;
   margin-left: 0.5em;
+}
+/* line 119, ../scss/components/_results_list.scss */
+ul.results-list.reverse-styled {
+  background-color: #4891dc;
+}
+/* line 121, ../scss/components/_results_list.scss */
+ul.results-list.reverse-styled li {
+  color: #fafafa;
+}
+/* line 122, ../scss/components/_results_list.scss */
+ul.results-list.reverse-styled li.highlighted:not(.toggle) {
+  background-color: #fafafa;
+  color: #4891dc;
+  border-top: 1px solid #fafafa;
+}
+/* line 125, ../scss/components/_results_list.scss */
+ul.results-list.reverse-styled li.highlighted:not(.toggle) a {
+  color: #4891dc;
+}
+/* line 130, ../scss/components/_results_list.scss */
+ul.results-list.reverse-styled li a {
+  color: #fafafa;
 }
 
 /* Initialize */
@@ -635,66 +652,75 @@ a {
   line-height: 1.5em;
   color: #002147;
 }
-/* line 60, ../scss/app.scss */
+/* line 59, ../scss/app.scss */
+.map-options span.highlighted {
+  background-color: #4891dc;
+  color: #fafafa;
+}
+/* line 62, ../scss/app.scss */
+.map-options span.highlighted a {
+  color: #fafafa;
+}
+/* line 67, ../scss/app.scss */
 .map-options span.filter {
   color: #aaaaaa;
 }
-/* line 63, ../scss/app.scss */
+/* line 70, ../scss/app.scss */
 .map-options span:first-child {
   border-left: none;
 }
 
-/* line 68, ../scss/app.scss */
+/* line 75, ../scss/app.scss */
 .highlighted {
   margin: 0;
   padding: 1em 12px;
   background-color: #4891dc;
   color: #fafafa;
 }
-/* line 73, ../scss/app.scss */
+/* line 80, ../scss/app.scss */
 .highlighted a {
   color: #fafafa;
 }
 
-/* line 79, ../scss/app.scss */
+/* line 86, ../scss/app.scss */
 .hide-filters {
   display: none;
 }
 
-/* line 83, ../scss/app.scss */
+/* line 90, ../scss/app.scss */
 .filters {
   padding: 8px 8px 6px;
   background-color: #4891dc;
   color: #fafafa;
 }
-/* line 88, ../scss/app.scss */
+/* line 95, ../scss/app.scss */
 .filters.single-facet-list .facets {
   width: 100%;
 }
-/* line 92, ../scss/app.scss */
+/* line 99, ../scss/app.scss */
 .filters .facets {
   display: inline-block;
   width: 49%;
   vertical-align: top;
 }
-/* line 97, ../scss/app.scss */
+/* line 104, ../scss/app.scss */
 .filters ul {
   margin: 0;
   padding: 0;
   list-style: none;
 }
-/* line 101, ../scss/app.scss */
+/* line 108, ../scss/app.scss */
 .filters ul li {
   margin: 5px 0;
 }
-/* line 105, ../scss/app.scss */
+/* line 112, ../scss/app.scss */
 .filters label {
   display: block;
   padding-left: 16px;
   text-indent: -16px;
   font-size: 0.9em;
 }
-/* line 111, ../scss/app.scss */
+/* line 118, ../scss/app.scss */
 .filters input {
   position: relative;
   top: -1px;
@@ -704,19 +730,19 @@ a {
   height: 13px;
   vertical-align: middle;
 }
-/* line 120, ../scss/app.scss */
+/* line 127, ../scss/app.scss */
 .filters h3 {
   margin: 0 0 3px;
   font-weight: normal;
   font-size: 0.95em;
 }
 
-/* line 126, ../scss/app.scss */
+/* line 133, ../scss/app.scss */
 a.action-button {
   text-decoration: none;
 }
 
-/* line 129, ../scss/app.scss */
+/* line 136, ../scss/app.scss */
 .action-button {
   border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -739,7 +765,7 @@ a.action-button {
   font-weight: 500;
   margin: 5px 5px 5px 0;
 }
-/* line 141, ../scss/app.scss */
+/* line 148, ../scss/app.scss */
 .action-button.social {
   background: #5f9baf;
   color: #fafafa;
