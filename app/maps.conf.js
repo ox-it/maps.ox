@@ -149,7 +149,7 @@ define([], function() {
                             "toggle": true,
                             icon: {
                                 iconSize: [18, 18],
-                                iconUrl: 'maki/renders/pub-18.png',
+                                iconUrl: 'maki/renders/beer-18.png',
                                 clickable: true
                             },
                             hasInfo: true
