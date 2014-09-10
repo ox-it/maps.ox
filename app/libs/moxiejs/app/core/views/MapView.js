@@ -118,7 +118,7 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
             collection.on("show", function(collection) {
                 if (!this.additionalLayers[name]) {
                     var icon = collection.getIcon();
-                    var clickable = collection.hasRTI || false;
+                    var clickable = collection.hasInfo || false;
                     var markers = new L.MarkerClusterGroup({
                         spiderfyOnMaxZoom: false,
                         showCoverageOnHover: false,
