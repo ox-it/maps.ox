@@ -35,7 +35,7 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
 
     var POI_PREFIX = 'places/';
     var routes = {
-        "": "categories",
+        "": "home",
         "categories": "categories",
         "categories*category_name": "categories",
         "search": "search",
@@ -96,7 +96,15 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
             searchView.render();
         },
 
+        home: function(category_name) {
+            this.displayCategories(category_name, true, true);
+        },
+
         categories: function(category_name) {
+            this.displayCategories(category_name, false, false);
+        },
+
+        displayCategories: function(category_name, reset_map, reset_detail) {
             // category_name seems to be passed as an empty string here on IE8
             if ((_.isUndefined(category_name) || category_name === '') && conf.defaultCategory) {
                 category_name = conf.defaultCategory;
@@ -114,6 +122,13 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
             layout.withBrowse();
             layout.setView('.content-browse', categoriesView);
             categoriesView.render();
+
+            if (reset_map === true) {
+                mapView.defaultView();
+            }
+            if (reset_detail === true) {
+                layout.removeDetail();
+            }
         },
 
         search: function(params) {
