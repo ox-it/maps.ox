@@ -118,7 +118,7 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
             collection.on("show", function(collection) {
                 if (!this.additionalLayers[name]) {
                     var icon = collection.getIcon();
-                    var clickable = collection.hasRTI || false;
+                    var clickable = collection.hasInfo || false;
                     var markers = new L.MarkerClusterGroup({
                         spiderfyOnMaxZoom: false,
                         showCoverageOnHover: false,
@@ -236,7 +236,8 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
                     if (this.showUser && this.user_position) {
                         bounds.extend(this.user_position);
                     }
-                    bounds = bounds.pad(conf.map.bounds.padding);
+                    var padding = (this.collection.length > 1)? conf.map.bounds.collectionPadding : conf.map.bounds.poiPadding;
+                    bounds = bounds.pad(padding);
                     // Animating here seemed to cause a problem when we call fitBounds several
                     // times during a quick succession, not sure if this is a bug with leaflet
                     // but setting animate: false seems to resolve things.

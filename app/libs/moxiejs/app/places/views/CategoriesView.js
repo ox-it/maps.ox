@@ -67,7 +67,7 @@ define(['jquery', 'underscore', 'backbone', 'app', 'moxie.conf', 'moxie.position
                     defaultQuery: defaultQuery,
                     format: conf.formats.geoJSON,
                     icon: category.get('icon'),
-                    hasRTI: category.get('hasRTI')
+                    hasInfo: category.get('hasInfo')
                 });
                 this.additionalCategories[category_name] = pois;
                 Backbone.trigger('map:additional-collection', pois, category_name);
