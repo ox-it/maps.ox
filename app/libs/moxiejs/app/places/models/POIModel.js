@@ -44,7 +44,18 @@ define(["MoxieModel", "underscore", "moxie.conf", "places/models/RTIModels", "pl
                 }
             } else if (this.hasLocation()) {
                 var latlng = new L.LatLng(this.get('lat'), this.get('lon'));
-                feature = new L.marker(latlng, {title: this.get('name')});
+                var icon = new L.icon({
+                        iconUrl: 'images/maps/marker-icon.png',
+                        iconRetinaUrl: 'images/maps/marker-icon-2x.png',
+                        iconSize: [50, 50],
+                        iconAnchor: [25, 25],
+                        popupAnchor: [-3, -76],
+                        shadowUrl: 'images/maps/marker-shadow.png',
+                        shadowRetinaUrl: 'images/maps/marker-shadow-2x.png',
+                        shadowSize: [50, 50],
+                        shadowAnchor: [25, 25]
+                });
+                feature = new L.marker(latlng, {title: this.get('name'), icon: icon});
             }
             return feature;
         },
