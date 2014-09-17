@@ -77,6 +77,12 @@ define([], function() {
                             "type_prefixed": "/university/college"
                         },
                         {
+                            "type": "hall",
+                            "type_name": "Hall",
+                            "type_name_plural": "Halls",
+                            "type_prefixed": "/university/hall"
+                        },
+                        {
                             "type": "department",
                             "type_name": "Department",
                             "type_name_plural": "Departments",
@@ -93,12 +99,6 @@ define([], function() {
                             "type_name": "Museum",
                             "type_name_plural": "Museums",
                             "type_prefixed": "/leisure/museum"
-                        },
-                        {
-                            "type": "hall",
-                            "type_name": "Hall",
-                            "type_name_plural": "Halls",
-                            "type_prefixed": "/university/hall"
                         }
                     ]
                 },
