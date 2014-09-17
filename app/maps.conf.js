@@ -3,7 +3,7 @@ define([], function() {
     var DEFAULT_LOCATION = {latitude: 51.752018, longitude: -1.257723};
     var GEOJSON = 'geoJSON';
     var MoxieConf = {
-        endpoint: 'http://new.m.ox.ac.uk/api',
+        endpoint: 'http://api.m.ox.ac.uk',
         paths: {
             places_search: '/places/search',
             places_search_geojson: '/places/search.geojson',
