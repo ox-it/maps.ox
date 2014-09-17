@@ -95,12 +95,6 @@ define([], function() {
                             "type_prefixed": "/leisure/museum"
                         },
                         {
-                            "type": "building",
-                            "type_name": "Building",
-                            "type_name_plural": "Buildings",
-                            "type_prefixed": "/university/building"
-                        },
-                        {
                             "type": "hall",
                             "type_name": "Hall",
                             "type_name_plural": "Halls",
