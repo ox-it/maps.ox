@@ -123,6 +123,10 @@
             </ul>
         {{/if}}
 
+        {{#if showZoomButton}}
+        <a href="#" class="zoom-all"><i class="fa fa-arrows-alt"></i> Show all markers</a>
+        {{/if}}
+
         {{! Links to parents and children }}
         <dl class="poi-children">
         {{#if occupiedBy}}
@@ -186,9 +190,6 @@
             {{/organisations}}
         {{/if}}
         </dl>
-        {{#if showZoomButton}}
-        <a href="#" class="zoom-all"><i class="fa fa-arrows-alt"></i> Show all markers</a>
-        {{/if}}
         {{#if poi.courses_name }}
             <h3>Courses</h3>
             <ul>
