@@ -3,7 +3,7 @@ define([], function() {
     var DEFAULT_LOCATION = {latitude: 51.752018, longitude: -1.257723};
     var GEOJSON = 'geoJSON';
     var MoxieConf = {
-        endpoint: 'http://new.m.ox.ac.uk/api',
+        endpoint: 'http://api.m.ox.ac.uk',
         paths: {
             places_search: '/places/search',
             places_search_geojson: '/places/search.geojson',
@@ -77,6 +77,12 @@ define([], function() {
                             "type_prefixed": "/university/college"
                         },
                         {
+                            "type": "hall",
+                            "type_name": "Hall",
+                            "type_name_plural": "Halls",
+                            "type_prefixed": "/university/hall"
+                        },
+                        {
                             "type": "department",
                             "type_name": "Department",
                             "type_name_plural": "Departments",
@@ -93,18 +99,6 @@ define([], function() {
                             "type_name": "Museum",
                             "type_name_plural": "Museums",
                             "type_prefixed": "/leisure/museum"
-                        },
-                        {
-                            "type": "building",
-                            "type_name": "Building",
-                            "type_name_plural": "Buildings",
-                            "type_prefixed": "/university/building"
-                        },
-                        {
-                            "type": "hall",
-                            "type_name": "Hall",
-                            "type_name_plural": "Halls",
-                            "type_prefixed": "/university/hall"
                         }
                     ]
                 },

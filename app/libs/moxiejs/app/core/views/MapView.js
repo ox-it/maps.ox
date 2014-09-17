@@ -259,6 +259,11 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
             this.setMapBounds();
         },
 
+        // reset the map lat/lon and zoom to the default from the configuration
+        defaultView: function() {
+            this.map.setView([conf.defaultLocation.coords.latitude, conf.defaultLocation.coords.longitude], conf.map.defaultZoom, true);
+        },
+
         cleanup: function() {
             $('html').removeClass('map');
             this.unsetCollection();

@@ -73,7 +73,7 @@
             <span><a href="{{ poi.website }}" target="_blank" class="action-button poi-website">Website <i class="fa fa-external-link"></i></a></span>
             {{/if}}
             {{#if accessibilityGuideURL }}
-            <span><a href="{{ accessibilityGuideURL }}" target="_blank" class="action-button poi-access-guide">Accessibility Guide <i class="fa fa-wheelchair"></i></a></span>
+            <span><a href="{{ accessibilityGuideURL }}" target="_blank" class="action-button poi-access-guide">Access information</a></span>
             {{/if}}
         </div>
 
@@ -121,6 +121,10 @@
             <li>{{this}}</li>
             {{/poi.library_subject}}
             </ul>
+        {{/if}}
+
+        {{#if showZoomButton}}
+        <a href="#" class="zoom-all"><i class="fa fa-arrows-alt"></i> Show all markers</a>
         {{/if}}
 
         {{! Links to parents and children }}
@@ -186,9 +190,6 @@
             {{/organisations}}
         {{/if}}
         </dl>
-        {{#if showZoomButton}}
-        <a href="#" class="zoom-all"><i class="fa fa-arrows-alt"></i> Show all markers</a>
-        {{/if}}
         {{#if poi.courses_name }}
             <h3>Courses</h3>
             <ul>
