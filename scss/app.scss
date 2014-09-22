@@ -70,6 +70,12 @@ a {
     span:first-child {
         border-left: none;
     }
+    span.home {
+        min-width: 40px;
+        i {
+            font-size: 1.2em;
+        }
+    }
 }
 
 .highlighted {
