@@ -44,6 +44,10 @@ define(['underscore', 'moxie.conf', 'leaflet', 'moxie.position'], function(_, Mo
             map.attributionControl.setPrefix('');
             map.attributionControl.addAttribution('&copy <a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors');
             return map;
+        },
+        getTypeFilterFromCategory: function(category) {
+            // Used to restrict results to either /university or everything else
+            return (category === "/university")? {name: "type", value: category} : {name: "-type_exact", value: "/university*"};
         }
     };
     return utils;
