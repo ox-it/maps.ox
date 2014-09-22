@@ -252,6 +252,12 @@
     }
 }
 
+.embedded {
+    #content {
+        top: 0;
+    }
+}
+
 .list-map, .detail-map, .generic {
     height: 100%;
     -webkit-overflow-scrolling: touch;
