@@ -4,7 +4,7 @@
 </div>
 
 <div class="map-options{{#if amenities}} something-highlighted{{/if}}">
-    <span>{{#unless university}}<a href="{{ reverse 'categories' }}">University</a>{{else}}University{{/unless}}</span>{{#unless amenities}}<span><a href="{{ reverse 'categories' 'category_name' '/amenities'}}">Lifestyle</a></span>{{else}}<span class="highlighted">Lifestyle</span>{{/unless}}
+    {{#unless university}}<span class="home"><a href="#"><i class="fa fa-home"></i></a></span><span><a href="{{ reverse 'categories' }}">University</a></span>{{else}}<span>University</span>{{/unless}}{{#unless amenities}}<span><a href="{{ reverse 'categories' 'category_name' '/amenities'}}">Lifestyle</a></span>{{else}}<span class="highlighted">Lifestyle</span>{{/unless}}
 </div>
 
 <div class="messages">
