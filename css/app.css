@@ -669,58 +669,66 @@ a {
 .map-options span:first-child {
   border-left: none;
 }
-
+/* line 73, ../scss/app.scss */
+.map-options span.home {
+  min-width: 40px;
+}
 /* line 75, ../scss/app.scss */
+.map-options span.home i {
+  font-size: 1.2em;
+}
+
+/* line 81, ../scss/app.scss */
 .highlighted {
   margin: 0;
   padding: 1em 12px;
   background-color: #4891dc;
   color: #fafafa;
 }
-/* line 80, ../scss/app.scss */
+/* line 86, ../scss/app.scss */
 .highlighted a {
   color: #fafafa;
 }
 
-/* line 86, ../scss/app.scss */
+/* line 92, ../scss/app.scss */
 .hide-filters {
   display: none;
 }
 
-/* line 90, ../scss/app.scss */
+/* line 96, ../scss/app.scss */
 .filters {
   padding: 8px 8px 6px;
   background-color: #4891dc;
   color: #fafafa;
 }
-/* line 95, ../scss/app.scss */
+/* line 101, ../scss/app.scss */
 .filters.single-facet-list .facets {
   width: 100%;
 }
-/* line 99, ../scss/app.scss */
+/* line 105, ../scss/app.scss */
 .filters .facets {
   display: inline-block;
   width: 49%;
   vertical-align: top;
 }
-/* line 104, ../scss/app.scss */
+/* line 110, ../scss/app.scss */
 .filters ul {
   margin: 0;
   padding: 0;
   list-style: none;
 }
-/* line 108, ../scss/app.scss */
+/* line 114, ../scss/app.scss */
 .filters ul li {
   margin: 5px 0;
 }
-/* line 112, ../scss/app.scss */
+/* line 118, ../scss/app.scss */
 .filters label {
   display: block;
   padding-left: 16px;
   text-indent: -16px;
   font-size: 0.9em;
 }
-/* line 118, ../scss/app.scss */
+/* line 124, ../scss/app.scss */
 .filters input {
   position: relative;
   top: -1px;
@@ -730,19 +738,19 @@ a {
   height: 13px;
   vertical-align: middle;
 }
-/* line 127, ../scss/app.scss */
+/* line 133, ../scss/app.scss */
 .filters h3 {
   margin: 0 0 3px;
   font-weight: normal;
   font-size: 0.95em;
 }
 
-/* line 133, ../scss/app.scss */
+/* line 139, ../scss/app.scss */
 a.action-button {
   text-decoration: none;
 }
 
-/* line 136, ../scss/app.scss */
+/* line 142, ../scss/app.scss */
 .action-button {
   border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -765,7 +773,7 @@ a.action-button {
   font-weight: 500;
   margin: 5px 5px 5px 0;
 }
-/* line 148, ../scss/app.scss */
+/* line 154, ../scss/app.scss */
 .action-button.social {
   background: #5f9baf;
   color: #fafafa;
