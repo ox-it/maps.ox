@@ -70,8 +70,11 @@ a {
     span:first-child {
         border-left: none;
     }
-    span.home i{
-        font-size: 1.2em;
+    span.home {
+        min-width: 40px;
+        i {
+            font-size: 1.2em;
+        }
     }
 }
 
