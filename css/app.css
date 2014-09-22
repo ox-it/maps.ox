@@ -433,21 +433,26 @@ ul.results-list.reverse-styled li a {
   cursor: pointer;
 }
 
-/* line 255, ../scss/components/_maplayout.scss */
+/* line 256, ../scss/components/_maplayout.scss */
+.embedded #content {
+  top: 0;
+}
+
+/* line 261, ../scss/components/_maplayout.scss */
 .list-map, .detail-map, .generic {
   height: 100%;
   -webkit-overflow-scrolling: touch;
 }
-/* line 258, ../scss/components/_maplayout.scss */
+/* line 264, ../scss/components/_maplayout.scss */
 .list-map ul.facet-list, .detail-map ul.facet-list, .generic ul.facet-list {
   padding-left: 5px;
 }
-/* line 261, ../scss/components/_maplayout.scss */
+/* line 267, ../scss/components/_maplayout.scss */
 .list-map > h3, .detail-map > h3, .generic > h3 {
   padding-left: 5px;
 }
 
-/* line 266, ../scss/components/_maplayout.scss */
+/* line 272, ../scss/components/_maplayout.scss */
 .numbered-marker {
   width: 30px;
   height: 30px;
@@ -472,7 +477,7 @@ ul.results-list.reverse-styled li a {
   line-height: 26px;
 }
 
-/* line 270, ../scss/components/_maplayout.scss */
+/* line 276, ../scss/components/_maplayout.scss */
 .detail-numbered-marker {
   margin-left: 8px;
   width: 24px;
@@ -498,23 +503,23 @@ ul.results-list.reverse-styled li a {
   line-height: 22px;
 }
 
-/* line 275, ../scss/components/_maplayout.scss */
+/* line 281, ../scss/components/_maplayout.scss */
 .social-links a {
   font-size: 1.7em;
   letter-spacing: 0.2em;
 }
 
-/* line 283, ../scss/components/_maplayout.scss */
+/* line 289, ../scss/components/_maplayout.scss */
 dl.poi-children dd {
   line-height: 1.7em;
 }
 
-/* line 286, ../scss/components/_maplayout.scss */
+/* line 292, ../scss/components/_maplayout.scss */
 dl.poi-children dd a {
   margin-left: 38px;
 }
 
-/* line 291, ../scss/components/_maplayout.scss */
+/* line 297, ../scss/components/_maplayout.scss */
 dl.poi-children dd > div + a {
   margin-left: 6px;
 }
