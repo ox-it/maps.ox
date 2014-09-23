@@ -197,11 +197,7 @@ define(["backbone", "core/collections/MoxieCollection", "underscore", "places/mo
             }
             if (this.options.excludeTypes) {
                 // Map updates types from /university/sub-libraries to \/university\/sub-library
-                var excludeTypes = this.options.excludeTypes.slice();
-                if ('-type_exact' in query) {
-                    excludeTypes = excludeTypes.concat(query['-type_exact']);
-                }
-                query['-type_exact'] = _.map(excludeTypes, function(t) { return t.replace(/\//g, '\\/'); });
+                query['-type_exact'] = _.map(this.options.excludeTypes, function(t) { return t.replace(/\//g, '\\/'); });
             }
             if (!('count' in query)) {
                 query.count = this.defaultCount;
