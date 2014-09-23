@@ -143,10 +143,19 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
             var layout = app.getLayout('MapBrowseLayout', {followUser: this.followUser});
             layout.removeDetail();
             layout.withBrowse();
+            // TODO this might need to be revisited later once
+            // there is a definitive decision
+            if ('type' in params) {
+                var type = params.type;
+            } else if ('university_only' in params) {
+                var type = '/university';
+            } else {
+                var type = '/amenities';
+            }
             var searchView = new SearchView({
                 collection: pois,
                 followUser: this.followUser,
-                type: params.type
+                type: type
             });
             layout.setView('.content-browse', searchView);
             var mapView = layout.getView('.content-map');

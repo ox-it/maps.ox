@@ -1,5 +1,5 @@
-define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView', 'hbs!places/templates/search', 'core/views/InfiniteScrollView', 'moxie.position'],
-    function($, Backbone, _, MoxieConf, ItemView, searchTemplate, InfiniteScrollView, userPosition){
+define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView', 'hbs!places/templates/search', 'core/views/InfiniteScrollView', 'moxie.position', 'places/utils'],
+    function($, Backbone, _, MoxieConf, ItemView, searchTemplate, InfiniteScrollView, userPosition, utils){
 
     var SORT_AZ = 'az';
     var SORT_NEARBY = 'nearby';
@@ -163,7 +163,8 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
             }
         },
         searchForTerm: function(term) {
-            Backbone.history.navigate(Backbone.history.reverse('search')+'?'+$.param({q: term, type: this.topLevelCategory}).replace(/\+/g, "%20"), {trigger: true});
+            var typeFilter = utils.getTypeFilterFromCategory(this.topLevelCategory);
+            Backbone.history.navigate(Backbone.history.reverse('search')+'?'+$.param([{name: "q", value: term}, typeFilter]).replace(/\+/g, "%20"), {trigger: true});
         },
 
         addResult: function(model) {
@@ -188,8 +189,8 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'places/views/ItemView
                 filtering: this.filtering,
                 facets: this.parentFacets || this.collection.facets,
                 facetsExist: false,
-                amenities: this.topLevelCategory.indexOf('/amenities') === 0,
-                university: this.topLevelCategory.indexOf('/university') === 0,
+                amenities: this.topLevelCategory === undefined || this.topLevelCategory.indexOf('/university') === -1,
+                university: this.topLevelCategory !== undefined && this.topLevelCategory.indexOf('/university') === 0,
             };
             if (!_.isEmpty(context.facets)) {
                 context.facetsExist = true;
