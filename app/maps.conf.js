@@ -98,7 +98,7 @@ define([], function() {
                             "type": "museum",
                             "type_name": "Museum",
                             "type_name_plural": "Museums",
-                            "type_prefixed": "/leisure/museum"
+                            "type_prefixed": "/university/museum"
                         }
                     ]
                 },
