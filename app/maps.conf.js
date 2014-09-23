@@ -27,7 +27,7 @@ define([], function() {
                 maxZoom: 18,
             },
             primaryLayer: {
-                path: 'http://maps-tiles.oucs.ox.ac.uk/{z}/{x}/{y}.png',
+                path: 'https://maps-tiles.oucs.ox.ac.uk/{z}/{x}/{y}.png',
                 bounds: [[51.6299, -1.4207], [51.8646, -1.1144]],
                 options: {
                     maxZoom: 18,
