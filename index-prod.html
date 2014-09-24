@@ -1,0 +1,46 @@
+<!--[if HTML5]><![endif]-->
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <meta charset="utf-8" />
+
+    <!-- Set the viewport width to device width for mobile, stop zooming -->
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <!-- Version that letterboxes the iPhone 5
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    -->
+
+    <!-- Stop the phone detecting phone numbers in plain text -->
+    <meta name="format-detection" content="telephone=no">
+
+    <title>Maps - University of Oxford</title>
+
+    <!-- font-awesome -->
+    <link rel="stylesheet" href="webfonts/font-awesome/css/font-awesome.min.css">
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="css/leaflet-{{build}}.css" />
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="css/leaflet.ie-{{build}}.css" />
+    <![endif]-->
+
+    <link rel="stylesheet" href="css/app-{{build}}.css">
+
+    <script src="app/main-built-{{build}}.js"></script>
+</head>
+<body>
+    <div id="main">
+        <div id="top-bar">
+            <h1><a href="#/">University of Oxford Maps</a></h1>
+        </div>
+        <div id="content">
+        </div>
+    </div>
+</body>
