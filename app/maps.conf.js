@@ -59,7 +59,7 @@ define([], function() {
             enableHighAccuracy: true,       // Use the GPS if possible
         },
         defaultCategory: "/university",
-        excludeTypes: ['/university/sub-library'],
+        excludeTypes: ['/university/sub-library', '/university/room'],
         oxfordOnly: true,      // only search POIs in oxford
         categories: {
             "types": [
