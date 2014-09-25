@@ -173,7 +173,7 @@ ul.results-list.reverse-styled li a {
 #content {
   overflow-x: hidden;
   position: absolute;
-  top: 36px;
+  top: 66px;
   right: 0;
   bottom: 0;
   left: 0;
@@ -619,30 +619,34 @@ body {
 
 /* line 23, ../scss/app.scss */
 #top-bar {
-  height: 35px;
+  height: 65px;
   border-bottom: 1px solid #aaaaaa;
   background-color: #002147;
 }
 /* line 24, ../scss/app.scss */
 #top-bar h1 {
   margin: 0;
-  margin-left: 1.1em;
-  line-height: 2em;
+  line-height: 66px;
   font-size: 1.2em;
   font-weight: 500;
 }
-/* line 31, ../scss/app.scss */
+/* line 30, ../scss/app.scss */
 #top-bar h1 a {
   color: #fafafa;
 }
+/* line 36, ../scss/app.scss */
+#top-bar #oxford-brandmark {
+  float: left;
+  margin: 10px;
+}
 
-/* line 38, ../scss/app.scss */
+/* line 41, ../scss/app.scss */
 a {
   color: #3277ae;
   text-decoration: none;
 }
 
-/* line 42, ../scss/app.scss */
+/* line 45, ../scss/app.scss */
 .map-options {
   margin-top: 1em;
   margin-bottom: 0;
@@ -650,11 +654,11 @@ a {
   border-bottom: 1px solid #aaaaaa;
   text-align: center;
 }
-/* line 43, ../scss/app.scss */
+/* line 46, ../scss/app.scss */
 .map-options.something-highlighted {
   border-bottom: none;
 }
-/* line 51, ../scss/app.scss */
+/* line 54, ../scss/app.scss */
 .map-options span {
   display: inline-block;
   padding: 5px;
@@ -664,83 +668,83 @@ a {
   line-height: 1.5em;
   color: #002147;
 }
-/* line 59, ../scss/app.scss */
+/* line 62, ../scss/app.scss */
 .map-options span.highlighted {
   background-color: #e0ded9;
   color: #002147;
 }
-/* line 62, ../scss/app.scss */
+/* line 65, ../scss/app.scss */
 .map-options span.highlighted a {
   color: #3277ae;
 }
-/* line 67, ../scss/app.scss */
+/* line 70, ../scss/app.scss */
 .map-options span.filter {
   color: #aaaaaa;
 }
-/* line 70, ../scss/app.scss */
+/* line 73, ../scss/app.scss */
 .map-options span:first-child {
   border-left: none;
 }
-/* line 73, ../scss/app.scss */
+/* line 76, ../scss/app.scss */
 .map-options span.home {
   min-width: 40px;
 }
-/* line 75, ../scss/app.scss */
+/* line 78, ../scss/app.scss */
 .map-options span.home i {
   font-size: 1.2em;
 }
 
-/* line 81, ../scss/app.scss */
+/* line 84, ../scss/app.scss */
 .highlighted {
   margin: 0;
   padding: 1em 12px;
   background-color: #3277ae;
   color: #fafafa;
 }
-/* line 86, ../scss/app.scss */
+/* line 89, ../scss/app.scss */
 .highlighted a {
   color: #fafafa;
 }
 
-/* line 92, ../scss/app.scss */
+/* line 95, ../scss/app.scss */
 .hide-filters {
   display: none;
 }
 
-/* line 96, ../scss/app.scss */
+/* line 99, ../scss/app.scss */
 .filters {
   padding: 8px 8px 6px;
   background-color: #a79d96;
   color: #fafafa;
 }
-/* line 101, ../scss/app.scss */
+/* line 104, ../scss/app.scss */
 .filters.single-facet-list .facets {
   width: 100%;
 }
-/* line 105, ../scss/app.scss */
+/* line 108, ../scss/app.scss */
 .filters .facets {
   display: inline-block;
   width: 49%;
   vertical-align: top;
 }
-/* line 110, ../scss/app.scss */
+/* line 113, ../scss/app.scss */
 .filters ul {
   margin: 0;
   padding: 0;
   list-style: none;
 }
-/* line 114, ../scss/app.scss */
+/* line 117, ../scss/app.scss */
 .filters ul li {
   margin: 5px 0;
 }
-/* line 118, ../scss/app.scss */
+/* line 121, ../scss/app.scss */
 .filters label {
   display: block;
   padding-left: 16px;
   text-indent: -16px;
   font-size: 0.9em;
 }
-/* line 124, ../scss/app.scss */
+/* line 127, ../scss/app.scss */
 .filters input {
   position: relative;
   top: -1px;
@@ -750,19 +754,19 @@ a {
   height: 13px;
   vertical-align: middle;
 }
-/* line 133, ../scss/app.scss */
+/* line 136, ../scss/app.scss */
 .filters h3 {
   margin: 0 0 3px;
   font-weight: normal;
   font-size: 0.95em;
 }
 
-/* line 139, ../scss/app.scss */
+/* line 142, ../scss/app.scss */
 a.action-button {
   text-decoration: none;
 }
 
-/* line 142, ../scss/app.scss */
+/* line 145, ../scss/app.scss */
 .action-button {
   border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -785,7 +789,7 @@ a.action-button {
   font-weight: 500;
   margin: 5px 5px 5px 0;
 }
-/* line 154, ../scss/app.scss */
+/* line 157, ../scss/app.scss */
 .action-button.social {
   background: #5f9baf;
   color: #fafafa;
