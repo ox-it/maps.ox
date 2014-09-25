@@ -27,7 +27,7 @@ define([], function() {
                 maxZoom: 18,
             },
             primaryLayer: {
-                path: 'http://maps-tiles.oucs.ox.ac.uk/{z}/{x}/{y}.png',
+                path: 'https://maps-tiles.oucs.ox.ac.uk/{z}/{x}/{y}.png',
                 bounds: [[51.6299, -1.4207], [51.8646, -1.1144]],
                 options: {
                     maxZoom: 18,
@@ -59,7 +59,7 @@ define([], function() {
             enableHighAccuracy: true,       // Use the GPS if possible
         },
         defaultCategory: "/university",
-        excludeTypes: ['/university/sub-library'],
+        excludeTypes: ['/university/sub-library', '/university/room'],
         oxfordOnly: true,      // only search POIs in oxford
         categories: {
             "types": [
@@ -98,7 +98,7 @@ define([], function() {
                             "type": "museum",
                             "type_name": "Museum",
                             "type_name_plural": "Museums",
-                            "type_prefixed": "/leisure/museum"
+                            "type_prefixed": "/university/museum"
                         }
                     ]
                 },

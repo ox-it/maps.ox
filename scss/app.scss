@@ -36,7 +36,7 @@ body {
     background-color: $oxfordBlue;
 }
 a {
-    color: $pantone279;
+    color: $oxWebLinkBlue;
     text-decoration: none;
 }
 .map-options {
@@ -57,10 +57,10 @@ a {
         line-height: 1.5em;
         color: $oxfordBlue;
         &.highlighted {
-            background-color: $pantone279;
-            color: $body-background;
+            background-color: $pantoneWarmGray1;
+            color: $oxfordBlue;
             a {
-                color: $body-background;
+                color: $oxWebLinkBlue;
             }
         }
     }
@@ -81,7 +81,7 @@ a {
 .highlighted {
     margin: 0;
     padding: 1em 12px;
-    background-color: $pantone279;
+    background-color: $oxWebLinkBlue;
     color: $body-background;
     a {
         color: $body-background;
@@ -95,7 +95,7 @@ a {
 
 .filters {
     padding: $filter-padding $filter-padding ($filter-padding - 2px);
-    background-color: $pantone279;
+    background-color: $pantoneWarmGray6;
     color: $body-background;
      &.single-facet-list {
         .facets {

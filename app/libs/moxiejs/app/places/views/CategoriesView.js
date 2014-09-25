@@ -92,7 +92,8 @@ define(['jquery', 'underscore', 'backbone', 'app', 'moxie.conf', 'moxie.position
             }
         },
         searchForTerm: function(term) {
-            var qstring = $.param({q: term, type: this.category_name}).replace(/\+/g, "%20");
+            var typeFilter = utils.getTypeFilterFromCategory(this.category_name);
+            var qstring = $.param([{name: "q", value: term}, typeFilter]).replace(/\+/g, "%20");
             var path = Backbone.history.reverse('search') + '?' + qstring;
             app.navigate(path, {trigger: true, replace: false});
         },
