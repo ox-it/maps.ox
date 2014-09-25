@@ -57,10 +57,10 @@ a {
         line-height: 1.5em;
         color: $oxfordBlue;
         &.highlighted {
-            background-color: $oxWebLinkBlue;
-            color: $body-background;
+            background-color: $pantoneWarmGray1;
+            color: $oxfordBlue;
             a {
-                color: $body-background;
+                color: $oxWebLinkBlue;
             }
         }
     }
@@ -95,7 +95,7 @@ a {
 
 .filters {
     padding: $filter-padding $filter-padding ($filter-padding - 2px);
-    background-color: $oxWebLinkBlue;
+    background-color: $pantoneWarmGray6;
     color: $body-background;
      &.single-facet-list {
         .facets {
