@@ -84,9 +84,20 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
             } else {
                 layout.withBrowse();
             }
+
+            // TODO this NEEDS to be revisited later
+            // defaulting to university for now as this is expected
+            // to be embedded for uni mainly...
+            if ('type' in params) {
+                var type = params.type;
+            } else {
+                var type = '/university';
+            }
+
             var searchView = new SearchView({
                 collection: customPOIs,
-                followUser: this.followUser
+                followUser: this.followUser,
+                type: type
             });
             layout.setView('.content-browse', searchView);
             var mapView = layout.getView('.content-map');
