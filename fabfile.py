@@ -32,6 +32,7 @@ def deploy_front(version):
         # adding the URL of the git repo for the JS client as the first line of the built file
         run("sed -i '1s/^/\/\/ https:\/\/github.com\/ox-it\/maps.ox\\n/' app/main-built.js")
         sed("index-prod.html", "\{\{build\}\}", git_hash)
+        sed("embed-prod.html", "\{\{build\}\}", git_hash)
         FILES = [
             ('{path}/app/main-built.js', '{path}/app/main-built-{version}.js'),
             ('{path}/css/app.css', '{path}/css/app-{version}.css'),
@@ -44,6 +45,8 @@ def deploy_front(version):
 
         run('rm -f index.html')
         run('ln -s %s %s' % ('index-prod.html', 'index.html'))
+        run('rm -f embed.html')
+        run('ln -s %s %s' % ('embed-prod.html', 'embed.html'))
 
     # Pre GZip static (html, css, js) files
     run('sh {0}/gzip_static_files.sh {1}'.format(
