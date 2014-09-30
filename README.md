@@ -9,13 +9,13 @@ These identifiers can be found from the URL within maps.ox, for example [Christ 
 Therefore the identifier is `oxpoints:23232352`. Now if we want to create a custom map with Christ Church and George and Danvers's on St. Aldates
 (identifier `osm:553028844`) we'd use the following path.
 
-> /#/custom?ids=oxpoints:23232352,osm:553028844
+    /#/custom?ids=oxpoints:23232352,osm:553028844
 
 Identifiers should be separated by a comma if you have more than one POI in your map.
 
 The browse pane (on the left) can be removed leaving a fullscreen map with the fullscreen paramater.
 
-> /#/custom?ids=oxpoints:23232352,osm:553028844&fullscreen
+    /#/custom?ids=oxpoints:23232352,osm:553028844&fullscreen
 
 [Example embedded maps](examples/custom.html)
 
