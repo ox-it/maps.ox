@@ -23,8 +23,7 @@ body {
 #top-bar {
     h1 {
         margin: 0;
-        margin-left: 1.1em;
-        line-height: 2em;
+        line-height: 66px;
         font-size: 1.2em;
         font-weight: 500;
     }
@@ -34,9 +33,13 @@ body {
     height: $navbarHeight - 1px;
     border-bottom: $map-pane-border;
     background-color: $oxfordBlue;
+    #oxford-brandmark {
+        float:left;
+        margin:10px;
+    }
 }
 a {
-    color: $pantone279;
+    color: $oxWebLinkBlue;
     text-decoration: none;
 }
 .map-options {
@@ -57,10 +60,10 @@ a {
         line-height: 1.5em;
         color: $oxfordBlue;
         &.highlighted {
-            background-color: $pantone279;
-            color: $body-background;
+            background-color: $pantoneWarmGray1;
+            color: $oxfordBlue;
             a {
-                color: $body-background;
+                color: $oxWebLinkBlue;
             }
         }
     }
@@ -81,7 +84,7 @@ a {
 .highlighted {
     margin: 0;
     padding: 1em 12px;
-    background-color: $pantone279;
+    background-color: $oxWebLinkBlue;
     color: $body-background;
     a {
         color: $body-background;
@@ -95,7 +98,7 @@ a {
 
 .filters {
     padding: $filter-padding $filter-padding ($filter-padding - 2px);
-    background-color: $pantone279;
+    background-color: $pantoneWarmGray6;
     color: $body-background;
      &.single-facet-list {
         .facets {
