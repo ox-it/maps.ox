@@ -47,7 +47,7 @@ define(['underscore', 'moxie.conf', 'leaflet', 'moxie.position'], function(_, Mo
         },
         getTypeFilterFromCategory: function(category) {
             // Used to restrict results to either /university or everything else
-            if (category === "/university") {
+            if (category.indexOf('/university') === 0) {
                 return {name: "university_only", value: 'true'};
             } else {
                 return {name: "exclude_university", value: "true"};
