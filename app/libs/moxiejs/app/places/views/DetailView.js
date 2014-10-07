@@ -197,6 +197,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
         beforeRender: function() {
             if (!this.additionalPOIs) {
                 if (this.model.has('_links')) {
+                    var primaryPlaceId = this.model.get('_links').primary_place.id;
                     var children = this.model.get('_links').child || [];
                     var poids = [];
                     _.each(children, function(child) {
@@ -211,6 +212,9 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                     } else if (poids.length > 1) {
                         this.additionalPOIs =  new NumberedPOICollection({
                             sortFunction: _.bind(function(child) {
+                                if (child.id === primaryPlaceId) {
+                                    return 0;
+                                }
                                 if (child.type[0] in this.childTypes) {
                                     return this.childTypes[child.type[0]].index;
                                 } else {
