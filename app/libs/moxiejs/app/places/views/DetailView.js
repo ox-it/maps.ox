@@ -47,9 +47,9 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
         },
 
         childTypes: {
-            '/university/site': {relation: 'occupies', index: 1},
-            '/university/building': {relation: 'occupies', index: 2},
-            '/university/library': {relation: 'libraries', index: 3},
+            '/university/site': {relation: 'occupies', index: 2},
+            '/university/building': {relation: 'occupies', index: 3},
+            '/university/library': {relation: 'libraries', index: 4},
             '/leisure/museum': {relation: 'contains', index: 5},
             '/university/department': {relation: 'organisations', index: 6},
             '/university/college': {relation: 'organisations', index: 7},
