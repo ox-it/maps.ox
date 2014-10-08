@@ -197,7 +197,10 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
         beforeRender: function() {
             if (!this.additionalPOIs) {
                 if (this.model.has('_links')) {
-                    var primaryPlaceId = this.model.get('_links').primary_place.id;
+                    var primaryPlaceId;
+                    if(this.model.get('_links').primary_place && this.model.get('_links').primary_place.href) {
+                        primaryPlaceId = this.model.get('_links').primary_place.href;
+                    }
                     var children = this.model.get('_links').child || [];
                     var poids = [];
                     _.each(children, function(child) {
@@ -212,7 +215,8 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                     } else if (poids.length > 1) {
                         this.additionalPOIs =  new NumberedPOICollection({
                             sortFunction: _.bind(function(child) {
-                                if (child.id === primaryPlaceId) {
+                                if (primaryPlaceId && child._links && child._links.self &&
+                                    child._links.self.href && child._links.self.href === primaryPlaceId) {
                                     return 0;
                                 }
                                 if (child.type[0] in this.childTypes) {
