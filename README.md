@@ -61,3 +61,8 @@ Merge changes from the remote to the subtree (on branch `maps-ox-changes`)
 Here's a useful git alias for merging master, building css and pushing to the `gh-pages` branch.
 
     publish = !sh -c 'git checkout gh-pages && git merge "$0" && bundle exec compass compile --force && git add -f css/app.css && git commit -m \"updated css\" && git push origin gh-pages'
+
+## Analysing queries made by the application
+
+Have a look to the `Makefile` at the root of the repository. Running `make` on the server
+will result in a file `queries` containing all the queries available in the logs.
