@@ -86,7 +86,10 @@ define([], function() {
                             "type": "department",
                             "type_name": "Department",
                             "type_name_plural": "Departments",
-                            "type_prefixed": "/university/department"
+                            "type_prefixed": "/university/department",
+                            "browse_only_parameters": {
+                                "is_display_in_maps_department_list": true
+                            }
                         },
                         {
                             "type": "library",

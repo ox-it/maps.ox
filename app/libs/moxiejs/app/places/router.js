@@ -144,6 +144,30 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
 
         search: function(params) {
             var query = params || {};
+            var layout = app.getLayout('MapBrowseLayout', {followUser: this.followUser});
+            layout.removeDetail();
+            layout.withBrowse();
+
+            // making sure no parameters are applied by default
+            pois.options.browse_only_parameters = {};
+
+            // TODO this might need to be revisited later once
+            // there is a definitive decision
+            if ('type' in params) {
+                var type = params.type;
+                // check if we have additional parameters for this type
+                var category = categories.findWhere({type_prefixed: type});
+                if (!query.q) {
+                    // apply the parameters if there is no user query
+                    // i.e. only when browsing
+                    pois.options.browse_only_parameters = category.get('browse_only_parameters');
+                }
+            } else if ('university_only' in params) {
+                var type = '/university';
+            } else {
+                var type = '/amenities';
+            }
+
             if (!_.isEqual(query, pois.query) || (pois.length <= 1)) {
                 // If the Collection has the correct query and we have items don't bother fetching new results now
                 pois.query = query;
@@ -151,18 +175,8 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
                 pois.reset();
                 pois.fetch();
             }
-            var layout = app.getLayout('MapBrowseLayout', {followUser: this.followUser});
-            layout.removeDetail();
-            layout.withBrowse();
-            // TODO this might need to be revisited later once
-            // there is a definitive decision
-            if ('type' in params) {
-                var type = params.type;
-            } else if ('university_only' in params) {
-                var type = '/university';
-            } else {
-                var type = '/amenities';
-            }
+
+
             var searchView = new SearchView({
                 collection: pois,
                 followUser: this.followUser,
