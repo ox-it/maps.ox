@@ -191,6 +191,9 @@ define(["backbone", "core/collections/MoxieCollection", "underscore", "places/mo
             var query = _.clone(this.query);
             if (this.options.defaultQuery && _.isEmpty(query)) {
                 query = this.options.defaultQuery;
+            } else if (this.options.browse_only_parameters && !_.isEmpty(this.options.browse_only_parameters)) {
+                // if the collection has some additional parameters
+                query = this.options.browse_only_parameters;
             }
             if (this.options.oxfordOnly) {
                 query['inoxford'] = 'true';

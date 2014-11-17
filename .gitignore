@@ -16,3 +16,5 @@ app/main-built.js
 
 # Ruby bundle (recommended in README.md)
 .bundle
+
+*.pyc

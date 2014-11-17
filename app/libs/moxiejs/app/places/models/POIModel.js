@@ -33,8 +33,8 @@ define(["MoxieModel", "underscore", "moxie.conf", "places/models/RTIModels", "pl
                         color: '#44687D', // Outline colour - pantone 5405
                         opacity: 1,
                         fill: true,
-                        fillColor: '#4891dc', // Colour of our <a>
-                        fillOpacity: 0.3,
+                        fillColor: '#3277AE', // Colour of our <a>
+                        fillOpacity: 0.2,
                         weight: 2, // Outline weight in pixels
                     });
                 } catch (e) {

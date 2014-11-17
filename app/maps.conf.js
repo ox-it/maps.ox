@@ -3,7 +3,7 @@ define([], function() {
     var DEFAULT_LOCATION = {latitude: 51.752018, longitude: -1.257723};
     var GEOJSON = 'geoJSON';
     var MoxieConf = {
-        endpoint: '//api.m.ox.ac.uk',
+        endpoint: '//maps.ox.ac.uk/api',
         paths: {
             places_search: '/places/search',
             places_search_geojson: '/places/search.geojson',
@@ -59,7 +59,7 @@ define([], function() {
             enableHighAccuracy: true,       // Use the GPS if possible
         },
         defaultCategory: "/university",
-        excludeTypes: ['/university/sub-library'],
+        excludeTypes: ['/university/sub-library', '/university/room'],
         oxfordOnly: true,      // only search POIs in oxford
         categories: {
             "types": [
@@ -86,7 +86,10 @@ define([], function() {
                             "type": "department",
                             "type_name": "Department",
                             "type_name_plural": "Departments",
-                            "type_prefixed": "/university/department"
+                            "type_prefixed": "/university/department",
+                            "browse_only_parameters": {
+                                "is_display_in_maps_department_list": true
+                            }
                         },
                         {
                             "type": "library",

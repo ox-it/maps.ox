@@ -25,19 +25,17 @@
     <!-- font-awesome -->
     <link rel="stylesheet" href="webfonts/font-awesome/css/font-awesome.min.css">
 
-    <!-- Included CSS Files -->
-    <link rel="stylesheet" href="css/leaflet.css">
+    <link rel="stylesheet" href="css/leaflet-{{build}}.css" />
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="css/leaflet.ie-{{build}}.css" />
+    <![endif]-->
     <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/app-{{build}}.css">
 
-    <script src="app/require.config.js"></script>
-    <script data-main="main" src="app/libs/moxiejs/app/libs/require.js"></script>
+    <script src="app/main-built-{{build}}.js"></script>
 </head>
-<body>
+<body class="embedded">
     <div id="main">
-        <div id="top-bar">
-            <a id="oxford-brandmark" href="http://www.ox.ac.uk"><img src="images/ox_brand6_rev_rect.gif"></a><h1><a href="#/">University Map</a></h1>
-        </div>
         <div id="content">
         </div>
     </div>
