@@ -195,6 +195,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
 
         additionalPOIs: null,
 
+        //This view may have been removed by the time a fetch is successful, so check whether it is still valid.
         renderIfActive: function() {
             if(this.validToRender)
             {
@@ -254,6 +255,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
 
         cleanup: function() {
             Backbone.off('favourited');
+            //flag that this view is no longer valid to be rendered.
             this.validToRender = false;
             clearInterval(this.refreshID);
         }
