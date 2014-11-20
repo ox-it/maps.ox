@@ -191,8 +191,16 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
         template: detailTemplate,
         manage: true,
 
+        validToRender: true,
 
         additionalPOIs: null,
+
+        renderIfActive: function() {
+            if(this.validToRender)
+            {
+                this.render();
+            }
+        },
 
         beforeRender: function() {
             if (!this.additionalPOIs) {
@@ -206,7 +214,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                     }, this);
                     if (poids.length === 1) {
                         var poi = new NumberedPOI({id: poids[0], singlePOI: true});
-                        poi.fetch({success: _.bind(this.render, this)});
+                        poi.fetch({success: _.bind(this.renderIfActive, this)});
                         this.additionalPOIs =  new NumberedPOICollection([poi]);
                     } else if (poids.length > 1) {
                         this.additionalPOIs =  new NumberedPOICollection({
@@ -219,7 +227,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                             }, this),
                             url: conf.urlFor('places_id') + poids.join(','),
                         });
-                        this.additionalPOIs.fetch({success: _.bind(this.render, this)});
+                        this.additionalPOIs.fetch({success: _.bind(this.renderIfActive, this)});
                     }
                 }
             } else {
@@ -246,6 +254,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
 
         cleanup: function() {
             Backbone.off('favourited');
+            this.validToRender = false;
             clearInterval(this.refreshID);
         }
 
