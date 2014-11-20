@@ -42,40 +42,47 @@
                 <h3>Creating custom maps</h3>
 
                 <p>In order to create a custom map you'll need the identifiers to the points you'd like to include on the map.
-                These identifiers can be found from the URL within maps.ox, for example <a href="/#/places/oxpoints:23232352">Christ Church</a> has the path <code>/#/places/oxpoints:23232352</code>. 
+                These identifiers can be found from the URL within maps.ox, for example <a href="/#/places/oxpoints:23232352">Christ Church</a> has the path <code>#/places/oxpoints:23232352</code>.
                 Therefore the identifier is <code>oxpoints:23232352</code>. Non-University points can be included as well: <a href="/#/places/osm:553028844">George and Danver</a> on St. Aldates has the identifier <code>osm:553028844</code>. Now if we want to create a custom map with Christ Church and George and Danver we'd use the following path.</p>
 
-                <pre><code>/#/custom?ids=oxpoints:23232352,osm:553028844
+                <pre><code>#/custom?ids=oxpoints:23232352,osm:553028844
                 </code></pre>
 
                 <p>Note that identifiers should be separated by a comma if you have more than one POI in your map.</p>
 
                 <p>The browse pane (on the left) can be removed leaving a fullscreen map by using the <code>fullscreen</code> parameter.</p>
 
-                <pre><code>/#/custom?ids=oxpoints:23232352,osm:553028844&amp;fullscreen
+                <pre><code>#/custom?ids=oxpoints:23232352,osm:553028844&amp;fullscreen
                 </code></pre>
 
                 <h3>Embedding a map</h3>
 
-                <p>You can embed a map in your website using an iframe. You need to use the base url <code>//maps.ox.ac.uk/embed.html</code> and then add a path, either a custom path created as per the instructions above (e.g. <code>/#/custom?ids=oxpoints:23232352,osm:553028844
+                <p>You can embed a map in your website using an iframe. You need to use the base url <code>//maps.ox.ac.uk/embed.html</code> and then add a path, either a custom path created as per the instructions above (e.g. <code>#/custom?ids=oxpoints:23232352,osm:553028844
                 </code>), or an existing path within maps (e.g. <code>#/search?type=/university/college</code>).</p>
 
-                <p> Note that the base url does not start with <code>http:</code>, but rather just two slashes. This is a <a href="http://www.paulirish.com/2010/the-protocol-relative-url/">protocol-relative URL</a>, and ensures that the map will be displayed over <code>http</code> or <code>https</code>.</p>
+                <p> Note that the base url does not start with <code>http:</code>, but rather just two slashes. This is a <a href="http://www.paulirish.com/2010/the-protocol-relative-url/">protocol-relative URL</a>, and ensures that the map will be displayed over <code>http</code> or <code>https</code>. (N.B. This will not work for viewing maps embedded in an locally stored file. An <code>http:</code> prefix can be included during local testing)</p>
 
                 <p>The following iframe embeds a custom map including the different locations of IT Services:</p>
 
-                <pre><code>&lt;iframe src="//maps.ox.ac.uk/embed.html#/custom?ids=oxpoints:40002001,oxpoints:23233672,oxpoints:23233665,oxpoints:55329098,oxpoints:23233636" style="width: 100%; height: 500px;"&gt;&lt;/iframe&gt;
+                <pre><code>&lt;iframe src="//maps.ox.ac.uk/embed.html#/custom?ids=oxpoints:40002001,oxpoints:23233672,oxpoints:23233665,oxpoints:55329098,oxpoints:23233636" style="width: 80%; height: 500px;"&gt;&lt;/iframe&gt;
                 </code></pre>
 
                 <h3>Examples</h3>
                 <h4>IT Services</h4>
-                <iframe src="//maps.ox.ac.uk/embed.html#/custom?ids=oxpoints:40002001,oxpoints:23233672,oxpoints:23233665,oxpoints:55329098,oxpoints:23233636" frameborder="0" width="100%" height="500" scrolling="no"></iframe>
+                <pre><code>//maps.ox.ac.uk/embed.html#/custom?ids=oxpoints:40002001,oxpoints:23233672,oxpoints:23233665,oxpoints:55329098,oxpoints:23233636"</code></pre>
+                <iframe src="//maps.ox.ac.uk/embed.html#/custom?ids=oxpoints:40002001,oxpoints:23233672,oxpoints:23233665,oxpoints:55329098,oxpoints:23233636" frameborder="0" width="80%" height="500" scrolling="no"></iframe>
+                <hr>
                 <h4>All Colleges</h4>
-                <iframe src="//maps.ox.ac.uk/embed.html#/search?type=/university/college" frameborder="0" width="100%" height="500" scrolling="no"></iframe> 
+                <pre><code>//maps.ox.ac.uk/embed.html#/search?type=/university/college</code></pre>
+                <iframe src="//maps.ox.ac.uk/embed.html#/search?type=/university/college" frameborder="0" width="80%" height="500" scrolling="no"></iframe>
+                <hr>
                 <h4>Custom map with browse pane</h4>
-                <iframe marginheight="0" marginwidth="0" src="//maps.ox.ac.uk/embed.html#/custom?ids=oxpoints:23232352,osm:553028844" frameborder="0" width="100%" height="500" scrolling="no"></iframe>
+                <pre><code>//maps.ox.ac.uk/embed.html#/custom?ids=oxpoints:23232352,osm:553028844</code></pre>
+                <iframe marginheight="0" marginwidth="0" src="//maps.ox.ac.uk/embed.html#/custom?ids=oxpoints:23232352,osm:553028844" frameborder="0" width="80%" height="500" scrolling="no"></iframe>
+                <hr>
                 <h4>Custom fullscreen map</h4>
-                <iframe marginheight="0" marginwidth="0" src="//maps.ox.ac.uk/embed.html#/custom?ids=oxpoints:23232352,osm:553028844&fullscreen" frameborder="0" width="100%" height="500" scrolling="no"></iframe>
+                <code><pre>//maps.ox.ac.uk/embed.html#/custom?ids=oxpoints:23232352,osm:553028844&fullscreen</pre></code>
+                <iframe marginheight="0" marginwidth="0" src="//maps.ox.ac.uk/embed.html#/custom?ids=oxpoints:23232352,osm:553028844&fullscreen" frameborder="0" width="80%" height="500" scrolling="no"></iframe>
 
             </div>
 
