@@ -47,9 +47,9 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
         },
 
         childTypes: {
-            '/university/site': {relation: 'occupies', index: 1},
-            '/university/building': {relation: 'occupies', index: 2},
-            '/university/library': {relation: 'libraries', index: 3},
+            '/university/site': {relation: 'occupies', index: 2},
+            '/university/building': {relation: 'occupies', index: 3},
+            '/university/library': {relation: 'libraries', index: 4},
             '/leisure/museum': {relation: 'contains', index: 5},
             '/university/department': {relation: 'organisations', index: 6},
             '/university/college': {relation: 'organisations', index: 7},
@@ -197,6 +197,10 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
         beforeRender: function() {
             if (!this.additionalPOIs) {
                 if (this.model.has('_links')) {
+                    var primaryPlaceId;
+                    if(this.model.get('_links').primary_place && this.model.get('_links').primary_place.href) {
+                        primaryPlaceId = this.model.get('_links').primary_place.href;
+                    }
                     var children = this.model.get('_links').child || [];
                     var poids = [];
                     _.each(children, function(child) {
@@ -211,6 +215,10 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                     } else if (poids.length > 1) {
                         this.additionalPOIs =  new NumberedPOICollection({
                             sortFunction: _.bind(function(child) {
+                                if (primaryPlaceId && child._links && child._links.self &&
+                                    child._links.self.href && child._links.self.href === primaryPlaceId) {
+                                    return 0;
+                                }
                                 if (child.type[0] in this.childTypes) {
                                     return this.childTypes[child.type[0]].index;
                                 } else {
