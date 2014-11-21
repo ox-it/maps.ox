@@ -1,0 +1,91 @@
+<!--[if HTML5]><![endif]-->
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <meta charset="utf-8" />
+
+    <!-- Set the viewport width to device width for mobile, stop zooming -->
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <!-- Version that letterboxes the iPhone 5
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    -->
+
+    <!-- Stop the phone detecting phone numbers in plain text -->
+    <meta name="format-detection" content="telephone=no">
+
+    <title>Maps - University of Oxford</title>
+
+    <link rel="stylesheet" href="webfonts/font-awesome/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/app.css">
+
+</head>
+<body>
+    <div id="main">
+        <div id="top-bar">
+            <a id="oxford-brandmark" href="http://www.ox.ac.uk"><img src="images/ox_brand6_rev_rect.gif"></a><h1><a href="/">University Map</a></h1>
+        </div>
+        <div id="content">
+
+            <div class="static-content">
+
+                <h2>Using the map on other websites</h2>
+
+                <h3>Creating custom maps</h3>
+
+                <p>In order to create a custom map you'll need the identifiers to the points you'd like to include on the map.
+                These identifiers can be found from the URL within maps.ox, for example <a href="/#/places/oxpoints:23232352">Christ Church</a> has the path <code>#/places/oxpoints:23232352</code>.
+                Therefore the identifier is <code>oxpoints:23232352</code>. Non-University points can be included as well: <a href="/#/places/osm:553028844">George and Danver</a> on St. Aldates has the identifier <code>osm:553028844</code>. Now if we want to create a custom map with Christ Church and George and Danver we'd use the following path.</p>
+
+                <pre><code>#/custom?ids=oxpoints:23232352,osm:553028844
+                </code></pre>
+
+                <p>Note that identifiers should be separated by a comma if you have more than one POI in your map.</p>
+
+                <p>The browse pane (on the left) can be removed leaving a fullscreen map by using the <code>fullscreen</code> parameter.</p>
+
+                <pre><code>#/custom?ids=oxpoints:23232352,osm:553028844&amp;fullscreen
+                </code></pre>
+
+                <h3>Embedding a map</h3>
+
+                <p>You can embed a map in your website using an iframe. You need to use the base url <code>//maps.ox.ac.uk/embed.html</code> and then add a path, either a custom path created as per the instructions above (e.g. <code>#/custom?ids=oxpoints:23232352,osm:553028844
+                </code>), or an existing path within maps (e.g. <code>#/search?type=/university/college</code>).</p>
+
+                <p> Note that the base url does not start with <code>http:</code>, but rather just two slashes. This is a <a href="http://www.paulirish.com/2010/the-protocol-relative-url/">protocol-relative URL</a>, and ensures that the map will be displayed over <code>http</code> or <code>https</code>. (N.B. This will not work for viewing maps embedded in an locally stored file. An <code>http:</code> prefix can be included during local testing)</p>
+
+                <p>The following iframe embeds a custom map including the different locations of IT Services:</p>
+
+                <pre><code>&lt;iframe src="//maps.ox.ac.uk/embed.html#/custom?ids=oxpoints:40002001,oxpoints:23233672,oxpoints:23233665,oxpoints:55329098,oxpoints:23233636" style="width: 80%; height: 500px;"&gt;&lt;/iframe&gt;
+                </code></pre>
+
+                <h3>Examples</h3>
+                <h4>IT Services</h4>
+                <pre><code>//maps.ox.ac.uk/embed.html#/custom?ids=oxpoints:40002001,oxpoints:23233672,oxpoints:23233665,oxpoints:55329098,oxpoints:23233636"</code></pre>
+                <iframe src="//maps.ox.ac.uk/embed.html#/custom?ids=oxpoints:40002001,oxpoints:23233672,oxpoints:23233665,oxpoints:55329098,oxpoints:23233636" frameborder="0" width="80%" height="500" scrolling="no"></iframe>
+                <hr>
+                <h4>All Colleges</h4>
+                <pre><code>//maps.ox.ac.uk/embed.html#/search?type=/university/college</code></pre>
+                <iframe src="//maps.ox.ac.uk/embed.html#/search?type=/university/college" frameborder="0" width="80%" height="500" scrolling="no"></iframe>
+                <hr>
+                <h4>Custom map with browse pane</h4>
+                <pre><code>//maps.ox.ac.uk/embed.html#/custom?ids=oxpoints:23232352,osm:553028844</code></pre>
+                <iframe marginheight="0" marginwidth="0" src="//maps.ox.ac.uk/embed.html#/custom?ids=oxpoints:23232352,osm:553028844" frameborder="0" width="80%" height="500" scrolling="no"></iframe>
+                <hr>
+                <h4>Custom fullscreen map</h4>
+                <code><pre>//maps.ox.ac.uk/embed.html#/custom?ids=oxpoints:23232352,osm:553028844&fullscreen</pre></code>
+                <iframe marginheight="0" marginwidth="0" src="//maps.ox.ac.uk/embed.html#/custom?ids=oxpoints:23232352,osm:553028844&fullscreen" frameborder="0" width="80%" height="500" scrolling="no"></iframe>
+
+            </div>
+
+        </div>
+    </div>
+</body>
