@@ -91,7 +91,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                 this.loadingImage = new Image();
                 this.loadingImage.onload = _.bind(function() {
                     this.image = this.loadingImage;
-                    this.render();  // Image has loaded, render the view
+                    this.renderIfActive();  // Image has loaded, render the view - but only if it's still part of the layout
                 }, this);
                 this.loadingImage.src = depiction.url;
                 hasDepiction = true;
