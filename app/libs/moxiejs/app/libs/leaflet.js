@@ -1625,7 +1625,7 @@ L.Map = L.Class.extend({
 	},
 
 	fitBounds: function (bounds, options) {
-
+        console.log("Fitting to supplied bounds: " + bounds._northEast.lat + " " + bounds._northEast.lng + " : " + bounds._southWest.lat + " " + bounds._southWest.lng);
 		options = options || {};
 		bounds = bounds.getBounds ? bounds.getBounds() : L.latLngBounds(bounds);
 
@@ -1641,6 +1641,7 @@ L.Map = L.Class.extend({
 
 		zoom = options && options.maxZoom ? Math.min(options.maxZoom, zoom) : zoom;
 
+         console.log("Set zoom of " + zoom + " (min:" + options.minZoom + ", max:" + options.maxZoom + ")");
 		return this.setView(center, zoom, options);
 	},
 

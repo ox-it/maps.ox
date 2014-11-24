@@ -91,18 +91,25 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
             }
         },
 
+        resetContentsPostSync: function() {
+            console.log("Resetting map contents on sync");
+            this.resetMapContents();
+        },
+
         setCollection: function(collection, additionalCollections) {
+            console.log("Setting Collection for map view");
             this.mapMoved = false;
             this.unsetCollection();
             this.collection = collection;
             // Listening only to "sync" seems to capture all necessary map changes
             //
             // Add is used as we load additional results.
-            this.collection.on("sync", this.resetMapContents, this);
+            this.collection.on("sync", this.resetContentsPostSync, this);
             this.collection.on("add", this.placePOI, this);
             if (additionalCollections) {
                 _.each(additionalCollections, this.registerAdditionalCollection, this);
             }
+            console.log("Resetting map contents for initial set of collection");
             this.resetMapContents();
         },
 
@@ -226,6 +233,7 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
         },
 
         setMapBounds: function() {
+            console.log("Resetting map bounds");
             // Only set map bounds if we have a collection
             if (this.collection && this.collection.length > 0) {
                 var bounds = this.collection.getBounds();
@@ -249,6 +257,7 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
         },
 
         resetMapContents: function(ev){
+            console.log("Resetting map contents");
             // Remove the existing map features
             _.each(this.features, function(marker) {
                 this.map.removeLayer(marker);

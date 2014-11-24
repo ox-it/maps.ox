@@ -58,6 +58,9 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
         routes: routes,
 
         custom: function(params) {
+
+            console.log("Loading Custom View");
+
             params = params || {};
             var fullscreen = 'fullscreen' in params;
             // Special case for custom maps with 1 POI
