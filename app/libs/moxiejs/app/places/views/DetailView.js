@@ -91,7 +91,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                 this.loadingImage = new Image();
                 this.loadingImage.onload = _.bind(function() {
                     this.image = this.loadingImage;
-                    this.render();  // Image has loaded, render the view
+                    this.renderIfActive();  // Image has loaded, render the view - but only if it's still part of the layout
                 }, this);
                 this.loadingImage.src = depiction.url;
                 hasDepiction = true;
@@ -191,8 +191,17 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
         template: detailTemplate,
         manage: true,
 
+        validToRender: true,
 
         additionalPOIs: null,
+
+        //This view may have been removed by the time a fetch is successful, so check whether it is still valid.
+        renderIfActive: function() {
+            if(this.validToRender)
+            {
+                this.render();
+            }
+        },
 
         beforeRender: function() {
             if (!this.additionalPOIs) {
@@ -210,7 +219,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                     }, this);
                     if (poids.length === 1) {
                         var poi = new NumberedPOI({id: poids[0], singlePOI: true});
-                        poi.fetch({success: _.bind(this.render, this)});
+                        poi.fetch({success: _.bind(this.renderIfActive, this)});
                         this.additionalPOIs =  new NumberedPOICollection([poi]);
                     } else if (poids.length > 1) {
                         this.additionalPOIs =  new NumberedPOICollection({
@@ -227,7 +236,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                             }, this),
                             url: conf.urlFor('places_id') + poids.join(','),
                         });
-                        this.additionalPOIs.fetch({success: _.bind(this.render, this)});
+                        this.additionalPOIs.fetch({success: _.bind(this.renderIfActive, this)});
                     }
                 }
             } else {
@@ -254,6 +263,8 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
 
         cleanup: function() {
             Backbone.off('favourited');
+            //flag that this view is no longer valid to be rendered.
+            this.validToRender = false;
             clearInterval(this.refreshID);
         }
 
