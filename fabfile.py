@@ -45,7 +45,6 @@ def deploy_front(version):
 
         run('rm -f index.html')
         run('ln -s %s %s' % ('index-prod.html', 'index.html'))
-        run('rm -f embed.html')
         run('ln -s %s %s' % ('embed-prod.html', 'embed.html'))
 
     # Pre GZip static (html, css, js) files
