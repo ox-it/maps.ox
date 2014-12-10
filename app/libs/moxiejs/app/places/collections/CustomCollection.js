@@ -2,7 +2,9 @@ define(['underscore', 'moxie.conf', 'places/collections/POICollection'], functio
     var CustomPOIs = POIs.extend({
         showInfo: true,
         url: function() {
-            return conf.urlFor('places_id') + this.ids;
+            // the API response is different for one ID, adding a
+            // comma makes it return a list
+            return conf.urlFor('places_id') + this.ids + ",";
         },
     });
     return CustomPOIs;

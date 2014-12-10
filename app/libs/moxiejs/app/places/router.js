@@ -60,23 +60,8 @@ define(["app", "underscore", "backbone", "moxie.conf", "moxie.position", "places
         custom: function(params) {
             params = params || {};
             var fullscreen = 'fullscreen' in params;
-            // Special case for custom maps with 1 POI
-            //
-            // As the API has a different response for a single resource
-            // we create the POI and call fetch on that rather than the
-            // CustomPOIs collection.
-            if (params.ids.split(',').length === 1) {
-                var poi = new POI({id: params.ids});
-                poi.on('sync', function() {
-                    customPOIs.trigger('reset');  // Make sure the SearchView refreshes
-                });
-                customPOIs.reset([poi]);
-                poi.fetch();
-            } else {
-                // Custom maps with multiple POIs
-                customPOIs.ids = params.ids;
-                customPOIs.fetch();
-            }
+            customPOIs.ids = params.ids;
+            customPOIs.fetch();
             var layout = app.getLayout('MapBrowseLayout', {followUser: this.followUser});
             layout.removeDetail();
             if (fullscreen) {
