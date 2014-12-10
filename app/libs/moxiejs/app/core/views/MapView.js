@@ -61,6 +61,11 @@ define(['backbone', 'jquery', 'leaflet', 'underscore', 'moxie.conf', 'places/uti
             this.map.on('dragstart', function() {
                 this.mapMoved = true;
             }, this);
+            this.map.on('resize', function() {
+                // resize when the window is resized, but also fixes
+                // issue when using the embed map in a tabbed view see RT#2602338
+                this.setMapBounds();
+            }, this);
         },
 
         // Manage displaying the User marker
