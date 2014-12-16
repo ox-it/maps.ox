@@ -154,6 +154,7 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
                         if (parent.type) {
                             switch (parent.type[0]) {
                                 case '/leisure/museum':
+                                case '/university/library':
                                 case '/university/department':
                                     if (poi.type[0]==='/university/building') {
                                         context.occupiedBy.push(parent);
