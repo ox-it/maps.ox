@@ -3,7 +3,8 @@ define(['leaflet', 'places/models/POIModel'], function(L, POI) {
         parse: function(data) {
             if (this.get('singlePOI')) {
                 if ('lat' in data && 'lon' in data) {
-                    data.number = 1;
+                    data.number = 0;
+                    data.markerText = '<i class="fa fa-sign-in"></i>';
                 }
             }
             return data;
