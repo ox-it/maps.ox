@@ -120,7 +120,7 @@ define([], function() {
                             "toggle": true,
                             icon: {
                                 iconSize: [18, 18],
-                                iconUrl: 'maki/renders/cafe-18.png',
+                                iconUrl: 'maki/icons/cafe-15.svg',
                                 clickable: true
                             },
                             hasInfo: true
@@ -133,7 +133,7 @@ define([], function() {
                             "toggle": true,
                             icon: {
                                 iconSize: [18, 18],
-                                iconUrl: 'maki/renders/restaurant-18.png',
+                                iconUrl: 'maki/icons/restaurant-15.svg',
                                 clickable: true
                             },
                             hasInfo: true
@@ -146,7 +146,7 @@ define([], function() {
                             "toggle": true,
                             icon: {
                                 iconSize: [18, 18],
-                                iconUrl: 'maki/renders/beer-18.png',
+                                iconUrl: 'maki/icons/beer-15.svg',
                                 clickable: true
                             },
                             hasInfo: true
@@ -159,7 +159,7 @@ define([], function() {
                             "toggle": true,
                             icon: {
                                 iconSize: [18, 18],
-                                iconUrl: 'maki/renders/bar-18.png',
+                                iconUrl: 'maki/icons/bar-15.svg',
                                 clickable: true
                             },
                             hasInfo: true
@@ -172,7 +172,7 @@ define([], function() {
                             "toggle": true,
                             icon: {
                                 iconSize: [18, 18],
-                                iconUrl: 'maki/renders/bank-18.png',
+                                iconUrl: 'maki/icons/bank-15.svg',
                                 clickable: true
                             },
                             hasInfo: true
@@ -185,7 +185,7 @@ define([], function() {
                             "toggle": true,
                             icon: {
                                 iconSize: [18, 18],
-                                iconUrl: 'maki/renders/car-18.png',
+                                iconUrl: 'maki/icons/car-15.svg',
                                 clickable: true
                             },
                             defaultQuery: {
@@ -204,7 +204,7 @@ define([], function() {
                             "toggle": true,
                             icon: {
                                 iconSize: [18, 18],
-                                iconUrl: 'maki/renders/bus-18.png',
+                                iconUrl: 'maki/icons/bus-15.svg',
                                 clickable: true
                             },
                              defaultQuery: {
@@ -223,7 +223,7 @@ define([], function() {
                             "toggle": true,
                             icon: {
                                 iconSize: [18, 18],
-                                iconUrl: 'maki/renders/bicycle-18.png',
+                                iconUrl: 'maki/icons/bicycle-15.svg',
                             },
                             defaultQuery: {
                                 type_exact: '/transport/bicycle-parking',
@@ -232,6 +232,23 @@ define([], function() {
                                 lon: DEFAULT_LOCATION.longitude,
                             },
 
+                        },
+                        {
+                            "type": "defibrillator",
+                            "type_name": "Defibrillator",
+                            "type_name_plural": "Defibrillators",
+                            "type_prefixed": "/amenities/health/defibrillator",
+                            "toggle": true,
+                            icon: {
+                                iconSize: [18,18],
+                                iconUrl: 'maki/icons/defibrillator-15.svg'
+                            },
+                            defaultQuery: {
+                                type_exact: '/amenities/health/defibrillator',
+                                count: 200,
+                                lat: DEFAULT_LOCATION.latitude,
+                                lon: DEFAULT_LOCATION.longitude,
+                            },
                         },
                         {
                             "type": "post",
@@ -255,7 +272,7 @@ define([], function() {
                             "toggle": true,
                             icon: {
                                 iconSize: [18, 18],
-                                iconUrl: 'maki/renders/post-18.png',
+                                iconUrl: 'maki/icons/post-15.svg',
                             },
                         },
                         {
@@ -266,7 +283,7 @@ define([], function() {
                             "toggle": true,
                             icon: {
                                 iconSize: [18, 18],
-                                iconUrl: 'maki/renders/waste-basket-18.png',
+                                iconUrl: 'maki/icons/waste-basket-15.svg',
                             }
                         }
                     ]
