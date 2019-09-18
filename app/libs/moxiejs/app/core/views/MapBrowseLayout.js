@@ -1,4 +1,4 @@
-define(['backbone', 'underscore', 'jquery', 'moxie.position', 'core/views/MapView', 'hbs!core/templates/map-browse', 'hbs!places/templates/requesting_geolocation', 'hbs!places/templates/error_geolocation'], function(Backbone, _, $, userPosition, MapView, mapBrowseTemplate, geoRequesting, geoError) {
+define(['backbone', 'underscore', 'jquery', 'moxie.position', 'core/views/MapView', 'hbs!core/templates/map-browse', 'hbs!places/templates/requesting_geolocation', 'hbs!places/templates/error_geolocation', 'hbs!places/templates/geo_enabled'], function(Backbone, _, $, userPosition, MapView, mapBrowseTemplate, geoRequesting, geoError, geoEnabled) {
 
     var MapBrowseLayout = Backbone.View.extend({
         initialize: function(options) {
@@ -57,15 +57,19 @@ define(['backbone', 'underscore', 'jquery', 'moxie.position', 'core/views/MapVie
                 }
             }, this));
             userPosition.on('position:unpaused', function() {
+                console.log('position:unpaused');
                 this.$('.messages').html(geoRequesting());
             }, this);
             userPosition.on('position:paused', function() {
+                console.log('position:paused');
                 this.$('.messages').html('');
             }, this);
             userPosition.on('position:updated', function() {
-                this.$('.messages').html('');
+                console.log('position:updated');
+                this.$('.messages').html(geoEnabled());
             }, this);
             userPosition.on('position:error', function() {
+                console.log('position:error');
                 this.$('.messages').html(geoError());
             }, this);
 

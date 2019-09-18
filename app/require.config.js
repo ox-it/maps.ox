@@ -58,6 +58,7 @@ var require = {
         "places/templates/item": "libs/moxiejs/app/places/templates/item",
         "places/templates/requesting_geolocation": "libs/moxiejs/app/places/templates/requesting_geolocation",
         "places/templates/error_geolocation": "libs/moxiejs/app/places/templates/error_geolocation",
+        "places/templates/geo_enabled": "libs/moxiejs/app/places/templates/geo_enabled",
 
         // Moxie Core modules
         "MoxieModel": "libs/moxiejs/app/core/models/MoxieModel",
