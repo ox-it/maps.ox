@@ -36,7 +36,7 @@ define([], function() {
                 }
             },
             secondaryLayer: {
-                path: 'https://api.mapbox.com/styles/v1/mobileox/cirw7r7130020gwklfesc5wmm/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibW9iaWxlb3giLCJhIjoiWVBPWUxLNCJ9.NxZzwy3fIjwy3fIjTTXPgRgjOGYw',
+                path: 'https://api.mapbox.com/styles/v1/mobileox/cirw7r7130020gwklfesc5wmm/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibW9iaWxlb3giLCJhIjoiWVBPWUxLNCJ9.NxZzwy3fIjTTXPgRgjOGYw',
                 options: {
                     maxZoom: 18,
                     zIndex: 100,
