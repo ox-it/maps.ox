@@ -208,11 +208,12 @@ define(['jquery', 'backbone', 'underscore', 'moxie.conf', 'core/views/ErrorView'
             if (!this.additionalPOIs) {
                 if (this.model.has('_links')) {
                     var primaryPlaceId;
+                    var poids = [];
                     if(this.model.get('_links').primary_place && this.model.get('_links').primary_place.href) {
                         primaryPlaceId = this.model.get('_links').primary_place.href;
                     }
+                    poids.push(this.model.get('_links').self.href.split('/').pop());
                     var children = this.model.get('_links').child || [];
-                    var poids = [];
                     _.each(children, function(child) {
                         if (this.inclusionPredicate(child)) {
                             poids.push(child.href.split('/').pop());

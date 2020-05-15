@@ -135,7 +135,7 @@
             {{#if href}}
             <dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
             {{else}}
-            <dd>{{#if number}}<div class="detail-numbered-marker"><div><span>{{ number }}</span></div></div>{{/if}}<a href="{{ reverse 'detail' 'id' id }}" title="{{ name }}">{{ name }}</a></dd>
+            <dd>{{#if markerText }}<div class="detail-numbered-marker"><div><span>{{{ markerText }}}</span></div></div>{{/if}}<a href="{{ reverse 'detail' 'id' id }}" title="{{ name }}">{{ name }}</a></dd>
             {{/if}}
             {{/occupiedBy}}
         {{/if}}
@@ -145,7 +145,7 @@
             {{#if href}}
             <dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
             {{else}}
-            <dd>{{#if number}}<div class="detail-numbered-marker"><div><span>{{ number }}</span></div></div>{{/if}}<a href="{{ reverse 'detail' 'id' id }}" title="{{ name }}">{{ name }}</a></dd>
+            <dd>{{#if markerText }}<div class="detail-numbered-marker"><div><span>{{{ markerText }}}</span></div></div>{{/if}}<a href="{{ reverse 'detail' 'id' id }}" title="{{ name }}">{{ name }}</a></dd>
             {{/if}}
             {{/partOf}}
         {{/if}}
@@ -155,7 +155,7 @@
             {{#if href}}
             <dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
             {{else}}
-            <dd>{{#if number}}<div class="detail-numbered-marker"><div><span>{{ number }}</span></div></div>{{/if}}<a href="{{ reverse 'detail' 'id' id }}" title="{{ name }}">{{ name }}</a></dd>
+            <dd>{{#if markerText }}<div class="detail-numbered-marker"><div><span>{{{ markerText }}}</span></div></div>{{/if}}<a href="{{ reverse 'detail' 'id' id }}" title="{{ name }}">{{ name }}</a></dd>
             {{/if}}
             {{/occupies}}
         {{/if}}
@@ -163,9 +163,9 @@
             <dt>Libraries</dt>
             {{#libraries}}
             {{#if href}}
-            <dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
+            <dd><a href="#{{ href }}" title="{{ title }}">a {{ title }}</a></dd>
             {{else}}
-            <dd>{{#if number}}<div class="detail-numbered-marker"><div><span>{{ number }}</span></div></div>{{/if}}<a href="{{ reverse 'detail' 'id' id }}" title="{{ name }}">{{ name }}</a></dd>
+            <dd>{{#if markerText }}<div class="detail-numbered-marker"><div><span>{{{ markerText }}}</span></div></div>{{/if}}<a href="{{ reverse 'detail' 'id' id }}" title="{{ name }}">{{ name }}</a></dd>
             {{/if}}
             {{/libraries}}
         {{/if}}
@@ -173,9 +173,9 @@
             <dt>Contains</dt>
             {{#contains}}
             {{#if href}}
-            <dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
+            <dd><a href="#{{ href }}" title="{{ title }}">a {{ title }}</a></dd>
             {{else}}
-            <dd>{{#if number}}<div class="detail-numbered-marker"><div><span>{{ number }}</span></div></div>{{/if}}<a href="{{ reverse 'detail' 'id' id }}" title="{{ name }}">{{ name }}</a></dd>
+            <dd>{{#if markerText }}<div class="detail-numbered-marker"><div><span>{{{ markerText }}}</span></div></div>{{/if}}<a href="{{ reverse 'detail' 'id' id }}" title="{{ name }}">{{ name }}</a></dd>
             {{/if}}
             {{/contains}}
         {{/if}}
@@ -185,7 +185,7 @@
             {{#if href}}
             <dd><a href="#{{ href }}" title="{{ title }}">{{ title }}</a></dd>
             {{else}}
-            <dd>{{#if number}}<div class="detail-numbered-marker"><div><span>{{ number }}</span></div></div>{{/if}}<a href="{{ reverse 'detail' 'id' id }}" title="{{ name }}">{{ name }}</a></dd>
+            <dd>{{#if markerText }}<div class="detail-numbered-marker"><div><span>{{{ markerText }}}</span></div></div>{{/if}}<a href="{{ reverse 'detail' 'id' id }}" title="{{ name }}">{{ name }}</a></dd>
             {{/if}}
             {{/organisations}}
         {{/if}}

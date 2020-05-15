@@ -18,7 +18,7 @@ define(['underscore', 'places/collections/POICollection', 'places/models/Numbere
                 //
                 // Numbering maps a {lat+lon} string to an Array of pois
                 var numbering = {};
-                var count = 1;
+                var count = 0;
                 _.each(pois, function(poi) {
                     var latlon = "" + poi.lat + poi.lon;
                     if (latlon in numbering) {
@@ -29,6 +29,7 @@ define(['underscore', 'places/collections/POICollection', 'places/models/Numbere
                         numbering[latlon] = [poi];
                         count++;
                     }
+                    poi.markerText = (poi.number === 0) ? '<i class="fa fa-sign-in"></i>' : poi.number;
                 });
                 this.numberOfMarkers = _.size(numbering);
             }
